@@ -4,7 +4,7 @@ import { BehaviorTimer } from '../components'
 
 export function BehaviorTimerContainer({ name }) {
     const { toggleActive, displayTime, toggleOpen, isActive, history, isOpen, totalTime, formatTotalTime, timePreview } = useBehaviorTimer()
-//hello
+//hello there
     return (
         <BehaviorTimer>
             <BehaviorTimer.Frame>
