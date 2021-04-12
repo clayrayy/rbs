@@ -6,8 +6,8 @@ export default function useGetDurationEvents(openClient, behaviorName) {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
     const [durations, setDurations] = useState([])
-    const [timestamp, setTimeStamp] = useState('')
-    const [totalSeconds, setTotalSeconds] = useState([])
+    // const [timestamp, setTimeStamp] = useState('')
+    // const [totalSeconds, setTotalSeconds] = useState([])
     const { firebase } = useContext(FirebaseContext)
     const { user } = useAuthListener()
 
@@ -18,8 +18,6 @@ export default function useGetDurationEvents(openClient, behaviorName) {
         .where('createdBy', '==', user.email)
         .where('clientId', '==', openClient.id)
         .where('behaviorName', '==', behaviorName)
-        
-
 
     useEffect(() => {
         const unsubscribe = durationEventRef
@@ -30,16 +28,16 @@ export default function useGetDurationEvents(openClient, behaviorName) {
                         allData.push({
                             ...doc.data(),
                             docId: doc.id
-                    })})
+                        })
+                    })
                     setLoading(false)
                     setDurations(allData)
-                    // setTotalSeconds(allData.reduce((a, b) => a.seconds + b.seconds))
                 }, err => setError(err)
             )
         return () => unsubscribe()
     }, []
     )
-    
-    return { durations: durations, loading, error, totalSeconds }
-    
+
+    return { durations: durations, loading, error }
+
 }

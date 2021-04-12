@@ -10,7 +10,7 @@ export default function DataSheet({ data, openClient }) {
     return (
         <>
             {!loading && behaviorsList.map((behavior => {
-                return <BehaviorTimerContainer key={behavior.docId} openClient={openClient} behaviorName={behavior} />
+                return <BehaviorTimerContainer key={Math.floor(Math.random() * 99999999999 + 1)} openClient={openClient} behaviorName={behavior} />
             }))}
 
             <FrequencyCounterContainer />

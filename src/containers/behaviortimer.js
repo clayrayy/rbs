@@ -1,17 +1,23 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useBehaviorTimer } from 'hooks'
 import { BehaviorTimer } from '../components'
-// import useGetDurationEvents from 'hooks/get-data-hooks/use-get-duration-events'
 
 export function BehaviorTimerContainer({ name, openClient, behaviorName }) {
-  const { toggleActive, displayTime, toggleOpen, isActive, history, isOpen, formatTime,  totalTime, formatTotalTime, timePreview, totalSeconds, durations, loading } = useBehaviorTimer(openClient, behaviorName)
-  // const { totalSeconds, loading } = useGetDurationEvents(openClient.id)
-  const [openBehavior, setOpenBehavior] = useState('')
-  // const { , loading } = useGetDurationEvents(openClient, behaviorName)
+  const { toggleActive,
+     displayTime,
+     toggleOpen,
+     isActive,
+     history,
+     isOpen,
+     formatTotalTime,
+     timePreview,
+     totalSeconds,
+     durations,
+     formatTime,
+     totalTime,
+     loading } = useBehaviorTimer(openClient, behaviorName)
 
-
-
-  return ( !loading &&(
+  return (
     <BehaviorTimer>
       <BehaviorTimer.Frame>
         <BehaviorTimer.ButtonContainer>
@@ -31,15 +37,15 @@ export function BehaviorTimerContainer({ name, openClient, behaviorName }) {
 
         {durations.map((item) => {
           return (
-            <BehaviorTimer.Item key={Math.floor(Math.random() * 99999999999 + 1)} item={item}>
-              <BehaviorTimer.TimeStamp>{item.date}</BehaviorTimer.TimeStamp>
+            <BehaviorTimer.Item key={Math.floor(Math.random() * 9999999999999 + 1)} item={item}>
+              <BehaviorTimer.TimeStamp>{item.timestamp}</BehaviorTimer.TimeStamp>
               <BehaviorTimer.TimeData>{formatTotalTime(item.seconds)}</BehaviorTimer.TimeData>
             </BehaviorTimer.Item>
           )
         })}
         <BehaviorTimer.TotalTimeContainer>
           <BehaviorTimer.TimeData>
-            {history.length === 0
+            {durations.length === 0
               ? 'No Data'
               : `Records: ${durations.length} - Total Time: ${formatTotalTime(totalSeconds)}`
             }
@@ -47,5 +53,5 @@ export function BehaviorTimerContainer({ name, openClient, behaviorName }) {
         </BehaviorTimer.TotalTimeContainer>
       </BehaviorTimer.ItemsContainer>
     </BehaviorTimer>
-  ))
+  )
 }

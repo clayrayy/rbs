@@ -1,6 +1,8 @@
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import useGetDurationEvents from 'hooks/get-data-hooks/use-get-duration-events'
+import { FirebaseContext } from 'context/firebase'
+import { useAuthListener } from 'hooks'
 
 
 export default function useBehaviorTimer(openClient, behaviorName) {
@@ -12,10 +14,20 @@ export default function useBehaviorTimer(openClient, behaviorName) {
     const [totalTime, setTotalTime] = useState(0)
     const [clientData, setClientData] = useState({})
     const [openBehavior, setOpenBehavior] = useState('')
-    const { durations, loading, totalSeconds } = useGetDurationEvents(openClient, behaviorName)
-    // console.log(behaviorName)
+    const { durations, loading } = useGetDurationEvents(openClient, behaviorName)
+    const { firebase } = useContext(FirebaseContext)
+    const { user } = useAuthListener()
+
+    let durationsTime = durations.map((duration) => duration.seconds)
+    let totalSeconds = 0;
+    let eventsRef = firebase
+        .firestore()
+        .collection('events')
     
-    // console.log(totalSeconds)
+    for (let i = 0; i < durationsTime.length; i++) {
+        totalSeconds += durationsTime[i]
+    }
+    console.log(totalSeconds)
 
     const updateClientData = () => {
         const oldTime = totalTime
@@ -27,13 +39,13 @@ export default function useBehaviorTimer(openClient, behaviorName) {
     let displayTime = time < 3600 ? formatTime(time).toString().slice(3) : formatTime(time)
 
     const timePreview = function formatTotalTimePreview() {
-        return (!isOpen ? (durations.length === 0
+        return (loading ? 'loading' : (!isOpen ? (durations.length === 0
             ? 'No Records'
             : durations.length === 1
                 ? `1 Record - Total Time: ${formatTotalTime(totalSeconds)}`
                 : durations.length > 1
                     ? `${durations.length} Records - Total Time: ${formatTotalTime(totalSeconds)} `
-                    : null) : 'History')
+                    : null) : 'History'))
     }
 
     useEffect(() => {
@@ -66,7 +78,14 @@ export default function useBehaviorTimer(openClient, behaviorName) {
             setDate(new Date().toLocaleString())
         } else {
             setIsActive(false)
-
+            eventsRef.add({
+                clientId: openClient.id,
+                createdBy: user.email,
+                eventType: 'duration',
+                seconds: time,
+                behaviorName: behaviorName,
+                // timestamp: firebase.firestore.Timestamp.now()
+            })
             
             setTime(0)
         }
