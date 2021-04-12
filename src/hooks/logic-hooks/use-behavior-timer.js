@@ -1,8 +1,9 @@
 
 import { useState, useEffect } from 'react'
+import useGetDurationEvents from 'hooks/get-data-hooks/use-get-duration-events'
 
 
-export default function useBehaviorTimer() {
+export default function useBehaviorTimer(openClient, behaviorName) {
     const [isActive, setIsActive] = useState(false)
     const [time, setTime] = useState(0)
     const [history, setHistory] = useState([])
@@ -10,15 +11,11 @@ export default function useBehaviorTimer() {
     const [isOpen, setIsOpen] = useState(false)
     const [totalTime, setTotalTime] = useState(0)
     const [clientData, setClientData] = useState({})
-    console.log(history)
-    /*
-    timeStamp: displayTime,
-    seconds: time
-    */
-
-    /* 
+    const [openBehavior, setOpenBehavior] = useState('')
+    const { durations, loading, totalSeconds } = useGetDurationEvents(openClient, behaviorName)
+    // console.log(behaviorName)
     
-    */
+    // console.log(totalSeconds)
 
     const updateClientData = () => {
         const oldTime = totalTime
@@ -30,12 +27,12 @@ export default function useBehaviorTimer() {
     let displayTime = time < 3600 ? formatTime(time).toString().slice(3) : formatTime(time)
 
     const timePreview = function formatTotalTimePreview() {
-        return (!isOpen ? (history.length === 0
+        return (!isOpen ? (durations.length === 0
             ? 'No Records'
-            : history.length === 1
-                ? `1 Record - Total Time: ${formatTotalTime(totalTime)}`
-                : history.length > 1
-                    ? `${history.length} Records - Total Time: ${formatTotalTime(totalTime)} `
+            : durations.length === 1
+                ? `1 Record - Total Time: ${formatTotalTime(totalSeconds)}`
+                : durations.length > 1
+                    ? `${durations.length} Records - Total Time: ${formatTotalTime(totalSeconds)} `
                     : null) : 'History')
     }
 
@@ -70,18 +67,16 @@ export default function useBehaviorTimer() {
         } else {
             setIsActive(false)
 
-            setHistory([...history, {
-                date: date,
-                time: displayTime
-            }])
+            
             setTime(0)
         }
     }
-console.log(history)
-    function toggleOpen() {
+
+    function toggleOpen(name) {
+        setOpenBehavior(name)
         setIsOpen(!isOpen)
     }
 
-    return { toggleActive, displayTime, toggleOpen, isActive, setIsActive, time, setTime, history, setHistory, date, setDate, isOpen, setIsOpen, totalTime, setTotalTime, formatTotalTime, formatTime, timePreview }
+    return { toggleActive, displayTime, toggleOpen, isActive, setIsActive, time, setTime, history, setHistory, date, setDate, isOpen, setIsOpen, totalTime, setTotalTime, formatTotalTime, formatTime, timePreview, totalSeconds, durations, loading }
 }
 

@@ -1,27 +1,22 @@
-import React from 'react'
+import { useGetBehaviorsData } from 'hooks/get-data-hooks/use-get-behaviors-data'
+// import useGetDurationEvents from 'hooks/get-data-hooks/use-get-duration-events'
+import React, { useState } from 'react'
 import { BehaviorTimerContainer } from '../containers/behaviortimer'
 import { FrequencyCounterContainer } from '../containers/frequencycounter'
 
-export default function DataSheet({data}) {
-    const durations = data.behaviors
-    // console.log(data)
-    console.log(durations)
-    
-    const behaviorsArray = Object.values(durations)
+export default function DataSheet({ data, openClient }) {
+    const { behaviorsList, loading, error } = useGetBehaviorsData(openClient.id)
 
-    console.log(behaviorsArray)
     return (
         <>
-        {behaviorsArray.map((behavior, index) => {
-            return (
-                <BehaviorTimerContainer key={index} name='hello' />
-            )
-        })}
-            
-        
-
+            {!loading && behaviorsList.map((behavior => {
+                return <BehaviorTimerContainer key={behavior.docId} openClient={openClient} behaviorName={behavior} />
+            }))}
 
             <FrequencyCounterContainer />
         </>
     )
 }
+
+
+///make a hook that takes in behavior being passed to behaviortimercontainer and returns data associated with that behavior

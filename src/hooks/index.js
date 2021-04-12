@@ -1,3 +1,3 @@
-export { default as useClientContent } from './use-client-data'
+export { default as useClientContent } from './get-data-hooks/use-get-clients'
 export { default as useAuthListener } from './use-auth-listener'
-export { default as useBehaviorTimer } from './use-behavior-timer'
+export { default as useBehaviorTimer } from './logic-hooks/use-behavior-timer'

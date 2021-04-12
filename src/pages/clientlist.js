@@ -1,25 +1,37 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 // import { ClientListContainer } from '../containers/clientlist'
 import { HeaderContainer } from '../containers/header'
 import { ClientCard } from '../components'
 import DataSheet from './datasheet'
-import useClientList from 'hooks/use-client-data'
+import useClientData from 'hooks/get-data-hooks/use-get-clients'
+// import { BehaviorContext } from 'context/behavior-context'
 // import useDurationData from 'hooks/use-duration-data'
-import { useGettingData } from 'hooks/gettingdatahook'
+// import { useGetDurationEvents } from 'hooks/get-data-hooks/use-get-durations-events'
+
 
 
 export default function ClientList() {
     const [datasheetOpen, setDatasheetOpen] = useState(false)
     const [data, setData] = useState({})
+    const [openClient, setOpenClient] = useState()
     // const [durationData, setDurationData] = useState([])
-    const { clients } = useClientList('clients')
+    const { clients } = useClientData()
     // const { durations } = useDurationData(data.id)
-    
+    // const {totalSeconds} = useGetDurationEvents(openClient)
+
+    // function toDateTime(secs) {
+    //     var t = new Date(1970, 0, 1); // Epoch
+    //     t.setSeconds(secs);
+    //     return t.toString();
+    // }
+
+    // console.log(toDateTime(1617538210 - 7200))
     function showClientDatasheet() {
         setDatasheetOpen(!datasheetOpen)
     }
-    console.log(useGettingData())
-    
+
+
+
     return (
         <>
             <HeaderContainer
@@ -31,7 +43,9 @@ export default function ClientList() {
                 backFromDatasheet={() => setDatasheetOpen(false)}
             />
             {datasheetOpen === true ? (
-            <DataSheet data={data} />
+                
+                    <DataSheet data={data} openClient={openClient} />
+                
             )
                 : (
                     clients.map(client => {
@@ -42,11 +56,14 @@ export default function ClientList() {
                                 key={client.docId}
                                 onClick={() => {
                                     showClientDatasheet()
+                                    setOpenClient({
+                                        id: client.docId
+                                    })
                                     setData({
                                         id: client.docId,
                                         clientName: clientName,
                                         behaviors: client.durations
-                                       
+
                                     })
                                 }}
                             >

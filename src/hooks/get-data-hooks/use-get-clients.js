@@ -2,28 +2,28 @@ import { FirebaseContext } from 'context/firebase'
 import { useAuthListener } from 'hooks'
 import { useEffect, useState, useContext } from 'react'
 
-export default function useClientData(target) {
+export default function useClientData() {
     const [content, setContent] = useState([])
     const { firebase } = useContext(FirebaseContext)
     const { user } = useAuthListener()
+    const clientsRef = firebase
+        .firestore()
+        .collection('clients')
+        .where("ownerUid", "==", user.email)
 
     useEffect(() => {
-        firebase
-            .firestore()
-            .collection(target)
-            .where("ownerUid", "==", user.email)
+        const unsubscribe = clientsRef
             .onSnapshot((snapshot) => {
                 const allContent = snapshot.docs.map((contentObj) => {
-                    // console.log(contentObj.data())
                     return {
-                    ...contentObj.data(),
-                    docId: contentObj.id,
-                    // behaviors: contentObj.doc('behavior')
-                }})
-
+                        ...contentObj.data(),
+                        docId: contentObj.id,
+                    }
+                })
                 setContent(allContent)
             })
-            
+            return () => unsubscribe()
     }, [])
-    return { [target]: content }
+
+    return { clients: content }
 }
