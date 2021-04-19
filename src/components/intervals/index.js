@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState, useContext } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleDown, faMinusCircle } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import { 
     Container,
     SelectorButton,
@@ -14,7 +14,8 @@ import {
     Label,
     ButtonText,
     PlusIcon,
-    MinusIcon
+    MinusIcon,
+    Inner
  } from './styles/intervals'
 
 export default function Intervals({ children, ...restProps }) {
@@ -29,6 +30,10 @@ Intervals. = function Intervals({ children, ...restProps }) {
 
 
 */
+
+Intervals.Inner = function IntervalsInner({ children, ...restProps }) {
+    return <Inner {...restProps}>{children}</Inner>
+}
 
 Intervals.SelectorButton = function IntervalsSelectorButton({ children, ...restProps }) {
     return <SelectorButton {...restProps}>{children}</SelectorButton>

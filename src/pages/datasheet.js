@@ -13,6 +13,8 @@ export default function DataSheet({ data, openClient }) {
                 return <BehaviorTimerContainer ids={behaviorsIdList} key={Math.floor(Math.random() * 99999999999 + 1)} openClient={openClient} behaviorName={behavior} />
             }))}
     <IntervalsContainer />
+    <IntervalsContainer />
+    <IntervalsContainer />
             <FrequencyCounterContainer />
         </>
     )

@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import colors from "constants/colors";
 
 export const Container = styled.div`
+position: relative;
     background: ${colors.cardBackground};
     color: ${colors.darkText};
     display: flex;
@@ -19,6 +20,20 @@ export const Container = styled.div`
     -webkit-box-shadow: 5px 5px 15px -1px rgba(0,0,0,0.16); 
     box-shadow: 5px 5px 15px -1px rgba(0,0,0,0.16);
 `
+export const Inner = styled.div`
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transition: all .35s ease-in-out;
+    opacity: ${({blackout}) => blackout ? '1' : '0'};
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    background-color: rgba(0,0,0,.9);
+    z-index: ${({bringForward}) => bringForward ? '10' : '-1'};
+`
 
 export const SelectorButton = styled.button`
     height: 30px;
@@ -32,13 +47,21 @@ export const SelectorButton = styled.button`
     color: ${colors.lightText};
     justify-content: center;
     transition: all .25s ease;
-    background-color: ${colors.btnPrimary};
+    background-color: ${({minusActive, plusActive}) => {
+        if (minusActive) {
+            return `${colors.accent}`
+        }
+        else if (plusActive) {
+            return `${colors.accent}`
+        }
+        else return `${colors.btnPrimary}`
+    }};
 
     &:active {
-        transform: scale(.95);
+        /* transform: scale(.95); */
         /* outline: none; */
         border: none;
-        background: ${colors.accent};
+        
     }
 
     &:focus {
@@ -56,6 +79,7 @@ export const PlusIcon = styled.span`
     border-radius: 1em;
     transition: all .25s ease;
     background-color: ${colors.lightText};
+    transform: ${({enlarge}) => enlarge ? 'scale(1.3)' : 'none'};
     
 
     
@@ -74,13 +98,13 @@ export const PlusIcon = styled.span`
 `
 
     export const MinusIcon = styled.span`
-position: relative;
+    position: relative;
     height: 2px;
     width: 15px;
     border-radius: 1em;
     background-color: ${colors.lightText};
     transition: all .15s ease-in-out;
-    transform: ${({reduce}) => reduce ? 'scale(.75)' : 'none'};
+    transform: ${({reduce}) => reduce ? 'scale(.8)' : 'none'};
 
 `
 
