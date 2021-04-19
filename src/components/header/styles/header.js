@@ -9,7 +9,7 @@ export const Container = styled.div`
     background: ${colors.headerBackground};
     margin-bottom: 2em;
     width: 100%;
-    padding: 0 25px;
+    /* padding: 0 25px; */
 `
 
 export const BackLink = styled(ReachRouterLink)`
@@ -20,29 +20,44 @@ export const Inner = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    width: 90%;
+    /* min-width: 100%; */
     max-width: 800px;
     height: 100px;
     background: ${colors.headerBackground};
+    @media (max-width: 600px) {
+        max-width: 100%;
+    }
 `
 
 export const Title = styled.h1`
     color: ${colors.lightText};
     letter-spacing: 1px;
     text-align: center;
-    font-size: clamp(1rem, -0.875rem + 8.333vw, 3.5rem);
+    /* max-width: 33%; */
+    /* min-width: 100%; */
+    
+    font-size: clamp(1.5rem, -0.875rem + 8.333vw, 2.5rem);
+
+    @media (max-width: 800px) {
+        max-width: 33%;
+        font-size: 1.5rem;
+    }
 `
 
 export const BackIcon = styled.span`
     font-size: 30px;
     color: ${colors.lightText};
     flex: 1;
+    transform: ${({active}) => active ? 'translateX(-5em)' : 'none'};
+    opacity: ${({active}) => active ? '0' : '1'};
+    transition: all .2s ease-in-out;
 `
 
 export const AddItemIcon = styled.span`
     z-index: ${({open}) => open ? '1000' : '1'};
     width: 1.5em;
-    /* margin-left: 1em; */
+    /* padding-left: 1em; */
     background-color: ${colors.lightText};
     height: .25em;
     /* margin-right: 1em; */
@@ -75,14 +90,15 @@ export const IconSpacer = styled.div`
     justify-content: flex-end;
     align-items: center;
     margin: 0;
-
+/* border: solid 1px magenta; */
 `
 
 export const IconContainer = styled.div`
 padding: 12px 16px;
 /* margin: 0; */
 transition: all .1s ease-in-out;
-z-index: ${({hideWhen}) => hideWhen ? '0' : '1000'}
+
+z-index: ${({hideWhen}) => hideWhen ? '0' : '1000'};
 `
 
 export const Hamburger = styled.span`
@@ -171,21 +187,24 @@ export const Menu = styled.ul`
     align-items: center;
     margin: 0;
     padding: 0;
+
+     
 `
 
 export const MenuItem = styled.li`
 color: white;
 cursor: pointer;
 font-size: 4rem;
+font-size: clamp(2rem, -0.875rem + 8.333vw, 3.5rem);
 
     &:hover {
         color: ${colors.pageBackground};
-    }
+    };
 `
 
 export const MenuLink = styled(ReachRouterLink)`
     text-decoration: none;
-    font-size: 4rem;
+    font-size: clamp(2rem, -0.875rem + 8.333vw, 3.5rem);
     color: ${colors.lightText};
 
     &:hover {

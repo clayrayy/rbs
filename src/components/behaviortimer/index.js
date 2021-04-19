@@ -1,25 +1,41 @@
 import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown, faMinusCircle } from '@fortawesome/free-solid-svg-icons'
 import {
     Container,
+    Frame,
+    Item,
     Header,
     TimerButton,
     TimeStamp,
     TimeData,
-    Item,
     ItemsContainer,
-    Frame,
     MoreInfo,
     ButtonContainer,
     TitleFrame,
     TotalTimeContainer,
-    Text
+    Text,
+    DeleteBehaviorIcon,
+    EditButton,
+    Seconds,
+    ButtonText,
+    DropdownContainer,
+    DropdownIcon,
+    Dropdown,
+    DropdownItem,
+    ConfirmDelete,
+    Timestamp,
+    IconContainer
 } from './styles/behaviortimer'
+import { motion } from 'framer-motion'
 
 export default function BehaviorTimer({ children, ...restProps }) {
+    const variants = {
+        hidden: { opacity: 0, x: 0, y: -30 },
+        visible: { opacity: 1, x: 0, y: 0 },
+    }
     return (
-        <Container {...restProps}>
+        <Container as={motion.div} animate='visible' initial='hidden' variants={variants}  {...restProps}>
             {children}
         </Container>
     )
@@ -29,12 +45,27 @@ BehaviorTimer.Header = function BehaviorTimerHeader({ children, ...restProps }) 
     return <Header {...restProps}>{children}</Header>
 }
 
+BehaviorTimer.Timestamp = function BehaviorTimerTimestamp({ children, ...restProps }) {
+    return <Timestamp {...restProps}>{children}</Timestamp>
+}
+
+BehaviorTimer.ConfirmDelete = function BehaviorTimerConfirmDelete({ children, ...restProps }) {
+    return <ConfirmDelete {...restProps}>{children}</ConfirmDelete>
+}
+
+BehaviorTimer.ButtonText = function BehaviorTimerButtonText({ children, ...restProps }) {
+    return <ButtonText {...restProps}>{children}</ButtonText>
+}
+
 BehaviorTimer.ButtonContainer = function BehaviorTimerButtonContainer({ children, ...restProps }) {
     return <ButtonContainer {...restProps}>{children}</ButtonContainer>
 }
+BehaviorTimer.IconContainer = function BehaviorTimerIconContainer({ children, ...restProps }) {
+    return <IconContainer {...restProps}>{children}</IconContainer>
+}
 
 BehaviorTimer.TimerButton = function BehaviorTimerTimerButton({ children, ...restProps }) {
-    return <TimerButton {...restProps}>{children}</TimerButton>
+    return <TimerButton as={motion.button} animate={{ opacity: 1 }}{...restProps}>{children}</TimerButton>
 }
 
 BehaviorTimer.TimeStamp = function BehaviorTimerTimeStamp({ children, ...restProps }) {
@@ -53,6 +84,18 @@ BehaviorTimer.Text = function BehaviorTimerText({ children, ...restProps }) {
     return <Text {...restProps}>{children}</Text>
 }
 
+BehaviorTimer.Seconds = function BehaviorTimerSeconds({ children, ...restProps }) {
+    return <Seconds {...restProps}>{children}</Seconds>
+}
+
+BehaviorTimer.DropdownIcon = function BehaviorTimerOptionsDropdown({ children, ...restProps }) {
+    return <DropdownIcon {...restProps}>{children}</DropdownIcon>
+}
+
+BehaviorTimer.EditButton = function BehaviorTimerEditButton({ children, ...restProps }) {
+    return <EditButton {...restProps}>{children}</EditButton>
+}
+
 BehaviorTimer.TotalTimeContainer = function BehaviorTimerTotalTimeContainer({ children, ...restProps }) {
     return <TotalTimeContainer {...restProps}>{children}</TotalTimeContainer>
 }
@@ -65,8 +108,30 @@ BehaviorTimer.Frame = function BehaviorTimerFrame({ children, ...restProps }) {
     return <Frame {...restProps}>{children}</Frame>
 }
 
+BehaviorTimer.DeleteBehaviorIcon = function BehaviorDeleteBehaviorIcon({ children, ...restProps }) {
+    const variants = {
+        hidden: { opacity: 0, x: -10  },
+        visible: { opacity: 1, x: 0 },
+    }
+    return (
+    <DeleteBehaviorIcon as={motion.span} 
+    animate='visible' initial='hidden' variants={variants} {...restProps}>
+        <FontAwesomeIcon icon={faMinusCircle} />
+    </DeleteBehaviorIcon>
+    )
+}
+
 BehaviorTimer.ItemsContainer = function BehaviorTimerItemsContainer({ children, ...restProps }) {
     return <ItemsContainer {...restProps}>{children}</ItemsContainer>
+}
+BehaviorTimer.Dropdown = function BehaviorTimerDropdown({ children, ...restProps }) {
+    return <Dropdown {...restProps}>{children}</Dropdown>
+}
+BehaviorTimer.DropdownItem = function BehaviorTimerDropdownItem({ children, ...restProps }) {
+    return <DropdownItem {...restProps}>{children}</DropdownItem>
+}
+BehaviorTimer.DropdownContainer = function BehaviorTimerDropdownContainer({ children, ...restProps }) {
+    return <DropdownContainer {...restProps}>{children}</DropdownContainer>
 }
 
 BehaviorTimer.MoreInfo = function BehaviorTimerMoreInfo({ children, ...restProps }) {

@@ -7,16 +7,12 @@ export function AddBehaviorContainer() {
     const [behaviorName, setBehaviorName] = useState('')
     const [addItemFormOpen, setAddItemFormOpen] = useState(false)
     
-        const handleAddBehavior = (e) => {
-        e.preventDefault()
-        setTimeout(() => {setAddItemFormOpen(false)}, 1000)
-        
-    }
+
 
     return (
 
         <AddItemForm>
-            <AddItemForm.Base onSubmit={handleAddBehavior}>
+            <AddItemForm.Base >
                 <AddItemForm.Title>Type</AddItemForm.Title>
                 <AddItemForm.TypeButtonContainer>
 

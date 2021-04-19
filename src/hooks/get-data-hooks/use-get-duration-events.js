@@ -6,6 +6,7 @@ export default function useGetDurationEvents(openClient, behaviorName) {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
     const [durations, setDurations] = useState([])
+    const [behaviorId, setBehaviorId] = useState('')
     // const [timestamp, setTimeStamp] = useState('')
     // const [totalSeconds, setTotalSeconds] = useState([])
     const { firebase } = useContext(FirebaseContext)
@@ -18,6 +19,7 @@ export default function useGetDurationEvents(openClient, behaviorName) {
         .where('createdBy', '==', user.email)
         .where('clientId', '==', openClient.id)
         .where('behaviorName', '==', behaviorName)
+        
 
     useEffect(() => {
         const unsubscribe = durationEventRef

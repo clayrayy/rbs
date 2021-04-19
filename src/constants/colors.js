@@ -1,14 +1,14 @@
 const colors = {
-    headerBackground: '#29335C',
+    headerBackground: '#183a55',
     // pageBackground: '#F3A712',
-    cardBackground: '#FCFCFC',
-    pageBackground: '#E6D5B8',
-    darkText: '#29335C',
+    cardBackground: '#FEFEFF',
+    pageBackground: '#e2e2e2',
+    darkText: '#183a55',
     lightText: '#F5F5F5',
-    accent: '#822F4B',
-    btnActive: '#DB2B39',
-    btnPrimary: '#29335C',
-    dropdown: 'rgba(0, 0, 0, 0.95)'
+    accent: '#6E3B55',
+    btnActive: '#C33C54',
+    btnPrimary: '#183a55',
+    dropdown: 'rgba(0, 0, 0, 0.85)'
 }
 
 

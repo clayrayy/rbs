@@ -8,14 +8,14 @@ import { useHistory } from 'react-router-dom'
 import { useAuthListener } from 'hooks'
 import * as ROUTES from '../constants/routes'
 
-
-
-export function HeaderContainer({ data, title, addIcon, name, backIcon, showMenu, backFromDatasheet }) {
-    const [menuOpen, setMenuOpen] = useState(false)
-    const [addClientFormOpen, setAddClientFormOpen] = useState(false)
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [inputType, setInputType] = useState('')
+export function HeaderContainer({ data, title, addIcon, name, backIcon, showMenu, backFromDatasheet, openClient }) {
+    const [menuOpen, setMenuOpen] = useState(false) // activates slideout menu
+    const [addClientFormOpen, setAddClientFormOpen] = useState(false) // activates slideout menu to add client
+    const [firstName, setFirstName] = useState('') //sets add client first name
+    const [lastName, setLastName] = useState('') //sets add client first name
+    const [showEditBehaviors, setShowEditBehaviors] = useState(false)
+    const [inputType, setInputType] = useState('') //sets whether to add rate or duration tracker
+    const [backActive, setBackActive] = useState(false) //activates change to animate back icon
     const [behaviorName, setBehaviorName] = useState('')
     let history = useHistory()
     const { user } = useAuthListener()
@@ -23,7 +23,11 @@ export function HeaderContainer({ data, title, addIcon, name, backIcon, showMenu
     const db = firebase.firestore()
 
     function goBack() {
-        history.goBack()
+        // setBackActive(true)
+        setTimeout(() => {
+            history.goBack()
+        }, 400)
+        
     }
 
     function formatClientName(name) {
@@ -45,7 +49,7 @@ export function HeaderContainer({ data, title, addIcon, name, backIcon, showMenu
             first: firstName,
             last: lastName,
             ownerUid: user.email,
-            durations: {}
+            
         })
             .catch((error) => {
                 console.error("Error writing document: ", error);
@@ -55,16 +59,28 @@ export function HeaderContainer({ data, title, addIcon, name, backIcon, showMenu
     const handleAddNewTracker = (e) => {
         e.preventDefault()
 
-        if (inputType === 'durations') {
-
+        if (inputType === 'duration') {
+            setAddClientFormOpen(false)
+            db.collection('behaviors').add({
+                behaviorName: behaviorName,
+                clientId: openClient.id,
+            })
+            .then(() => {
+                setInputType('')
+                setBehaviorName('')
+            }
+            )
         }
     }
-
+//set timeout to delay page change and transition arrow off screen
     return (
         <Header>
             <Header.IconSpacer>
                 {backIcon === 'true' &&
-                    (<Header.BackIcon onClick={backFromDatasheet ? backFromDatasheet : goBack} />)
+                    (<Header.BackIcon active={backActive} onClick={backFromDatasheet ? backFromDatasheet : ()=> {
+                        goBack()
+                        setBackActive(true)
+                    }} />)
                 }
             </Header.IconSpacer>
             <Header.Title>{title}</Header.Title>
@@ -93,7 +109,7 @@ export function HeaderContainer({ data, title, addIcon, name, backIcon, showMenu
                                             onChange={({ target }) => { setInputType(target.name) }}
                                             value={inputType}
                                             checked={inputType === 'frequency'}
-                                            required
+                                            
                                         /><span>Rate</span></label>
                                     </AddItemForm.TypeSelectorFrame>
                                     <AddItemForm.TypeSelectorFrame>
@@ -112,7 +128,7 @@ export function HeaderContainer({ data, title, addIcon, name, backIcon, showMenu
                                     onChange={({ target }) => setBehaviorName(target.value)}
                                     value={behaviorName}
                                     placeholder='Behavior Name'
-                                    required
+                                    
                                 />
                                 <AddItemForm.Submit type='submit'>Add Tracker</AddItemForm.Submit>
                             </AddItemForm.Base>
@@ -143,6 +159,12 @@ export function HeaderContainer({ data, title, addIcon, name, backIcon, showMenu
                 <Header.Menu>
                     <Header.MenuItem>
                         <Header.MenuLink to={ROUTES.PROFILE}>Profile</Header.MenuLink>
+                    </Header.MenuItem>
+                    <Header.MenuItem>
+                        <p>About RBS Data</p>
+                    </Header.MenuItem>
+                    <Header.MenuItem>
+                        {/* <p onClick={setShowEditBehaviors(true)}>Edit Behaviors</p> */}
                     </Header.MenuItem>
                     <Header.MenuItem>
                         <p onClick={signOut}>Sign Out</p>

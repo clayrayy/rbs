@@ -12,8 +12,12 @@ import {
 import { motion } from 'framer-motion'
 
 export default function ClientCard({ children, ...restProps }) {
+    const variants = {
+        hidden: { opacity: 0, x:0, y:-30 },
+        visible: { opacity: 1, x:0, y: 0 },
+      }
     return (
-        <Container as={motion.section} drag animate={{ opacity: 1}} {...restProps}>
+        <Container as={motion.section} drag animate='visible' initial='hidden' variants={variants} {...restProps}>
             {children}
         </Container>
     )

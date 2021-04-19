@@ -13,6 +13,7 @@ import useClientData from 'hooks/get-data-hooks/use-get-clients'
 export default function ClientList() {
     const [datasheetOpen, setDatasheetOpen] = useState(false)
     const [data, setData] = useState({})
+    const [backActive, setBackActive] = useState(false) //activates change to animate back icon
     const [openClient, setOpenClient] = useState()
     // const [durationData, setDurationData] = useState([])
     const { clients } = useClientData()
@@ -40,12 +41,15 @@ export default function ClientList() {
                 name={datasheetOpen ? 'behaviors' : 'clients'}
                 addIcon='true'
                 data={data}
-                backFromDatasheet={() => setDatasheetOpen(false)}
+                backFromDatasheet={() => { setTimeout(() => { 
+                    setDatasheetOpen(false)
+                 }, 400) }}
+                openClient={openClient}
             />
             {datasheetOpen === true ? (
-                
-                    <DataSheet data={data} openClient={openClient} />
-                
+
+                <DataSheet data={data} openClient={openClient} />
+
             )
                 : (
                     clients.map(client => {
@@ -63,6 +67,7 @@ export default function ClientList() {
                                         id: client.docId,
                                         clientName: clientName,
                                         behaviors: client.durations
+
 
                                     })
                                 }}

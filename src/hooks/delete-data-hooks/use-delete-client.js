@@ -11,4 +11,5 @@ export default function useDeleteClient(clientId) {
     const eventsRef = firebase.firestore().collection('events').where('clientId', '==', clientId)
 
     
+    
 }

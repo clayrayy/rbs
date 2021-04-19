@@ -10,9 +10,13 @@ export default function useBehaviorTimer(openClient, behaviorName) {
     const [time, setTime] = useState(0)
     const [history, setHistory] = useState([])
     const [date, setDate] = useState('')
+    const [formattedTime, setFormattedTime] = useState('')
+    const [epochDate, setEpochDate] = useState('')
     const [isOpen, setIsOpen] = useState(false)
+    const [editEventsActive, setEditEventsActive] = useState(false)
     const [totalTime, setTotalTime] = useState(0)
-    const [clientData, setClientData] = useState({})
+    const [editOpen, setEditOpen] = useState(false)
+    const [deleteBehaviorDD, setDeleteBehaviorDD] = useState(false)
     const [openBehavior, setOpenBehavior] = useState('')
     const { durations, loading } = useGetDurationEvents(openClient, behaviorName)
     const { firebase } = useContext(FirebaseContext)
@@ -27,14 +31,6 @@ export default function useBehaviorTimer(openClient, behaviorName) {
     for (let i = 0; i < durationsTime.length; i++) {
         totalSeconds += durationsTime[i]
     }
-    console.log(totalSeconds)
-
-    const updateClientData = () => {
-        const oldTime = totalTime
-        setClientData({
-
-        })
-    }
 
     let displayTime = time < 3600 ? formatTime(time).toString().slice(3) : formatTime(time)
 
@@ -42,9 +38,9 @@ export default function useBehaviorTimer(openClient, behaviorName) {
         return (loading ? 'loading' : (!isOpen ? (durations.length === 0
             ? 'No Records'
             : durations.length === 1
-                ? `1 Record - Total Time: ${formatTotalTime(totalSeconds)}`
+                ? `1 Record ${formatTotalTime(totalSeconds)}`
                 : durations.length > 1
-                    ? `${durations.length} Records - Total Time: ${formatTotalTime(totalSeconds)} `
+                    ? `${durations.length} Records ${formatTotalTime(totalSeconds)} `
                     : null) : 'History'))
     }
 
@@ -71,20 +67,26 @@ export default function useBehaviorTimer(openClient, behaviorName) {
 
         return `${h > 0 ? `${h.padStart()}:${m}:${s}` : `${m}:${s}`}`
     }
-
+    
     function toggleActive() {
         if (!isActive) {
             setIsActive(true)
             setDate(new Date().toLocaleString())
+            setEpochDate(new Date())
+            setEditEventsActive(false)
         } else {
             setIsActive(false)
+            setEditEventsActive(false)
             eventsRef.add({
                 clientId: openClient.id,
                 createdBy: user.email,
                 eventType: 'duration',
                 seconds: time,
+                name: behaviorName[0],
                 behaviorName: behaviorName,
-                // timestamp: firebase.firestore.Timestamp.now()
+                timestamp:date,
+                epochDate: epochDate,
+                serverTimestamp: firebase.firestore.FieldValue.serverTimestamp()
             })
             
             setTime(0)
@@ -93,9 +95,44 @@ export default function useBehaviorTimer(openClient, behaviorName) {
 
     function toggleOpen(name) {
         setOpenBehavior(name)
+        if (isOpen) {
+            setEditEventsActive(false)
+        }
         setIsOpen(!isOpen)
     }
 
-    return { toggleActive, displayTime, toggleOpen, isActive, setIsActive, time, setTime, history, setHistory, date, setDate, isOpen, setIsOpen, totalTime, setTotalTime, formatTotalTime, formatTime, timePreview, totalSeconds, durations, loading }
+    const deleteEvent = (id) => {
+        firebase
+          .firestore()
+          .collection('events')
+          .doc(id)
+          .delete()
+      }
+    
+      const deleteBehaviorEvents = (behaviorName, id) => {
+        let eventsRef = firebase
+          .firestore()
+          .collection('events')
+          .where('name', '==', behaviorName)
+    
+        eventsRef
+          .get()
+          .then((querySnapshot) => {
+            let batch = firebase.firestore().batch()
+            querySnapshot.forEach((doc) => {
+              batch.delete(doc.ref)
+            })
+            return batch.commit()
+          })
+          .then(firebase
+            .firestore()
+            .collection('behaviors')
+            .doc(id)
+            .delete()
+          )
+    
+      }
+
+    return { toggleActive, displayTime, toggleOpen, isActive, setIsActive, time, setTime, history, setHistory, date, setDate, isOpen, setIsOpen, totalTime, setTotalTime, deleteBehaviorEvents, deleteEvent, formatTotalTime, formatTime, timePreview, totalSeconds, durations, loading, editEventsActive, setEditEventsActive, deleteBehaviorDD, setDeleteBehaviorDD, editOpen, setEditOpen }
 }
 

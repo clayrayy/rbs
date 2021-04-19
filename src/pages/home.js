@@ -9,7 +9,7 @@ export default function Home() {
     return (
         <>
         <HeaderContainer 
-            title='Home' 
+            title='RBS Data' 
             backIcon='false'
             showMenu='false'
         />

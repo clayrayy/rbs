@@ -66,7 +66,7 @@ export function SignupFormContainer() {
         <Form>
             <Form.Base onSubmit={handleSignup}>
                 <Form.Title>
-                    Enter your info and choose a password to get started
+                    Let's get this party started
                 </Form.Title>
 
                 <Form.Input
