@@ -158,6 +158,23 @@ export const StartButton = styled.button`
     }
 
 `
+export const Seconds = styled.div`
+    background: #eab3bb;
+    height: 45%;
+    left: 49.5%;
+    position: absolute;
+    top: 14%;
+    transform-origin: 50% 80%;
+    width: 1%;
+    z-index: 0;
+    animation: rotate ${({time}) => time}s linear infinite;
+
+    @keyframes rotate {
+        100% {
+            transform: rotateZ(-360deg);
+        }
+    }
+    `
 
 export const Header = styled.h1`
     

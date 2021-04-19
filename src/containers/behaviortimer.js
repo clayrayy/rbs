@@ -81,14 +81,14 @@ export function BehaviorTimerContainer({ name, openClient, behaviorName, behavio
 
       </BehaviorTimer.Frame>
 
-      <BehaviorTimer.ItemsContainer moveOver={editEventsActive} open={isOpen} durations={durations}>
+      <BehaviorTimer.ItemsContainer  open={isOpen} durations={durations}>
 
         {durations.sort((a, b) => a.serverTimestamp - b.serverTimestamp).map((item) => {
           return (
             <BehaviorTimer.Item key={Math.floor(Math.random() * 9999999999999 + 1)} item={item}>
-              <BehaviorTimer.DeleteBehaviorIcon onClick={() => deleteEvent(item.docId)} active={editEventsActive} />
+              <BehaviorTimer.DeleteBehaviorIcon onClick={() => deleteEvent(item.docId)} active={editEventsActive}></BehaviorTimer.DeleteBehaviorIcon>
 
-              <BehaviorTimer.Timestamp moveRight={editEventsActive}>{item.timestamp}</BehaviorTimer.Timestamp>
+              <BehaviorTimer.Timestamp>{item.timestamp}</BehaviorTimer.Timestamp>
 
 
               <BehaviorTimer.TimeData>{formatTotalTime(item.seconds)}</BehaviorTimer.TimeData>

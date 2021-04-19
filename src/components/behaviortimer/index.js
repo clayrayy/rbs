@@ -109,13 +109,13 @@ BehaviorTimer.Frame = function BehaviorTimerFrame({ children, ...restProps }) {
 }
 
 BehaviorTimer.DeleteBehaviorIcon = function BehaviorDeleteBehaviorIcon({ children, ...restProps }) {
-    const variants = {
-        hidden: { opacity: 0, x: -10  },
-        visible: { opacity: 1, x: 0 },
-    }
+    // const variants = {
+    //     hidden: { opacity: 0, x: -10  },
+    //     visible: { opacity: 1, x: 0 },
+    // }
     return (
-    <DeleteBehaviorIcon as={motion.span} 
-    animate='visible' initial='hidden' variants={variants} {...restProps}>
+    <DeleteBehaviorIcon /*as={motion.span} 
+    animate='visible' initial='hidden' variants={variants}*/ {...restProps}>
         <FontAwesomeIcon icon={faMinusCircle} />
     </DeleteBehaviorIcon>
     )

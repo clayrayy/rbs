@@ -14,6 +14,7 @@ export function IntervalsContainer() {
     const [addSecondsActive, setAddSecondsActive] = useState(false) //used to animate add button
     const [subtractSecondsActive, setSubtractSecondsActive] = useState(false) //used to animate subtract button
     const [intervalResult, setIntervalResult] = useState('')
+    const [clockSeconds, setClockSeconds] = useState(0)
     const [showResultModal, setShowResultModal] = useState(false)//tells modal component to set opacity from 0 to 1
     const [bringUpModal, setBringUpModal] = useState(false) // tells modal component to increase z-index from -1 to 10
 
@@ -30,6 +31,7 @@ export function IntervalsContainer() {
 
     //starts timer
     function startTimer() {
+        setClockSeconds(seconds)
         setTimerActive(!timerActive)
     }
 
@@ -82,7 +84,7 @@ export function IntervalsContainer() {
         }
     }
 
-    //used to handle the results of the interval
+    //used to handle the results of the interval test
     function handleResult() {
         setShowResultModal(false)
         setBringUpModal(false)
@@ -94,6 +96,7 @@ export function IntervalsContainer() {
             <Intervals.StartButtonContainer >
                 <Intervals.Label>Interval</Intervals.Label>
                 <Intervals.StartButton disabled={seconds === 0} active={timerActive} onClick={startTimer}>
+                    {timerActive && <Intervals.Seconds time={clockSeconds}/>}
                     <Intervals.ButtonText>
                         Start
                 <br />

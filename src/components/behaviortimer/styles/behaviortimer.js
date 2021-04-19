@@ -2,14 +2,6 @@ import styled, {/* css */ } from 'styled-components'
 import colors from "constants/colors";
 
 
-/*  
-                        ----TODO-----
-    find a way to calculate the height of the itemscontainer div to 
-    make accordion animation smoother and not clip off items
-
-*/
-
-
 export const Container = styled.div`
     background: ${colors.cardBackground};
     color: ${colors.darkText};
@@ -160,7 +152,7 @@ export const ItemsContainer = styled.div`
     /* margin-left: ${({moveOver}) => moveOver ? '1em' : '0'}; */
     opacity: ${({ open }) => open ? '1' : '0'};
     display: flex;
-    overflow: hidden;
+    /* overflow: hidden; */
     
     transition: all .35s ease-out;
     /* border: solid 1px magenta; */
@@ -215,9 +207,10 @@ export const Item = styled.div`
     align-items: center;
     width: 100%;
     border-bottom: solid 1px;
+    border-bottom-width: 60%;
 
     &:first-of-type {
-        border-top: 0;
+        border-top: solid 1px;
     }
 `
 
@@ -282,19 +275,33 @@ export const TotalTimeContainer = styled.div`
     }
 `
 
-export const DeleteBehaviorIcon = styled.span`
-    /* position: fixed; */
-    left: 1.4em;
+export const DeleteBehaviorIcon = styled.p`
+    /* position: absolute; */
+    height: 3px;
+    background-color: red;
+    /* left: 1.4em; */
     /* z-index: ${({active}) => active ? '1' : '-1'}; */
     /* background-color: red; */
-    margin: 0 1em;
+    margin: ${({active}) => active ? '0 1em' : '0'};
     /* font-size: 1.5em; */
     color: ${colors.btnActive};
-    /* transition: all .2s ease; */
-    display: ${({ active }) => active ?  'block': 'none'};
-    transition: all .1s ease;
-    transform: scale((${({ active }) => active ? '1' : '0'}));
-
+    transition: all 2s ease;
+    width: ${({active}) => active ? '1em' : '0'};
+    /* opacity: ${({active}) => active ? '1' : '0'}; */
+    /* display: ${({ active }) => active ?  'block': 'none'}; */
+    /* transition: all .1s ease; */
+    /* transform: scale((${({ active }) => active ? '1' : '0'})); */
+    animation: 0.4s ease-out fadeIn 1;
+    @keyframes fadeIn {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+  }
+};
     
 `
 

@@ -15,7 +15,8 @@ import {
     ButtonText,
     PlusIcon,
     MinusIcon,
-    Inner
+    Inner,
+    Seconds
  } from './styles/intervals'
 
 export default function Intervals({ children, ...restProps }) {
@@ -33,6 +34,10 @@ Intervals. = function Intervals({ children, ...restProps }) {
 
 Intervals.Inner = function IntervalsInner({ children, ...restProps }) {
     return <Inner {...restProps}>{children}</Inner>
+}
+
+Intervals.Seconds = function IntervalsSeconds({ children, ...restProps }) {
+    return <Seconds {...restProps}>{children}</Seconds>
 }
 
 Intervals.SelectorButton = function IntervalsSelectorButton({ children, ...restProps }) {
