@@ -25,7 +25,12 @@ import {
     DropdownItem,
     ConfirmDelete,
     Timestamp,
-    IconContainer
+    IconContainer,
+    Inner,
+    ModalButton,
+    ModalButtonContainer,
+    ModalText,
+    ModalTextContainer
 } from './styles/behaviortimer'
 import { motion } from 'framer-motion'
 
@@ -39,6 +44,25 @@ export default function BehaviorTimer({ children, ...restProps }) {
             {children}
         </Container>
     )
+}
+
+BehaviorTimer.Inner = function BehaviorTimerInner({ children, ...restProps }) {
+    return <Inner {...restProps}>{children}</Inner>
+}
+
+BehaviorTimer.ModalTextContainer = function BehaviorTimerModalTextContainer({ children, ...restProps }) {
+    return <ModalTextContainer {...restProps}>{children}</ModalTextContainer>
+}
+
+BehaviorTimer.ModalText = function BehaviorTimerModalText({ children, ...restProps }) {
+    return <ModalText {...restProps}>{children}</ModalText>
+}
+
+BehaviorTimer.ModalButton = function BehaviorTimerModalButton({ children, ...restProps }) {
+    return <ModalButton {...restProps}>{children}</ModalButton>
+}
+BehaviorTimer.ModalButtonContainer = function BehaviorTimerModalButtonContainer({ children, ...restProps }) {
+    return <ModalButtonContainer {...restProps}>{children}</ModalButtonContainer>
 }
 
 BehaviorTimer.Header = function BehaviorTimerHeader({ children, ...restProps }) {

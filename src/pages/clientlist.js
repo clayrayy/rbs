@@ -3,35 +3,27 @@ import React, { useState, useContext } from 'react'
 import { HeaderContainer } from '../containers/header'
 import { ClientCard } from '../components'
 import DataSheet from './datasheet'
+import * as ROUTES from '../constants/routes'
 import useClientData from 'hooks/get-data-hooks/use-get-clients'
-// import { BehaviorContext } from 'context/behavior-context'
-// import useDurationData from 'hooks/use-duration-data'
-// import { useGetDurationEvents } from 'hooks/get-data-hooks/use-get-durations-events'
+import { ClientListContainer } from 'containers/clientlist'
 
 
+//
 
 export default function ClientList() {
     const [datasheetOpen, setDatasheetOpen] = useState(false)
     const [data, setData] = useState({})
+    const [showSessions, setShowSessions] = useState(false)
     const [backActive, setBackActive] = useState(false) //activates change to animate back icon
     const [openClient, setOpenClient] = useState()
     // const [durationData, setDurationData] = useState([])
     const { clients } = useClientData()
-    // const { durations } = useDurationData(data.id)
-    // const {totalSeconds} = useGetDurationEvents(openClient)
 
-    // function toDateTime(secs) {
-    //     var t = new Date(1970, 0, 1); // Epoch
-    //     t.setSeconds(secs);
-    //     return t.toString();
-    // }
-
-    // console.log(toDateTime(1617538210 - 7200))
     function showClientDatasheet() {
         setDatasheetOpen(!datasheetOpen)
     }
 
-
+    console.log(showSessions)
 
     return (
         <>
@@ -41,9 +33,11 @@ export default function ClientList() {
                 name={datasheetOpen ? 'behaviors' : 'clients'}
                 addIcon='true'
                 data={data}
-                backFromDatasheet={() => { setTimeout(() => { 
-                    setDatasheetOpen(false)
-                 }, 400) }}
+                backFromDatasheet={() => {
+                    setTimeout(() => {
+                        setDatasheetOpen(false)
+                    }, 400)
+                }}
                 openClient={openClient}
             />
             {datasheetOpen === true ? (
@@ -53,36 +47,51 @@ export default function ClientList() {
             )
                 : (
                     clients.map(client => {
-                        // console.log(client.durations)
+                        const isOpen = showSessions
                         const clientName = `${client.first} ${client.last}`
                         return (
                             <ClientCard
                                 key={client.docId}
-                                onClick={() => {
-                                    showClientDatasheet()
-                                    setOpenClient({
-                                        id: client.docId
-                                    })
-                                    setData({
-                                        id: client.docId,
-                                        clientName: clientName,
-                                        behaviors: client.durations
+                                open={isOpen}>
 
+                                <ClientCard.Frame>
 
-                                    })
-                                }}
-                            >
-                                <ClientCard.TitleContainer>
-                                    <ClientCard.Title>{clientName}</ClientCard.Title>
-                                </ClientCard.TitleContainer>
-                                <ClientCard.IconContainer>
-                                    <ClientCard.OpenClientIcon />
-                                </ClientCard.IconContainer>
+                                    <ClientCard.TitleContainer>
+                                        <ClientCard.Title>
+                                            {clientName}
+                                        </ClientCard.Title>
+                                    </ClientCard.TitleContainer>
+
+                                    <p onClick={() => setShowSessions(!showSessions)}>
+                                        Open sessions
+                                        </p>
+                                    <ClientCard.IconContainer>
+
+                                        <ClientCard.OpenClientIcon onClick={() => {
+                                            setDatasheetOpen(true)
+                                            setOpenClient({
+                                                id: client.docId
+                                            })
+                                            setData({
+                                                id: client.docId,
+                                                clientName: clientName,
+                                                behaviors: client.durations
+                                            })
+                                        }} />
+
+                                    </ClientCard.IconContainer>
+
+                                </ClientCard.Frame>
+                                <ClientCard.SessionsContainer open={showSessions}>
+                                        <p>test</p>
+                                </ClientCard.SessionsContainer>
+                                
                             </ClientCard>
                         )
                     })
                 )
             }
+            <ClientListContainer clients={}/>
         </>
     )
 }

@@ -7,17 +7,19 @@ import {
     OpenClientIcon,
     IconContainer,
     TitleContainer,
-    Link
+    Link,
+    SessionsContainer,
+    Frame
  } from './styles/clientcard'
 import { motion } from 'framer-motion'
 
 export default function ClientCard({ children, ...restProps }) {
-    const variants = {
-        hidden: { opacity: 0, x:0, y:-30 },
-        visible: { opacity: 1, x:0, y: 0 },
-      }
+    // const variants = {
+    //     hidden: { opacity: 0, x:0, y:-30 },
+    //     visible: { opacity: 1, x:0, y: 0 },
+    //   }
     return (
-        <Container as={motion.section} drag animate='visible' initial='hidden' variants={variants} {...restProps}>
+        <Container /*as={motion.section} drag animate='visible' initial='hidden' variants={variants}*/ {...restProps}>
             {children}
         </Container>
     )
@@ -36,4 +38,16 @@ ClientCard.OpenClientIcon = function ClientCardOpenClientkIcon({ ...restProps })
 
 ClientCard.IconContainer = function ClientCardIconContainer({ children, ...restProps }) {
     return <IconContainer {...restProps}>{children}</IconContainer>
+}
+
+ClientCard.Link = function ClientCardLink({ children, ...restProps }) {
+    return <Link {...restProps}>{children}</Link>
+}
+
+ClientCard.Frame = function ClientCardFrame({ children, ...restProps }) {
+    return <Frame {...restProps}>{children}</Frame>
+}
+
+ClientCard.SessionsContainer = function ClientCardSessionsContainer({ children, ...restProps }) {
+    return <SessionsContainer {...restProps}>{children}</SessionsContainer>
 }

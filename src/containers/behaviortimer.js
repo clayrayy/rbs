@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import { useBehaviorTimer } from 'hooks'
 import { BehaviorTimer } from '../components'
 import { FirebaseContext } from 'context/firebase'
+import { useGetSessionsData } from 'hooks/get-data-hooks/use-get-sessions'
 
 export function BehaviorTimerContainer({ name, openClient, behaviorName, behaviorsList }) {
   const { toggleActive,
@@ -24,14 +25,39 @@ export function BehaviorTimerContainer({ name, openClient, behaviorName, behavio
     setEditOpen
   } = useBehaviorTimer(openClient, behaviorName)
 
-
-  const { firebase } = useContext(FirebaseContext)
-
-
+  const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false)
+  const [bringUpModal, setBringUpModal] = useState(false)
+  const { sessions, loading } = useGetSessionsData()  
+console.log(sessions, loading)
   return (
 
     <BehaviorTimer>
-{/*_______ Behavior Dropdown Menu Start _______*/}
+
+      {/*_______ Confirm Delete Duration Modal Start _______*/}
+      <BehaviorTimer.Inner
+        blackout={showConfirmDeleteModal}
+        bringForward={bringUpModal}
+      >
+        <BehaviorTimer.ModalTextContainer>
+          <BehaviorTimer.ModalText className='modal-text'>
+
+            You are about to permanently delete behavior <strong>"{behaviorName[0]}"</strong> and all data associated with it.
+          </BehaviorTimer.ModalText>
+        </BehaviorTimer.ModalTextContainer>
+        <BehaviorTimer.ModalButtonContainer>
+          <BehaviorTimer.ModalButton className='delete' onClick={() => deleteBehaviorEvents(behaviorName[0], behaviorName[1])}>Confirm</BehaviorTimer.ModalButton>
+          <BehaviorTimer.ModalButton className='cancel' onClick={() => {
+            setShowConfirmDeleteModal(false)
+            setDeleteBehaviorDD(false)
+            setBringUpModal(false)
+          }}>Cancel</BehaviorTimer.ModalButton>
+        </BehaviorTimer.ModalButtonContainer>
+      </BehaviorTimer.Inner>
+      {/*_______ Confirm Delete Duration Modal End _______*/}
+
+
+      {/*_______ Duration Dropdown Menu Start _______*/}
+
       <BehaviorTimer.DropdownContainer >
         <BehaviorTimer.IconContainer onClick={() => setDeleteBehaviorDD(!deleteBehaviorDD)}>
           <BehaviorTimer.DropdownIcon open={deleteBehaviorDD} />
@@ -47,14 +73,19 @@ export function BehaviorTimerContainer({ name, openClient, behaviorName, behavio
             {editEventsActive ? null : 'Edit Events'}
           </BehaviorTimer.DropdownItem>
           <BehaviorTimer.DropdownItem
-            onClick={() => deleteBehaviorEvents(behaviorName[0], behaviorName[1])}
+            onClick={() => {
+              setShowConfirmDeleteModal(true)
+              setDeleteBehaviorDD(false)
+              setBringUpModal(true)
+              setIsOpen(false)
+            }}
           >
-            Delete
+            Delete Behavior
           </BehaviorTimer.DropdownItem>
         </BehaviorTimer.Dropdown>
       </BehaviorTimer.DropdownContainer>
 
-{/*_______ Behavior Dropdown Menu End _______*/}
+      {/*_______ Duration Dropdown Menu End _______*/}
 
       <BehaviorTimer.Frame>
 
@@ -81,7 +112,7 @@ export function BehaviorTimerContainer({ name, openClient, behaviorName, behavio
 
       </BehaviorTimer.Frame>
 
-      <BehaviorTimer.ItemsContainer  open={isOpen} durations={durations}>
+      <BehaviorTimer.ItemsContainer open={isOpen} durations={durations}>
 
         {durations.sort((a, b) => a.serverTimestamp - b.serverTimestamp).map((item) => {
           return (

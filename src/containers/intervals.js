@@ -50,10 +50,10 @@ export function IntervalsContainer() {
             setSeconds(0)
             setTimerActive(false)
             setBringUpModal(true)
-            
-                setShowResultModal(true)
-            
-            
+
+            setShowResultModal(true)
+
+
         }
 
         return () => clearInterval(timerId)
@@ -90,16 +90,25 @@ export function IntervalsContainer() {
         setBringUpModal(false)
     }
 
+    function resetTimer() {
+        setSeconds(0)
+    }
+
     return (
         <Intervals>
-            <Intervals.Inner blackout={showResultModal} bringForward={bringUpModal}><p style={{color: 'white'}}onClick={handleResult}>yes or no goes here (either button fires function to reset timer, submit db post, and close modal</p></Intervals.Inner>
+            <Intervals.Inner blackout={showResultModal} bringForward={bringUpModal}>
+                <Intervals.ResultButton className='yes'>Yes</Intervals.ResultButton>
+                <Intervals.ResultButton className='no'>No</Intervals.ResultButton>
+                <Intervals.ResultButton className='submit' onClick={handleResult}>Submit</Intervals.ResultButton>
+
+            </Intervals.Inner>
             <Intervals.StartButtonContainer >
                 <Intervals.Label>Interval</Intervals.Label>
                 <Intervals.StartButton disabled={seconds === 0} active={timerActive} onClick={startTimer}>
-                    {timerActive && <Intervals.Seconds time={clockSeconds}/>}
+                    {timerActive && <Intervals.Seconds time={clockSeconds} />}
                     <Intervals.ButtonText>
                         Start
-                <br />
+                        <br />
                         {formatTotalTime(seconds)}
                     </Intervals.ButtonText>
                 </Intervals.StartButton>
@@ -115,9 +124,17 @@ export function IntervalsContainer() {
                         <Intervals.PlusIcon enlarge={addSecondsActive} />
                     </Intervals.SelectorButton>
                 </Intervals.ButtonContainer>
+                <Intervals.ResetContainer>
+                    {!timerActive
+                        ? (seconds !== 0 &&
+                            <Intervals.Text className='reset' onClick={resetTimer}>reset</Intervals.Text>
+                        )
+                        : <Intervals.Text className='running'>trial running</Intervals.Text>
+                    }
+                </Intervals.ResetContainer>
             </Intervals.TitleFrame>
             <Intervals.MoreInfo />
-            
+
         </Intervals>
 
     )

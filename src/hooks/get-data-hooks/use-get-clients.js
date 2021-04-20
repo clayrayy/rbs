@@ -4,6 +4,7 @@ import { useEffect, useState, useContext } from 'react'
 
 export default function useClientData() {
     const [content, setContent] = useState([])
+    const [loading, setLoading] = useState(true)
     const { firebase } = useContext(FirebaseContext)
     const { user } = useAuthListener()
     const clientsRef = firebase
@@ -21,9 +22,10 @@ export default function useClientData() {
                     }
                 })
                 setContent(allContent)
+                setLoading(false)
             })
             return () => unsubscribe()
     }, [])
 
-    return { clients: content }
+    return { clients: content, loading }
 }

@@ -3,6 +3,7 @@ import colors from "constants/colors";
 
 
 export const Container = styled.div`
+position: relative;
     background: ${colors.cardBackground};
     color: ${colors.darkText};
     display: flex;
@@ -10,7 +11,7 @@ export const Container = styled.div`
     width: 800px;
     /* opacity: 0; */
     flex-direction:column;
-    justify-content: space-between;
+    justify-content: center;
     margin: 0 auto 1em auto;
     align-items: center;
     border-radius: 15px;
@@ -20,6 +21,88 @@ export const Container = styled.div`
     box-shadow: 5px 5px 15px -1px rgba(0,0,0,0.16);
 `
 
+export const Inner = styled.div`
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transition: all .35s ease-in-out;
+    opacity: ${({blackout}) => blackout ? '1' : '0'};
+    width: 100%;
+    height: 100%;
+    /* padding: 1em; */
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: row;
+    border-radius: 15px;
+    background-color: rgba(0,0,0,.9);
+    z-index: ${({bringForward}) => bringForward ? '10' : '-1'};
+`
+export const ModalButton = styled.button`
+    cursor: pointer;
+    color: ${colors.lightText};
+    border: none;
+    padding: 1em;
+    height: 3em;
+    border-radius: 15px;
+    /* margin-left: 1em; */
+    &.delete {
+    background-color: ${colors.btnActive}
+    }
+
+    &.cancel {
+        background-color: ${colors.btnPrimary};
+        margin-left: 3em;
+    }
+
+    @media (max-width: 600px) {
+        padding: .75em;
+        font-size: .75rem;
+    }
+`
+
+export const ModalTextContainer = styled.div`
+max-width: 50%;
+display: flex;
+justify-content: center;
+
+`
+
+export const ModalText = styled.p`
+    text-align: center;
+    padding: 1em;
+    /* padding-top: 2em; */
+    /* border: solid 1px; */
+    max-width: 70%;
+    height: 100%;
+    width: 100%;
+    color: ${colors.btnActive};
+    flex: 2;
+
+    @media (max-width: 600px) {
+        font-size: .75rem;
+    }
+`
+
+export const ModalButtonContainer = styled.div`
+/* padding-top: 1em; */
+/* padding-right: 2em; */
+/* width: 80%; */
+/* border: solid 1px magenta; */
+max-width:70%;
+text-align: center;
+justify-self: center;
+align-self: center;
+align-items: center;
+justify-content: center;
+display: flex;
+height: 5em;
+padding: 1em;
+flex: 1;
+border-left: solid 1px white;
+`
 
 
 export const Header = styled.h1`
@@ -54,19 +137,19 @@ export const Text = styled.h2`
     margin: 0;
     color: ${colors.darkText};
     letter-spacing: .1px;
-    text-align: left;
     font-weight: 400;
     font-size: 1rem;
     flex: 1;
     min-height: 40px;
     padding: 0;
     text-align: center;
-    z-index: 15;
+    z-index: 0;
+    /* border: solid 1px; */
     /* max-width: 100px; */
-    
-    @media(min-width: 600px) {
-        font-size: 1.2rem;
+    @media(max-width: 600px) {
+        font-size: .75rem;
     }
+    
 `
 
 export const TitleFrame = styled.div`
@@ -187,7 +270,7 @@ export const Seconds = styled.div`
 
 export const ButtonText = styled.p`
     font-weight: 200;
-    z-index: 10;
+    z-index: 2;
 
     @media (max-width: 600px) {
         font-size: .85rem;
@@ -344,7 +427,7 @@ export const DropdownIcon = styled.span`
     position: relative;
     margin-top: .25em;
     margin-right: .50em;
-    z-index:99;
+    z-index:3;
     transition: all .25s ease;
 
     &::before,
@@ -378,11 +461,11 @@ export const Dropdown = styled.div`
     /* padding: 1.25em 1em; */
     min-width: 90%;
     max-width: 800px;
-    z-index: 80;
+    z-index: 2;
     color: ${colors.btnActive};
     text-align: center;
     border-radius: 15px;
-    padding: 1.6em 1.6em;
+    /* padding: .2em 5em; */
     /* max-height: ${({visible}) => visible ? '3em' : '.5em'}; */
     transform: ${({visible}) => visible ? 'scaleY(1)' : 'scaleY(0)'};
     transform-origin: top;
@@ -390,7 +473,9 @@ export const Dropdown = styled.div`
 `
 
 export const DropdownItem = styled.p`
-
+min-width: 200px;
+cursor: pointer;
+/* border: solid 1px */
 `
 
 export const DropdownContainer = styled.div`

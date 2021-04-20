@@ -1,19 +1,13 @@
 import React from 'react'
 import {ClientCard} from '../components'
 
-
 export function ClientListContainer(first, last) {
 
-    
-    
-    
-
-    
     return (
         
             <ClientCard >
                 <ClientCard.TitleContainer>
-                    <ClientCard.Title>{`${first} ${last}`}</ClientCard.Title>
+                    <ClientCard.Title>{`${first}poop ${last}`}</ClientCard.Title>
                 </ClientCard.TitleContainer>
                 <ClientCard.IconContainer>
                     <ClientCard.OpenClientIcon />

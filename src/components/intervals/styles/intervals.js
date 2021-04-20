@@ -30,15 +30,49 @@ export const Inner = styled.div`
     opacity: ${({blackout}) => blackout ? '1' : '0'};
     width: 100%;
     height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
     border-radius: 15px;
     background-color: rgba(0,0,0,.9);
     z-index: ${({bringForward}) => bringForward ? '10' : '-1'};
 `
+export const ResultButton = styled.button`
+
+    background-color: ${colors.btnPrimary};
+    color: ${colors.lightText};
+    padding: 1em 2.5em;
+    border: none;
+    transition: all .25s ease;
+    border-radius: 15px;
+
+    &:active {
+        background-color: ${colors.accent};
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &.yes {
+
+    }
+
+    &.no {
+
+    }
+
+    &.submit {
+
+    }
+
+
+`
 
 export const SelectorButton = styled.button`
-    height: 30px;
-    width: 30px;
-    margin-bottom: 1em;
+    height: 32px;
+    width: 32px;
+    /* margin-bottom: 1em; */
     /* max-width: 35px; */
     border: none;
     display: flex;
@@ -75,7 +109,7 @@ export const SelectorButton = styled.button`
 export const PlusIcon = styled.span`
     position: relative;
     height: 2px;
-    width: 15px;
+    width: 10px;
     border-radius: 1em;
     transition: all .25s ease;
     background-color: ${colors.lightText};
@@ -90,8 +124,8 @@ export const PlusIcon = styled.span`
         background-color: ${colors.lightText};
         border-radius: 1em;
         height: 2px;
-        width: 15px;
-        transform: rotate(90deg) translateY(7.5px) ;
+        width: 10px;
+        transform: rotate(90deg) translateY(5px) ;
 
     }
 
@@ -100,7 +134,7 @@ export const PlusIcon = styled.span`
     export const MinusIcon = styled.span`
     position: relative;
     height: 2px;
-    width: 15px;
+    width: 10px;
     border-radius: 1em;
     background-color: ${colors.lightText};
     transition: all .15s ease-in-out;
@@ -108,12 +142,6 @@ export const PlusIcon = styled.span`
 
 `
 
-export const ButtonContainer = styled.div`
-display: flex;
-flex-direction: row;
-align-items: baseline;
-justify-content: center;
-`
 
 export const StartButton = styled.button`
 
@@ -183,12 +211,61 @@ export const Header = styled.h1`
 export const Input = styled.input`
 
 `
+export const ResetContainer = styled.div`
+/* border: solid 1px red; */
+height: 1em;
+/* width: 33%; */
+display: flex;
+justify-content: center;
+align-items: center;
+`
+export const ButtonContainer = styled.div`
+display: flex;
+align-items: baseline;
+justify-content: center;
+/* margin: 0; */
+user-select: none;
+/* margin-bottom: 1em; */
+`
 
 export const Text = styled.p`
 /* font-weight: bold; */
 margin: 0 1em;
     @media (max-width: 600px) {
         font-size: .85rem;
+    }
+    
+    &.running {
+        padding: .18em .3em;
+        /* position: absolute; */
+
+        color: rgba(0,0,0,.4);
+        /* border: solid 1px ${colors.btnPrimary}; */
+        transition: all .2s ease;
+        border-radius: 15px;
+        font-style: italic;
+        font-size: .85rem;
+    }
+
+    &.reset {
+        /* position: absolute; */
+
+        
+        min-width: 100%;
+        /* max-width: 50px; */
+        color:${colors.btnActive};
+        border: solid 1px red;
+        border-radius: 15px;
+        /* padding: 0 .3em; */
+        cursor: pointer;
+        /* text-align: center; */
+        transition: all .2s ease;
+        user-select: none;
+
+        &:active {
+            transform: scale(.9);
+            
+        }
     }
 `
 
@@ -199,6 +276,7 @@ export const TitleFrame = styled.div`
     justify-content: center;
     align-items: center;
     text-align: center;
+    /* margin: 0; */
     
 `
 

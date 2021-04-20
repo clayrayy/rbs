@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { 
     Container,
     SelectorButton,
@@ -16,7 +16,9 @@ import {
     PlusIcon,
     MinusIcon,
     Inner,
-    Seconds
+    Seconds,
+    ResetContainer,
+    ResultButton
  } from './styles/intervals'
 
 export default function Intervals({ children, ...restProps }) {
@@ -38,6 +40,10 @@ Intervals.Inner = function IntervalsInner({ children, ...restProps }) {
 
 Intervals.Seconds = function IntervalsSeconds({ children, ...restProps }) {
     return <Seconds {...restProps}>{children}</Seconds>
+}
+
+Intervals.ResultButton = function IntervalsResultButton({ children, ...restProps }) {
+    return <ResultButton {...restProps}>{children}</ResultButton>
 }
 
 Intervals.SelectorButton = function IntervalsSelectorButton({ children, ...restProps }) {
@@ -68,12 +74,19 @@ Intervals.Label = function IntervalsLabel({ children, ...restProps }) {
     return <Label {...restProps}>{children}</Label>
 }
 
+
+Intervals.ResetContainer = function IntervalsResetContainer({ children, ...restProps }) {
+    return <ResetContainer {...restProps}>{children}</ResetContainer>
+}
+
 Intervals.PlusIcon = function IntervalsPlusIcon({ children, ...restProps }) {
     return <PlusIcon {...restProps}>{children}</PlusIcon>
 }
 
 Intervals.MinusIcon = function IntervalsMinusIcon({ children, ...restProps }) {
-    return <MinusIcon {...restProps}>{children}</MinusIcon>
+    return <MinusIcon {...restProps}>{children}
+    
+    </MinusIcon>
 }
 
 Intervals.ButtonText = function IntervalsButtonText({ children, ...restProps }) {
