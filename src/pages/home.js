@@ -9,9 +9,10 @@ export default function Home() {
     return (
         <>
         <HeaderContainer 
-            title='RBS Data' 
-            backIcon='false'
-            showMenu='false'
+            title='RBS Data'
+            name='home' 
+            backIcon= {false}
+            showMenu= {false}
         />
         <Homepage>
             <Homepage.Title>Log in </Homepage.Title>

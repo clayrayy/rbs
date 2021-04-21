@@ -1,20 +1,42 @@
-import React from 'react'
-import {ClientCard} from '../components'
+import React, { useState, useContext } from 'react'
+import { ClientCard } from '../components'
+import { useGetSessionsData } from 'hooks/get-data-hooks/use-get-sessions'
 
-export function ClientListContainer(first, last) {
+export function ClientListContainer({ client }) {
+    const [showSessions, setShowSessions] = useState(false)
+    const [showAddSessionForm, setShowAddSessionForm] = useState(false)
+    // const { sessions } = useGetSessionsData(client.docId)
+    // const clientName = `${client.first} ${client.last}`
 
     return (
-        
-            <ClientCard >
-                <ClientCard.TitleContainer>
-                    <ClientCard.Title>{`${first}poop ${last}`}</ClientCard.Title>
+        <ClientCard open={showSessions}>
+            <ClientCard.Frame>
+                <ClientCard.TitleContainer >
+        <button onClick={()=> setShowAddSessionForm(!showAddSessionForm)}>{showAddSessionForm ? 'cancel' : 'Start new session'}</button>
+                    {/* <ClientCard.Title>{clientName}</ClientCard.Title> */}
                 </ClientCard.TitleContainer>
+                <p onClick={() => setShowSessions(!showSessions)}>
+                    Open sessions
+                </p>
                 <ClientCard.IconContainer>
-                    <ClientCard.OpenClientIcon />
+                    <ClientCard.DownArrow />
                 </ClientCard.IconContainer>
-            </ClientCard>
+            </ClientCard.Frame>
+            <ClientCard.SessionsContainer >
+                {showAddSessionForm && (
+                    <form onSubmit={(e) => e.preventDefault()}>
+                        <input placeholder='session'/>
+                        <button type='submit'>Submit</button>
+                    </form>
+                )}
+                {/* <p>{sessions.map((session, index) => {
+                    return <p key={index}>session run by: {session.createdBy}<br />length: {session.sessionLength}<br />includes duration data: {session.dataTypes.duration.toString()}</p>
+                })}</p> */}
+                <p>populate using sessions data make a {`<Link to={ROUTES.DATASHEET} state={session} />`} passing state information to datasheet for each session</p>
+            </ClientCard.SessionsContainer>
+        </ClientCard>
 
-        
+
     )
 }
 // <form onSubmit={handleSubmit}>
@@ -28,10 +50,10 @@ export function ClientListContainer(first, last) {
 // function handleChange({target}) {
     //     setFirstName(target.value)
     // }
-    
+
     // function handleSubmit(e) {
         //     e.preventDefault()
-        
+
         //     db.collection("clients").add({
             //         first: firstName,
             //         last: lastName

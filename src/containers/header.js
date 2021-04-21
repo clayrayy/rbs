@@ -72,11 +72,11 @@ export function HeaderContainer({ data, title, addIcon, name, backIcon, showMenu
             )
         }
     }
-//set timeout to delay page change and transition arrow off screen
+
     return (
         <Header>
             <Header.IconSpacer>
-                {backIcon === 'true' &&
+                {backIcon &&
                     (<Header.BackIcon active={backActive} onClick={backFromDatasheet ? backFromDatasheet : ()=> {
                         goBack()
                         setBackActive(true)
@@ -85,7 +85,7 @@ export function HeaderContainer({ data, title, addIcon, name, backIcon, showMenu
             </Header.IconSpacer>
             <Header.Title>{title}</Header.Title>
             <Header.IconSpacer>
-                {addIcon === 'true' && (
+                {addIcon && (
                     <Header.IconContainer  name='add' hideWhen={menuOpen} open={addClientFormOpen} onClick={() => setAddClientFormOpen(!addClientFormOpen)}><Header.AddItemIcon
                         open={addClientFormOpen}
                     /></Header.IconContainer>)

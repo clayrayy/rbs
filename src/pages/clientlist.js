@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react'
-// import { ClientListContainer } from '../containers/clientlist'
 import { HeaderContainer } from '../containers/header'
 import { ClientCard } from '../components'
 import DataSheet from './datasheet'
 import * as ROUTES from '../constants/routes'
 import useClientData from 'hooks/get-data-hooks/use-get-clients'
 import { ClientListContainer } from 'containers/clientlist'
+// import { DataSheet } from 'pages'
 
 
 //
@@ -31,7 +31,7 @@ export default function ClientList() {
                 backIcon={datasheetOpen ? 'true' : 'false'}
                 title={datasheetOpen ? data.clientName : 'Clients'}
                 name={datasheetOpen ? 'behaviors' : 'clients'}
-                addIcon='true'
+                addIcon={true}
                 data={data}
                 backFromDatasheet={() => {
                     setTimeout(() => {
@@ -63,7 +63,7 @@ export default function ClientList() {
                                     </ClientCard.TitleContainer>
 
                                     <p onClick={() => setShowSessions(!showSessions)}>
-                                        Open sessions
+                                        History
                                         </p>
                                     <ClientCard.IconContainer>
 
@@ -83,15 +83,16 @@ export default function ClientList() {
 
                                 </ClientCard.Frame>
                                 <ClientCard.SessionsContainer open={showSessions}>
-                                        <p>test</p>
+                                    <p>test</p>
                                 </ClientCard.SessionsContainer>
-                                
+
                             </ClientCard>
                         )
                     })
                 )
             }
-            <ClientListContainer clients={}/>
+            {/* {/* <ClientListContainer /> */}
+            <ClientListContainer behaviorName='Elopement'/> 
         </>
     )
 }

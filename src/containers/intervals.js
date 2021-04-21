@@ -7,7 +7,7 @@ import { Intervals, BehaviorTimer } from '../components'
 
 //add interval time preset buttons and make a 'custom time' button that brings up add and subtract time buttons
 
-export function IntervalsContainer() {
+export function IntervalsContainer({behaviorName}) {
     const [seconds, setSeconds] = useState(0)
     const [displayTime, setDisplayTime] = useState(0)
     const [timerActive, setTimerActive] = useState(false)
@@ -114,7 +114,7 @@ export function IntervalsContainer() {
                 </Intervals.StartButton>
             </Intervals.StartButtonContainer>
             <Intervals.TitleFrame>
-                <BehaviorTimer.Header>Behavior</BehaviorTimer.Header>
+                <BehaviorTimer.Header>{behaviorName}</BehaviorTimer.Header>
                 <Intervals.ButtonContainer>
                     <Intervals.SelectorButton minusActive={subtractSecondsActive} onClick={subtractTime}>
                         <Intervals.MinusIcon reduce={subtractSecondsActive} />

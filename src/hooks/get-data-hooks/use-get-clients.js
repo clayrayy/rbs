@@ -3,7 +3,8 @@ import { useAuthListener } from 'hooks'
 import { useEffect, useState, useContext } from 'react'
 
 export default function useClientData() {
-    const [content, setContent] = useState([])
+    // const [content, setContent] = useState([])
+    const [clients, setClients] = useState([])
     const [loading, setLoading] = useState(true)
     const { firebase } = useContext(FirebaseContext)
     const { user } = useAuthListener()
@@ -15,17 +16,20 @@ export default function useClientData() {
     useEffect(() => {
         const unsubscribe = clientsRef
             .onSnapshot((snapshot) => {
-                const allContent = snapshot.docs.map((contentObj) => {
-                    return {
-                        ...contentObj.data(),
+                let content = []
+                snapshot.docs.forEach((contentObj) => {
+                    content.push({
+                         ...contentObj.data(),
                         docId: contentObj.id,
-                    }
+                    })
                 })
-                setContent(allContent)
+                setClients(content)
                 setLoading(false)
+                
+                
             })
             return () => unsubscribe()
     }, [])
 
-    return { clients: content, loading }
+    return { clients, loading }
 }

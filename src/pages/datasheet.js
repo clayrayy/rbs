@@ -14,9 +14,9 @@ export default function DataSheet({ data, openClient }) {
             {!loading && behaviorsList.map((behavior => {
                 return <BehaviorTimerContainer ids={behaviorsIdList} key={Math.floor(Math.random() * 99999999999 + 1)} openClient={openClient} behaviorName={behavior} />
             }))}
-    <IntervalsContainer />
-    <IntervalsContainer />
-    <IntervalsContainer />
+    <IntervalsContainer behaviorName='Elopement'/>
+    <IntervalsContainer behaviorName='Tantrum'/>
+    <IntervalsContainer behaviorName='Picking Up Quarters'/>
             <FrequencyCounterContainer />
         </>
     )

@@ -1,6 +1,6 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
+import { faAngleRight, faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import { 
     Container,
     Title,
@@ -9,7 +9,8 @@ import {
     TitleContainer,
     Link,
     SessionsContainer,
-    Frame
+    Frame,
+    DownArrow
  } from './styles/clientcard'
 import { motion } from 'framer-motion'
 
@@ -27,6 +28,9 @@ export default function ClientCard({ children, ...restProps }) {
 
 ClientCard.TitleContainer = function ClientCardTitleContainer({ children, ...restProps }) {
     return <TitleContainer {...restProps}>{children}</TitleContainer>
+}
+ClientCard.DownArrow = function ClientDownArrow({ children, ...restProps }) {
+    return <DownArrow {...restProps}><FontAwesomeIcon icon={faAngleDown} /></DownArrow>
 }
 ClientCard.Title = function ClientCardTitle({ children, ...restProps }) {
     return <Title {...restProps}>{children}</Title>

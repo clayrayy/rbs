@@ -59,3 +59,6 @@ export const Link = styled(ReachRouterLink)`
 export const SessionsContainer = styled.div`
 overflow: hidden;
 `
+export const DownArrow = styled.span`
+
+`
