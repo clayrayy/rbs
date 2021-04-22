@@ -5,7 +5,7 @@ import { FirebaseContext } from 'context/firebase'
 import { useAuthListener } from 'hooks'
 
 
-export default function useBehaviorTimer(openClient, behaviorName) {
+export default function useBehaviorTimer(client, behaviorName) {
     const [isActive, setIsActive] = useState(false)
     const [time, setTime] = useState(0)
     const [history, setHistory] = useState([])
@@ -18,7 +18,7 @@ export default function useBehaviorTimer(openClient, behaviorName) {
     const [editOpen, setEditOpen] = useState(false)
     const [deleteBehaviorDD, setDeleteBehaviorDD] = useState(false)
     const [openBehavior, setOpenBehavior] = useState('')
-    const { durations, loading } = useGetDurationEvents(openClient, behaviorName)
+    const { durations, loading } = useGetDurationEvents(client, behaviorName)
     const { firebase } = useContext(FirebaseContext)
     const { user } = useAuthListener()
 
@@ -40,7 +40,7 @@ export default function useBehaviorTimer(openClient, behaviorName) {
             : durations.length === 1
                 ? `1 Record ${formatTotalTime(totalSeconds)}`
                 : durations.length > 1
-                    ? `${durations.length} Records ${formatTotalTime(totalSeconds)} `
+                    ? `${durations.length} Records | ${formatTotalTime(totalSeconds)} `
                     : null) : 'History'))
     }
 
@@ -78,11 +78,11 @@ export default function useBehaviorTimer(openClient, behaviorName) {
             setIsActive(false)
             setEditEventsActive(false)
             eventsRef.add({
-                clientId: openClient.id,
+                clientId: client,
                 createdBy: user.email,
                 eventType: 'duration',
                 seconds: time,
-                name: behaviorName[0],
+                name: behaviorName,
                 behaviorName: behaviorName,
                 timestamp:date,
                 epochDate: epochDate,

@@ -7,12 +7,12 @@ export function useGetSessionsData(id) {
     const { firebase } = useContext(FirebaseContext)
 
     const sessionRef = firebase
-    .firestore()
-    .collection('sessions')
-    .where('clientId', '==', id)
+        .firestore()
+        .collection('sessions')
+        .where('clientId', '==', id)
 
     useEffect(() => {
-       const unsubscribe =  sessionRef.onSnapshot((snapshot) => {
+        const unsubscribe = sessionRef.onSnapshot((snapshot) => {
             let sessionsData = []
             snapshot.forEach((doc) => {
                 sessionsData.push({

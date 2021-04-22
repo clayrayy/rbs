@@ -2,7 +2,7 @@ import React from 'react'
 import { ClientListContainer } from 'containers/clientlist'
 import useClientData from 'hooks/get-data-hooks/use-get-clients'
 import { HeaderContainer } from 'containers/header'
-import { BehaviorTimerContainer } from 'containers/behaviortimer'
+import { BehaviorTimerContainer } from 'containers/deprecated.../behaviortimer'
 // import { DurationContainer } from 'containers/duration'
 
 export default function NewClientList() {

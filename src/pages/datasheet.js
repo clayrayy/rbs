@@ -1,12 +1,13 @@
 import { useGetBehaviorsData } from 'hooks/get-data-hooks/use-get-behaviors-data'
 import React from 'react'
-import { BehaviorTimerContainer } from '../containers/behaviortimer'
+import { BehaviorTimerContainer } from '../containers/deprecated.../behaviortimer'
 import { FrequencyCounterContainer } from '../containers/frequencycounter'
 import { IntervalsContainer } from '../containers/intervals'
 import {BehaviorTimer} from '../components'
 
 export default function DataSheet({ data, openClient }) {
     const { behaviorsList, loading, error, behaviorsIdList } = useGetBehaviorsData(openClient.id)
+    
     
     return (
         <>

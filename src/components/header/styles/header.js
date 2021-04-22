@@ -36,14 +36,28 @@ export const Title = styled.h1`
     text-align: center;
     /* max-width: 33%; */
     /* min-width: 100%; */
-    
+    margin: 0;
     font-size: clamp(1.5rem, -0.875rem + 8.333vw, 2.5rem);
 
     @media (max-width: 800px) {
-        max-width: 33%;
+        /* max-width: 33%; */
         font-size: 1.5rem;
     }
 `
+    
+    export const Subtitle =styled.p`
+    margin: 0;
+    color: ${colors.lightText};
+    font-size: clamp(.5rem, -0.875rem + 8.333vw, 1rem);
+    `
+
+    export const TitleContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    /* border: solid 1px magenta; */
+    `
 
 export const BackIcon = styled.span`
     font-size: 30px;
@@ -90,7 +104,7 @@ export const IconSpacer = styled.div`
     justify-content: flex-end;
     align-items: center;
     margin: 0;
-/* border: solid 1px magenta; */
+    /* border: solid 1px magenta; */
 `
 
 export const IconContainer = styled.div`

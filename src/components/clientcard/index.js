@@ -10,7 +10,13 @@ import {
     Link,
     SessionsContainer,
     Frame,
-    DownArrow
+    DownArrow,
+    SessionButton,
+    ButtonContainer,
+    ButtonText,
+    ButtonSpacer,
+    Text,
+    Modal
  } from './styles/clientcard'
 import { motion } from 'framer-motion'
 
@@ -35,6 +41,23 @@ ClientCard.DownArrow = function ClientDownArrow({ children, ...restProps }) {
 ClientCard.Title = function ClientCardTitle({ children, ...restProps }) {
     return <Title {...restProps}>{children}</Title>
 }
+ClientCard.Modal = function ClientCardModal({ children, ...restProps }) {
+    return <Modal {...restProps}>{children}</Modal>
+}
+
+ClientCard.SessionButton = function ClientCardSessionButton({ children, ...restProps }) {
+    return <SessionButton {...restProps}>{children}</SessionButton>
+}
+ClientCard.ButtonText = function ClientCardButtonText({ children, ...restProps }) {
+    return <ButtonText {...restProps}>{children}</ButtonText>
+}
+
+ClientCard.ButtonContainer = function ClientCardButtonContainer({ children, ...restProps }) {
+    return <ButtonContainer {...restProps}>{children}</ButtonContainer>
+}
+ClientCard.ButtonSpacer = function ClientCardButtonSpacer({ children, ...restProps }) {
+    return <ButtonSpacer {...restProps}>{children}</ButtonSpacer>
+}
 
 ClientCard.OpenClientIcon = function ClientCardOpenClientkIcon({ ...restProps }) {
     return <OpenClientIcon {...restProps}><FontAwesomeIcon icon={faAngleRight} /></OpenClientIcon>
@@ -50,6 +73,9 @@ ClientCard.Link = function ClientCardLink({ children, ...restProps }) {
 
 ClientCard.Frame = function ClientCardFrame({ children, ...restProps }) {
     return <Frame {...restProps}>{children}</Frame>
+}
+ClientCard.Text = function ClientCardText({ children, ...restProps }) {
+    return <Text {...restProps}>{children}</Text>
 }
 
 ClientCard.SessionsContainer = function ClientCardSessionsContainer({ children, ...restProps }) {

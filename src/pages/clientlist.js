@@ -92,7 +92,7 @@ export default function ClientList() {
                 )
             }
             {/* {/* <ClientListContainer /> */}
-            <ClientListContainer behaviorName='Elopement'/> 
+            
         </>
     )
 }

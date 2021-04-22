@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 import colors from "constants/colors";
 
 export const Container = styled.div`
@@ -6,15 +6,18 @@ position: relative;
     background: ${colors.cardBackground};
     color: ${colors.darkText};
     display: flex;
-    max-width: 90%;
+    max-width: 95%;
     width: 800px;
+    flex-direction: column;
     /* opacity: 0; */
+    /* border-right: solid 3px ${colors.darkText};
+    border-top: solid 2px ${colors.darkText}; */
     /* flex-direction:column; */
     justify-content: space-between;
     margin: 0 auto 1em auto;
-    padding: 1.5em;
+    padding: .5em;
     align-items: center;
-    border-radius: 15px;
+    /* border-radius: 15px; */
     min-width: 300px;
     /* padding: 10px 25px 0px 25px; */
     -webkit-box-shadow: 5px 5px 15px -1px rgba(0,0,0,0.16); 
@@ -33,7 +36,7 @@ export const Inner = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    border-radius: 15px;
+    /* border-radius: 15px; */
     background-color: rgba(0,0,0,.9);
     z-index: ${({bringForward}) => bringForward ? '10' : '-1'};
 `
@@ -46,9 +49,10 @@ export const ResultButton = styled.button`
     transition: all .25s ease;
     border-radius: 15px;
 
-    &:active {
+    &:focus {
         background-color: ${colors.accent};
     }
+
 
     &:focus {
         outline: none;
@@ -142,9 +146,22 @@ export const PlusIcon = styled.span`
 
 `
 
+    export const StartButtonContainer = styled.div`
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    flex: 1;
+    `
+    
+    export const ButtonText = styled.p`
+        font-family: inherit;
+        @media (max-width: 600px) {
+            font-size: .85rem;
+        }
+    `
 
 export const StartButton = styled.button`
-
+font-family: inherit;
     border: none;
     color: ${colors.lightText};
     height: 70px;
@@ -153,6 +170,7 @@ export const StartButton = styled.button`
     background: ${({ active }) => active ? `${colors.btnActive}` : `${colors.btnPrimary}`};
     border-radius: ${({ active }) => active ? '50%' : '15%'};
     display: flex;
+    /* border: ${({active, disabled}) => !active && !disabled ? 'solid green 3px' : 'none'}; */
     font-size: 1.2rem;
     font-weight: 200;
     justify-self: flex-start;
@@ -160,6 +178,15 @@ export const StartButton = styled.button`
     align-items: center;
     letter-spacing: 1px;
     position: relative;
+    background: ${({disabled, active}) => {
+        if(disabled) {
+            return 'rgba(0,0,0,.25);'
+        }
+        if(active) {
+            return `${colors.btnActive};`
+        }
+        else return `rgba(0,0,0,.75);`
+    }};
     
     
     -webkit-box-shadow: 5px 5px 46px -13px rgba(0,0,0,0.65); 
@@ -290,21 +317,13 @@ export const MoreInfo = styled.span`
     transform: ${({ open }) => open ? 'scaleY(-1)' : 'none'};
     /* padding-top: 10px; */
     /* padding-right: 8px; */
-`
 
-export const StartButtonContainer = styled.div`
-display: flex;
-position: relative;
-flex-direction: column;
-flex: 1;
-`
-
-export const ButtonText = styled.p`
-
-    @media (max-width: 600px) {
-        font-size: .85rem;
+    &.session {
+        text-align: center;
+        color: ${colors.lightText}
     }
 `
+
 
 export const Label = styled.p`
 position: absolute;
@@ -319,4 +338,20 @@ font-size: .75rem;
 @media (max-width: 600px) {
     bottom: 5em;
 }
+`
+
+export const ResultsContainer = styled.div`
+/* border: solid 1px magenta; */
+height: ${({open}) => open ? '100%' : '0'};
+width: 100%;
+transition: all .25s linear;
+overflow: hidden;
+`
+export const Frame = styled.div`
+display: flex;
+align-items: center;
+margin: 0;
+padding: 0;
+justify-content: space-between;
+width: 100%;
 `

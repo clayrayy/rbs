@@ -10,6 +10,7 @@ import {
     Text,
     TitleFrame,
     MoreInfo,
+    ResultsContainer,
     StartButtonContainer,
     Label,
     ButtonText,
@@ -18,7 +19,8 @@ import {
     Inner,
     Seconds,
     ResetContainer,
-    ResultButton
+    ResultButton,
+    Frame
  } from './styles/intervals'
 
 export default function Intervals({ children, ...restProps }) {
@@ -52,6 +54,14 @@ Intervals.SelectorButton = function IntervalsSelectorButton({ children, ...restP
 
 Intervals.Header = function IntervalsHeader({ children, ...restProps }) {
     return <Header {...restProps}>{children}</Header>
+}
+
+Intervals.Frame = function IntervalsFrame({ children, ...restProps }) {
+    return <Frame {...restProps}>{children}</Frame>
+}
+
+Intervals.ResultsContainer = function IntervalsResultsContainer({ children, ...restProps }) {
+    return <ResultsContainer {...restProps}>{children}</ResultsContainer>
 }
 
 Intervals.StartButton = function IntervalsStartButton({ children, ...restProps }) {

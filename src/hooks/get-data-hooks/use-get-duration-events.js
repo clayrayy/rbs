@@ -17,7 +17,7 @@ export default function useGetDurationEvents(openClient, behaviorName) {
         .collection('events')
         .where('eventType', '==', 'duration')
         .where('createdBy', '==', user.email)
-        .where('clientId', '==', openClient.id)
+        .where('clientId', '==', openClient)
         .where('behaviorName', '==', behaviorName)
         
 

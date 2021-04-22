@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useBehaviorTimer } from 'hooks'
-import { BehaviorTimer } from '../components'
+import { BehaviorTimer } from 'components'
 import { FirebaseContext } from 'context/firebase'
 import { useGetSessionsData } from 'hooks/get-data-hooks/use-get-sessions'
 
-export function BehaviorTimerContainer({ name, openClient, behaviorName, behaviorsList }) {
+export function BehaviorTimerContainer({ name, client, behaviorName, customItem }) {
   const { toggleActive,
     displayTime,
     toggleOpen,
@@ -23,12 +23,17 @@ export function BehaviorTimerContainer({ name, openClient, behaviorName, behavio
     setDeleteBehaviorDD,
     editOpen,
     setEditOpen
-  } = useBehaviorTimer(openClient, behaviorName)
+  } = useBehaviorTimer(client.docId, behaviorName)
 
   const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false)
   const [bringUpModal, setBringUpModal] = useState(false)
-  const { sessions, loading } = useGetSessionsData()  
-console.log(sessions, loading)
+
+  useEffect(() => {
+    if(durations.length === 0) {
+      setIsOpen(false)
+    }
+  }, [editEventsActive])
+
   return (
 
     <BehaviorTimer>
@@ -57,34 +62,34 @@ console.log(sessions, loading)
 
 
       {/*_______ Duration Dropdown Menu Start _______*/}
+      {customItem &&
+        <BehaviorTimer.DropdownContainer >
+          <BehaviorTimer.IconContainer onClick={() => setDeleteBehaviorDD(!deleteBehaviorDD)}>
+            <BehaviorTimer.DropdownIcon open={deleteBehaviorDD} />
+          </BehaviorTimer.IconContainer>
 
-      <BehaviorTimer.DropdownContainer >
-        <BehaviorTimer.IconContainer onClick={() => setDeleteBehaviorDD(!deleteBehaviorDD)}>
-          <BehaviorTimer.DropdownIcon open={deleteBehaviorDD} />
-        </BehaviorTimer.IconContainer>
-
-        <BehaviorTimer.Dropdown visible={deleteBehaviorDD} editOpen={editOpen} altBorder={isOpen}>
-          <BehaviorTimer.DropdownItem
-            onClick={() => {
-              setDeleteBehaviorDD(!deleteBehaviorDD)
-              setIsOpen(true)
-              setEditEventsActive(!editEventsActive)
-            }}>
-            {editEventsActive ? null : 'Edit Events'}
+          <BehaviorTimer.Dropdown visible={deleteBehaviorDD} editOpen={editOpen} altBorder={isOpen}>
+            <BehaviorTimer.DropdownItem
+              onClick={() => {
+                setDeleteBehaviorDD(!deleteBehaviorDD)
+                setIsOpen(true)
+                setEditEventsActive(!editEventsActive)
+              }}>
+              {editEventsActive ? null : 'Edit Events'}
+            </BehaviorTimer.DropdownItem>
+            <BehaviorTimer.DropdownItem
+              onClick={() => {
+                setShowConfirmDeleteModal(true)
+                setDeleteBehaviorDD(false)
+                setBringUpModal(true)
+                setIsOpen(false)
+              }}
+            >
+              Delete Behavior
           </BehaviorTimer.DropdownItem>
-          <BehaviorTimer.DropdownItem
-            onClick={() => {
-              setShowConfirmDeleteModal(true)
-              setDeleteBehaviorDD(false)
-              setBringUpModal(true)
-              setIsOpen(false)
-            }}
-          >
-            Delete Behavior
-          </BehaviorTimer.DropdownItem>
-        </BehaviorTimer.Dropdown>
-      </BehaviorTimer.DropdownContainer>
-
+          </BehaviorTimer.Dropdown>
+        </BehaviorTimer.DropdownContainer>
+      }
       {/*_______ Duration Dropdown Menu End _______*/}
 
       <BehaviorTimer.Frame>
@@ -97,18 +102,17 @@ console.log(sessions, loading)
         </BehaviorTimer.ButtonContainer>
 
         <BehaviorTimer.TitleFrame>
-          <BehaviorTimer.Header>{behaviorName[0]}</BehaviorTimer.Header>
+          <BehaviorTimer.Header>{behaviorName}</BehaviorTimer.Header>
           {durations.length === 0
             ? <BehaviorTimer.Text>No Records</BehaviorTimer.Text>
             : <BehaviorTimer.Text>{timePreview()}</BehaviorTimer.Text>
           }
         </BehaviorTimer.TitleFrame>
 
-        {durations.length !== 0 ?
+        
           <BehaviorTimer.MoreInfo onClick={() => { toggleOpen(name) }} moveToBack={deleteBehaviorDD} open={isOpen} />
-          :
-          <BehaviorTimer.MoreInfo />
-        }
+          
+        
 
       </BehaviorTimer.Frame>
 
@@ -117,7 +121,7 @@ console.log(sessions, loading)
         {durations.sort((a, b) => a.serverTimestamp - b.serverTimestamp).map((item) => {
           return (
             <BehaviorTimer.Item key={Math.floor(Math.random() * 9999999999999 + 1)} item={item}>
-              <BehaviorTimer.DeleteBehaviorIcon onClick={() => deleteEvent(item.docId)} active={editEventsActive}></BehaviorTimer.DeleteBehaviorIcon>
+              <BehaviorTimer.DeleteBehaviorIcon onClick={() => deleteEvent(item.docId)} active={editEventsActive} />
 
               <BehaviorTimer.Timestamp>{item.timestamp}</BehaviorTimer.Timestamp>
 

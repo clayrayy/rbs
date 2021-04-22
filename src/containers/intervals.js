@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import { FirebaseContext } from 'context/firebase'
+import { useAuthListener, useGetSessionIntervals } from 'hooks'
+import React, { useState, useEffect, useContext } from 'react'
 import { Intervals, BehaviorTimer } from '../components'
 
 
@@ -7,18 +9,23 @@ import { Intervals, BehaviorTimer } from '../components'
 
 //add interval time preset buttons and make a 'custom time' button that brings up add and subtract time buttons
 
-export function IntervalsContainer({behaviorName}) {
+export function IntervalsContainer({ behaviorName, client, sessionId }) {
+    const { firebase } = useContext(FirebaseContext)
     const [seconds, setSeconds] = useState(0)
     const [displayTime, setDisplayTime] = useState(0)
     const [timerActive, setTimerActive] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
+    const [result, setResult] = useState(false)
     const [addSecondsActive, setAddSecondsActive] = useState(false) //used to animate add button
     const [subtractSecondsActive, setSubtractSecondsActive] = useState(false) //used to animate subtract button
     const [intervalResult, setIntervalResult] = useState('')
     const [clockSeconds, setClockSeconds] = useState(0)
     const [showResultModal, setShowResultModal] = useState(false)//tells modal component to set opacity from 0 to 1
     const [bringUpModal, setBringUpModal] = useState(false) // tells modal component to increase z-index from -1 to 10
+    const { user } = useAuthListener()
 
-
+const {intervals, loading} = useGetSessionIntervals(client.docId, sessionId, behaviorName)
+// console.log(intervals)
     // converts seconds to hh:mm:ss format
     function formatTotalTime(t) {
         const h = (Math.floor(t / 3600)).toString().padStart(2, '0')
@@ -88,52 +95,92 @@ export function IntervalsContainer({behaviorName}) {
     function handleResult() {
         setShowResultModal(false)
         setBringUpModal(false)
+
+        firebase
+            .firestore()
+            .collection('events')
+            .doc()
+            .set({
+                behaviorName: behaviorName,
+                createdBy: user.email,
+                sessionId: sessionId,
+                clientId: client.docId,
+                eventType: 'interval',
+                serverTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                date: new Date().toLocaleString(),
+                epochDate: new Date(),
+                result: result
+
+            })
     }
 
     function resetTimer() {
         setSeconds(0)
     }
-
+//CHANGE VALUES HERE ***************************
     return (
         <Intervals>
-            <Intervals.Inner blackout={showResultModal} bringForward={bringUpModal}>
-                <Intervals.ResultButton className='yes'>Yes</Intervals.ResultButton>
-                <Intervals.ResultButton className='no'>No</Intervals.ResultButton>
+            <Intervals.Inner blackout={showResultModal} bringForward={bringUpModal}><p style={{color: 'white'}}>Did the behavior occur for the entire interval?</p>
+                <Intervals.ResultButton className='yes' onClick={()=>setResult(true)}>Yes</Intervals.ResultButton>
+                <Intervals.ResultButton className='no' onClick={()=>setResult(false)}>No</Intervals.ResultButton>
                 <Intervals.ResultButton className='submit' onClick={handleResult}>Submit</Intervals.ResultButton>
 
             </Intervals.Inner>
-            <Intervals.StartButtonContainer >
-                <Intervals.Label>Interval</Intervals.Label>
-                <Intervals.StartButton disabled={seconds === 0} active={timerActive} onClick={startTimer}>
-                    {timerActive && <Intervals.Seconds time={clockSeconds} />}
-                    <Intervals.ButtonText>
-                        Start
-                        <br />
-                        {formatTotalTime(seconds)}
-                    </Intervals.ButtonText>
-                </Intervals.StartButton>
-            </Intervals.StartButtonContainer>
-            <Intervals.TitleFrame>
-                <BehaviorTimer.Header>{behaviorName}</BehaviorTimer.Header>
-                <Intervals.ButtonContainer>
-                    <Intervals.SelectorButton minusActive={subtractSecondsActive} onClick={subtractTime}>
-                        <Intervals.MinusIcon reduce={subtractSecondsActive} />
-                    </Intervals.SelectorButton>
-                    <Intervals.Text>Seconds</Intervals.Text>
-                    <Intervals.SelectorButton plusActive={addSecondsActive} onClick={addTime}>
-                        <Intervals.PlusIcon enlarge={addSecondsActive} />
-                    </Intervals.SelectorButton>
-                </Intervals.ButtonContainer>
-                <Intervals.ResetContainer>
-                    {!timerActive
-                        ? (seconds !== 0 &&
-                            <Intervals.Text className='reset' onClick={resetTimer}>reset</Intervals.Text>
+            <Intervals.Frame>
+                <Intervals.StartButtonContainer >
+                    
+                    <Intervals.StartButton disabled={seconds === 0} active={timerActive} onClick={startTimer}>
+                        {timerActive && <Intervals.Seconds time={clockSeconds} />}
+                        {!timerActive
+                            ? (
+                                <Intervals.ButtonText>
+                                    Start
+                                    <br />
+                                    {formatTotalTime(seconds)}
+                                </Intervals.ButtonText>
+                            )
+                            : (
+                                <Intervals.ButtonText>
+                                    {formatTotalTime(seconds)}
+                                </Intervals.ButtonText>
+                            )
+
+                        }
+
+                    </Intervals.StartButton>
+                </Intervals.StartButtonContainer>
+                <Intervals.TitleFrame>
+                    <BehaviorTimer.Header onClick={()=>setIsOpen(!isOpen)}>{behaviorName}</BehaviorTimer.Header>
+                    <Intervals.ButtonContainer>
+                        <Intervals.SelectorButton minusActive={subtractSecondsActive} onClick={subtractTime}>
+                            <Intervals.MinusIcon reduce={subtractSecondsActive} />
+                        </Intervals.SelectorButton>
+                        <Intervals.Text>Seconds</Intervals.Text>
+                        <Intervals.SelectorButton plusActive={addSecondsActive} onClick={addTime}>
+                            <Intervals.PlusIcon enlarge={addSecondsActive} />
+                        </Intervals.SelectorButton>
+                    </Intervals.ButtonContainer>
+                    <Intervals.ResetContainer>
+                        {!timerActive
+                            ? (seconds !== 0 &&
+                                <Intervals.Text className='reset' onClick={resetTimer}>reset</Intervals.Text>
+                            )
+                            : <Intervals.Text className='running'>trial running</Intervals.Text>
+                        }
+                    </Intervals.ResetContainer>
+                </Intervals.TitleFrame>
+                <Intervals.MoreInfo  onClick={()=> setIsOpen(!isOpen)}/>
+            </Intervals.Frame>
+            <Intervals.ResultsContainer open={isOpen}>{
+                intervals.map((interval, index) => {
+                    return (<>
+                    <p>{interval.date}
+                    {interval.result ? 'true' : 'false'}</p>
+                    </>
                         )
-                        : <Intervals.Text className='running'>trial running</Intervals.Text>
-                    }
-                </Intervals.ResetContainer>
-            </Intervals.TitleFrame>
-            <Intervals.MoreInfo />
+                })
+
+            }</Intervals.ResultsContainer>
 
         </Intervals>
 

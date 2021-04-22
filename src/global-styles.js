@@ -5,17 +5,19 @@ import colors from "constants/colors";
 export const GlobalStyles = createGlobalStyle`
     * {
         box-sizing: border-box;
+
     }
 
     
     html,
     body {
+        font-size: 18px;
         box-sizing: border-box;
         margin: 0;
         height: 100%;
         width: 100%;
         overflow: auto;
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Montserrat', sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         background: ${colors.pageBackground};

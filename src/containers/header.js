@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom'
 import { useAuthListener } from 'hooks'
 import * as ROUTES from '../constants/routes'
 
-export function HeaderContainer({ data, title, addIcon, name, backIcon, showMenu, backFromDatasheet, openClient }) {
+export function HeaderContainer({ data, title, addIcon, name, backIcon, showMenu, backFromDatasheet, openClient, subtitle }) {
     const [menuOpen, setMenuOpen] = useState(false) // activates slideout menu
     const [addClientFormOpen, setAddClientFormOpen] = useState(false) // activates slideout menu to add client
     const [firstName, setFirstName] = useState('') //sets add client first name
@@ -27,7 +27,7 @@ export function HeaderContainer({ data, title, addIcon, name, backIcon, showMenu
         setTimeout(() => {
             history.goBack()
         }, 400)
-        
+
     }
 
     function formatClientName(name) {
@@ -49,7 +49,7 @@ export function HeaderContainer({ data, title, addIcon, name, backIcon, showMenu
             first: firstName,
             last: lastName,
             ownerUid: user.email,
-            
+
         })
             .catch((error) => {
                 console.error("Error writing document: ", error);
@@ -65,11 +65,11 @@ export function HeaderContainer({ data, title, addIcon, name, backIcon, showMenu
                 behaviorName: behaviorName,
                 clientId: openClient.id,
             })
-            .then(() => {
-                setInputType('')
-                setBehaviorName('')
-            }
-            )
+                .then(() => {
+                    setInputType('')
+                    setBehaviorName('')
+                }
+                )
         }
     }
 
@@ -77,16 +77,19 @@ export function HeaderContainer({ data, title, addIcon, name, backIcon, showMenu
         <Header>
             <Header.IconSpacer>
                 {backIcon &&
-                    (<Header.BackIcon active={backActive} onClick={backFromDatasheet ? backFromDatasheet : ()=> {
+                    (<Header.BackIcon active={backActive} onClick={backFromDatasheet ? backFromDatasheet : () => {
                         goBack()
                         setBackActive(true)
                     }} />)
                 }
             </Header.IconSpacer>
-            <Header.Title>{title}</Header.Title>
+            <Header.TitleContainer>
+                <Header.Title>{title}</Header.Title>
+               {subtitle && <Header.Subtitle>{subtitle}</Header.Subtitle>}
+            </Header.TitleContainer>
             <Header.IconSpacer>
                 {addIcon && (
-                    <Header.IconContainer  name='add' hideWhen={menuOpen} open={addClientFormOpen} onClick={() => setAddClientFormOpen(!addClientFormOpen)}><Header.AddItemIcon
+                    <Header.IconContainer name='add' hideWhen={menuOpen} open={addClientFormOpen} onClick={() => setAddClientFormOpen(!addClientFormOpen)}><Header.AddItemIcon
                         open={addClientFormOpen}
                     /></Header.IconContainer>)
                 }
@@ -109,7 +112,7 @@ export function HeaderContainer({ data, title, addIcon, name, backIcon, showMenu
                                             onChange={({ target }) => { setInputType(target.name) }}
                                             value={inputType}
                                             checked={inputType === 'frequency'}
-                                            
+
                                         /><span>Rate</span></label>
                                     </AddItemForm.TypeSelectorFrame>
                                     <AddItemForm.TypeSelectorFrame>
@@ -128,7 +131,7 @@ export function HeaderContainer({ data, title, addIcon, name, backIcon, showMenu
                                     onChange={({ target }) => setBehaviorName(target.value)}
                                     value={behaviorName}
                                     placeholder='Behavior Name'
-                                    
+
                                 />
                                 <AddItemForm.Submit type='submit'>Add Tracker</AddItemForm.Submit>
                             </AddItemForm.Base>

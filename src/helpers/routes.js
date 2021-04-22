@@ -40,7 +40,7 @@ export function ProtectedRoute({ user, children, ...restProps }) {
                     return (
                         <Redirect
                             to={{
-                                pathname: '/home',
+                                pathname: '/',
                                 state: { from: location },
                             }}
                         />

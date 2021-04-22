@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Title, BackIcon, AddItemIcon, Inner, IconContainer, Hamburger, MenuDiv, AddItemForm, Menu, MenuItem, MenuLink, IconSpacer } from './styles/header'
+import { Container, Title, BackIcon, AddItemIcon, Inner, IconContainer, Hamburger, MenuDiv, AddItemForm, Menu, TitleContainer, MenuItem, MenuLink, IconSpacer, Subtitle } from './styles/header'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 
@@ -16,6 +16,12 @@ export default function Header({ children, ...restProps }) {
 
 Header.Title = function HeaderTitle({ children, ...restProps }) {
     return <Title {...restProps}>{children}</Title>
+}
+Header.Subtitle = function HeaderSubtitle({ children, ...restProps }) {
+    return <Subtitle {...restProps}>{children}</Subtitle>
+}
+Header.TitleContainer = function HeaderTitleContainer({ children, ...restProps }) {
+    return <TitleContainer {...restProps}>{children}</TitleContainer>
 }
 
 Header.BackIcon = function HeaderBackIcon({ backType, backIcon, ...restProps }) {

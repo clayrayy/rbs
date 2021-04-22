@@ -7,16 +7,16 @@ position: relative;
     background: ${colors.cardBackground};
     color: ${colors.darkText};
     display: flex;
-    max-width: 90%;
+    max-width: 95%;
     width: 800px;
     /* opacity: 0; */
     flex-direction:column;
-    justify-content: center;
+    justify-content: space-between;
     margin: 0 auto 1em auto;
     align-items: center;
-    border-radius: 15px;
+    /* border-radius: 15px; */
     min-width: 300px;
-    padding: 10px 25px 0px 25px;
+    padding: .5em;
     -webkit-box-shadow: 5px 5px 15px -1px rgba(0,0,0,0.16); 
     box-shadow: 5px 5px 15px -1px rgba(0,0,0,0.16);
 `
@@ -109,7 +109,7 @@ export const Header = styled.h1`
     /* font-size: 24px; */
     color: ${colors.darkText};
     font-family: Arial, Helvetica, sans-serif;
-    margin-top: 0;
+    margin: 0;
     /* max-width: 400px; */
     /* min-width: 30%; */
     font-size: clamp(1rem, -0.875rem + 8.333vw, 1.5rem);
@@ -157,6 +157,7 @@ export const TitleFrame = styled.div`
     flex-direction: column;
     align-items: center;
     font-weight: 700;
+    margin: 0;
 `
 
 
@@ -181,6 +182,7 @@ export const TimerButton = styled.button`
     display: flex;
     font-size: 1.2rem;
     font-weight: 200;
+    font-family: inherit;
     justify-self: flex-start;
     justify-content: center;
     align-items: center;
@@ -217,6 +219,9 @@ export const MoreInfo = styled.span`
     color: ${colors.darkText};
     text-align: right;
     flex: 1;
+    margin: 0;
+    padding: 0;
+    /* border: 1px solid magenta; */
     z-index: ${({moveToBack}) => moveToBack ? '0' : '1'};
     transition: all .3s ease-out;
     transform: ${({ open }) => open ? 'scaleY(-1)' : 'none'};
@@ -226,17 +231,18 @@ export const MoreInfo = styled.span`
 
 export const ItemsContainer = styled.div`
     flex-direction: column;
-    
-    max-height: ${({ open, durations }) => open ? `${durations.length <= 3 ? durations.length * 180 : durations.length * 80}px` : '0'};
+    height: ${({open}) => open ? '100%' : '0'};
+    /* max-height: ${({ open, durations }) => open ? `${durations.length <= 3 ? durations.length * 180 : durations.length * 80}px` : '0'}; */
     width: 93%;
     box-sizing: border-box;
     max-width: 800px;
-    padding-top: 1.5em;
+    /* padding-top: 1.5em; */
     /* margin-left: ${({moveOver}) => moveOver ? '1em' : '0'}; */
     opacity: ${({ open }) => open ? '1' : '0'};
     display: flex;
     /* overflow: hidden; */
-    
+    /* border: 1px solid magenta; */
+
     transition: all .35s ease-out;
     /* border: solid 1px magenta; */
 
@@ -290,10 +296,12 @@ export const Item = styled.div`
     align-items: center;
     width: 100%;
     border-bottom: solid 1px;
-    border-bottom-width: 60%;
+    /* border-bottom-width: 60%; */
+    margin: 0;
+    padding: 0;
 
     &:first-of-type {
-        border-top: solid 1px;
+        margin-top: 1em;
     }
 `
 
@@ -360,8 +368,8 @@ export const TotalTimeContainer = styled.div`
 
 export const DeleteBehaviorIcon = styled.p`
     /* position: absolute; */
-    height: 3px;
-    background-color: red;
+    /* height: 3px; */
+    /* background-color: red; */
     /* left: 1.4em; */
     /* z-index: ${({active}) => active ? '1' : '-1'}; */
     /* background-color: red; */
@@ -370,21 +378,11 @@ export const DeleteBehaviorIcon = styled.p`
     color: ${colors.btnActive};
     transition: all 2s ease;
     width: ${({active}) => active ? '1em' : '0'};
-    /* opacity: ${({active}) => active ? '1' : '0'}; */
+    opacity: ${({active}) => active ? '1' : '0'};
     /* display: ${({ active }) => active ?  'block': 'none'}; */
     /* transition: all .1s ease; */
     /* transform: scale((${({ active }) => active ? '1' : '0'})); */
-    animation: 0.4s ease-out fadeIn 1;
-    @keyframes fadeIn {
-  0% {
-    opacity: 0;
-    visibility: hidden;
-  }
-  100% {
-    opacity: 1;
-    visibility: visible;
-  }
-};
+
     
 `
 
@@ -393,7 +391,7 @@ export const EditButton = styled.button`
     flex: 1;
     width: 100%;
     border: none;
-    max-width: 100px;
+    max-width: 150px;
     border-radius: 30px;
     font-size: .66rem;
     padding: .7em 1.5em;
@@ -424,10 +422,12 @@ export const DropdownIcon = styled.span`
     display: block;
     background-color: ${({open}) => open ? `${colors.btnActive}` : `${colors.headerBackground}` };
     border-radius: ${({open}) => open ? '0' : '50%' };
-    position: relative;
+    /* position: absolute; */
     margin-top: .25em;
+    right: 1.5em;
+    top: .75em;
     margin-right: .50em;
-    z-index:3;
+    z-index:-1;
     transition: all .25s ease;
 
     &::before,
@@ -448,6 +448,8 @@ export const DropdownIcon = styled.span`
     &::before {
         left: .5em;
     }
+
+
 `
 
 export const Dropdown = styled.div`
@@ -461,7 +463,7 @@ export const Dropdown = styled.div`
     /* padding: 1.25em 1em; */
     min-width: 90%;
     max-width: 800px;
-    z-index: 2;
+    /* z-index: 2; */
     color: ${colors.btnActive};
     text-align: center;
     border-radius: 15px;
@@ -481,6 +483,11 @@ cursor: pointer;
 export const DropdownContainer = styled.div`
     align-self: flex-end;
     position: relative;
+
+    &.session {
+        border: solid 1px magenta;
+        /* padding: .5em; */
+    }
 `
 export const ConfirmDelete = styled.div`
     align-self: flex-end;
