@@ -39,7 +39,7 @@ export const Title = styled.h1`
     margin: 0;
     font-size: clamp(1.5rem, -0.875rem + 8.333vw, 2.5rem);
 
-    @media (max-width: 800px) {
+    @media (max-width: 600px) {
         /* max-width: 33%; */
         font-size: 1.5rem;
     }
@@ -153,8 +153,8 @@ export const Hamburger = styled.span`
 `
 
 export const AddItemForm = styled.div`
-    position: fixed;
     display: flex;
+    position: fixed;
     justify-content: center;
     align-items: flex-start;
     padding-top: 8em;

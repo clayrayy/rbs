@@ -28,7 +28,7 @@ export const Inner = styled.div`
     left: 0;
     right: 0;
     transition: all .35s ease-in-out;
-    opacity: ${({blackout}) => blackout ? '1' : '0'};
+    opacity: ${({ blackout }) => blackout ? '1' : '0'};
     width: 100%;
     height: 100%;
     /* padding: 1em; */
@@ -36,9 +36,9 @@ export const Inner = styled.div`
     align-items: center;
     justify-content: space-evenly;
     flex-direction: row;
-    border-radius: 15px;
+    /* border-radius: 15px; */
     background-color: rgba(0,0,0,.9);
-    z-index: ${({bringForward}) => bringForward ? '10' : '-1'};
+    z-index: ${({ bringForward }) => bringForward ? '10' : '-1'};
 `
 export const ModalButton = styled.button`
     cursor: pointer;
@@ -53,7 +53,7 @@ export const ModalButton = styled.button`
     }
 
     &.cancel {
-        background-color: ${colors.btnPrimary};
+        background-color: ${colors.headerBackground};
         margin-left: 3em;
     }
 
@@ -98,7 +98,7 @@ align-self: center;
 align-items: center;
 justify-content: center;
 display: flex;
-height: 5em;
+height: 3em;
 padding: 1em;
 flex: 1;
 border-left: solid 1px white;
@@ -175,7 +175,6 @@ export const TimerButton = styled.button`
     border: none;
     color: ${({ active }) => active ? `${colors.lightText}` : `${colors.lightText}`};
     height: 70px;
-    font-weight: 700;
     width: 70px;
     background: ${({ active }) => active ? `${colors.btnActive}` : `${colors.btnPrimary}`};
     border-radius: ${({ active }) => active ? '50%' : '15%'};
@@ -214,15 +213,15 @@ export const TimerButton = styled.button`
     }
 `
 
-export const MoreInfo = styled.span`
+export const MoreInfo = styled.div`
     font-size: 32px;
     color: ${colors.darkText};
     text-align: right;
-    flex: 1;
+    /* flex: 1; */
     margin: 0;
     padding: 0;
     /* border: 1px solid magenta; */
-    z-index: ${({moveToBack}) => moveToBack ? '0' : '1'};
+    z-index: ${({ moveToBack }) => moveToBack ? '0' : '1'};
     transition: all .3s ease-out;
     transform: ${({ open }) => open ? 'scaleY(-1)' : 'none'};
     /* padding-top: 10px; */
@@ -231,13 +230,13 @@ export const MoreInfo = styled.span`
 
 export const ItemsContainer = styled.div`
     flex-direction: column;
-    height: ${({open}) => open ? '100%' : '0'};
+    height: ${({ open }) => open ? '100%' : '0'};
     /* max-height: ${({ open, durations }) => open ? `${durations.length <= 3 ? durations.length * 180 : durations.length * 80}px` : '0'}; */
     width: 93%;
     box-sizing: border-box;
     max-width: 800px;
     /* padding-top: 1.5em; */
-    /* margin-left: ${({moveOver}) => moveOver ? '1em' : '0'}; */
+    /* margin-left: ${({ moveOver }) => moveOver ? '1em' : '0'}; */
     opacity: ${({ open }) => open ? '1' : '0'};
     display: flex;
     /* overflow: hidden; */
@@ -265,13 +264,15 @@ export const Seconds = styled.div`
     transform-origin: 50% 80%;
     width: 1%;
     z-index: 0;
-    animation: rotate 60s infinite linear;
+    animation: clockwise 60s infinite linear;
 
-    @keyframes rotate {
-        100% {
-            transform: rotateZ(360deg);
+    
+        @keyframes clockwise {
+            100% {
+                transform: rotateZ(360deg);
+            }
         }
-    }
+    
     `
 
 export const ButtonText = styled.p`
@@ -283,22 +284,17 @@ export const ButtonText = styled.p`
     }
     `
 
-export const IconContainer = styled.div`
-    /* position: absolute; */
-    /* width: 30px;
-    height: 30px; */
-    /* padding-top: 1em; */
-    `
 
 export const Item = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    /* width: 100%; */
     border-bottom: solid 1px;
     /* border-bottom-width: 60%; */
     margin: 0;
     padding: 0;
+    transition: all .25s ease;
 
     &:first-of-type {
         margin-top: 1em;
@@ -307,10 +303,11 @@ export const Item = styled.div`
 
 export const TimeStamp = styled.p`
     font-weight: bold;
-    
+    transition: all .25s linear;
     /* margin-left: ${({ moveRight }) => moveRight ? '1em' : '0'}; */
     transition: all .5s ease;
     /* transform: translateX(10em); */
+    /* border: solid 1px black; */
     
 
 `
@@ -366,20 +363,20 @@ export const TotalTimeContainer = styled.div`
     }
 `
 
-export const DeleteBehaviorIcon = styled.p`
+export const DeleteBehaviorIcon = styled.span`
     /* position: absolute; */
     /* height: 3px; */
     /* background-color: red; */
     /* left: 1.4em; */
-    /* z-index: ${({active}) => active ? '1' : '-1'}; */
+    z-index: ${({ active }) => active ? '1' : '-1'};
     /* background-color: red; */
-    margin: ${({active}) => active ? '0 1em' : '0'};
+    margin: ${({ active }) => active ? '0 1em' : '0'};
     /* font-size: 1.5em; */
     color: ${colors.btnActive};
-    transition: all 2s ease;
-    width: ${({active}) => active ? '1em' : '0'};
-    opacity: ${({active}) => active ? '1' : '0'};
-    /* display: ${({ active }) => active ?  'block': 'none'}; */
+    /* transition: all 2s ease; */
+    width: ${({ active }) => active ? '1em' : '0'};
+    opacity: ${({ active }) => active ? '1' : '0'};
+    /* display: ${({ active }) => active ? 'block' : 'none'}; */
     /* transition: all .1s ease; */
     /* transform: scale((${({ active }) => active ? '1' : '0'})); */
 
@@ -418,76 +415,106 @@ export const EditButton = styled.button`
 
 export const DropdownIcon = styled.span`
     height: 5px;
-    width: ${({open}) => open ? '10px' : '5px' };
+    /* justify-self: flex-end; */
+    position: relative;
+    width: ${({ open }) => open ? '15px' : '5px'};
     display: block;
-    background-color: ${({open}) => open ? `${colors.btnActive}` : `${colors.headerBackground}` };
-    border-radius: ${({open}) => open ? '0' : '50%' };
-    /* position: absolute; */
-    margin-top: .25em;
-    right: 1.5em;
-    top: .75em;
-    margin-right: .50em;
-    z-index:-1;
+    background-color: ${({ open }) => open ? `${colors.btnActive}` : `${colors.headerBackground}`};
+    border-radius: ${({ open }) => open ? '10px' : '50%'};
+    transform: translateY(-.55em);
     transition: all .25s ease;
 
     &::before,
     &::after {
         content: '';
-        background-color: ${({open}) => open ? `${colors.btnActive}` : `${colors.headerBackground}` };
-        border-radius: ${({open}) => open ? '10px' : '50%' };
+        background-color: ${({ open }) => open ? `${colors.btnActive}` : `${colors.headerBackground}`};
+        border-radius: ${({ open }) => open ? '10px' : '50%'};
         height: 5px;
-        width: ${({open}) => open ? '7px' :  '5px'};
+        width: ${({ open }) => open ? '10px' : '5px'};
         position: absolute;
+        /* z-index: 999; */
         transition: all .25s ease;
     }
 
     &::after {
-        right: .5em;
+        
+        transform: ${({open}) => open ? 'translateX(0px)':'translateX(7px)'};
     }
 
     &::before {
-        left: .5em;
+        transform: translateX(-7px);
     }
 
 
+`
+export const IconContainer = styled.div`
+    /* border: solid 1px; */
+    align-self: flex-end;
+    padding: 1em;
+    flex: 1;
+    z-index: 150;
+
+    ${({iconType}) => iconType === 'delete' && `
+        padding: 1em;
+        height: 20px;
+    `}
+    ${({iconType}) => iconType === 'more-info' && `
+        padding: 0 .58em;
+    `}
+    `
+export const IconPositioner = styled.div`
+    z-index: 999; 
+    padding: 0 .25em;
+    margin: 0; 
+    /* position: absolute; */
+    top: -1em;
+    /* border: solid 1px green; */
 `
 
 export const Dropdown = styled.div`
     position: absolute;
-    right: -.5em;
-    top: -.2em;
+    right: -.2em;
+    top: -.6em;
     /* width: 100%; */
     background: rgba(0, 0, 0, .85);
-    overflow: hidden;
-    opacity: ${({visible}) => visible ? '1' : '0'};
+    /* overflow: hidden; */
+    opacity: ${({ visible }) => visible ? '1' : '0'};
     /* padding: 1.25em 1em; */
-    min-width: 90%;
-    max-width: 800px;
-    /* z-index: 2; */
+    /* min-width: 90%; */
+    /* max-width: 800px; */
+    z-index: 2;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     color: ${colors.btnActive};
     text-align: center;
     border-radius: 15px;
     /* padding: .2em 5em; */
-    /* max-height: ${({visible}) => visible ? '3em' : '.5em'}; */
-    transform: ${({visible}) => visible ? 'scaleY(1)' : 'scaleY(0)'};
+    /* max-height: ${({ visible }) => visible ? '3em' : '.5em'}; */
+    transform: ${({ visible }) => visible ? 'scaleY(1)' : 'scaleY(0)'};
     transform-origin: top;
     transition: all  .25s ease-in;
 `
 
-export const DropdownItem = styled.p`
-min-width: 200px;
+export const DropdownItem = styled.div`
+/* min-width: 200px; */
 cursor: pointer;
-/* border: solid 1px */
+/* border: solid 1px; */
+text-align: center;
+font-size: .9rem;
+margin: .5em;
+/* display: ${({hide}) => !hide ? 'none': 'inline-block'}; */
+
+
 `
 
 export const DropdownContainer = styled.div`
     align-self: flex-end;
     position: relative;
 
-    &.session {
-        border: solid 1px magenta;
-        /* padding: .5em; */
-    }
+
 `
 export const ConfirmDelete = styled.div`
     align-self: flex-end;

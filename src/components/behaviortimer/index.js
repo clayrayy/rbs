@@ -30,7 +30,8 @@ import {
     ModalButton,
     ModalButtonContainer,
     ModalText,
-    ModalTextContainer
+    ModalTextContainer,
+    IconPositioner
 } from './styles/behaviortimer'
 import { motion } from 'framer-motion'
 
@@ -48,6 +49,9 @@ export default function BehaviorTimer({ children, ...restProps }) {
 
 BehaviorTimer.Inner = function BehaviorTimerInner({ children, ...restProps }) {
     return <Inner {...restProps}>{children}</Inner>
+}
+BehaviorTimer.IconPositioner = function BehaviorTimerIconPositioner({ children, ...restProps }) {
+    return <IconPositioner {...restProps}>{children}</IconPositioner>
 }
 
 BehaviorTimer.ModalTextContainer = function BehaviorTimerModalTextContainer({ children, ...restProps }) {
@@ -133,13 +137,9 @@ BehaviorTimer.Frame = function BehaviorTimerFrame({ children, ...restProps }) {
 }
 
 BehaviorTimer.DeleteBehaviorIcon = function BehaviorDeleteBehaviorIcon({ children, ...restProps }) {
-    // const variants = {
-    //     hidden: { opacity: 0, x: -10  },
-    //     visible: { opacity: 1, x: 0 },
-    // }
+    
     return (
-    <DeleteBehaviorIcon /*as={motion.span} 
-    animate='visible' initial='hidden' variants={variants}*/ {...restProps}>
+    <DeleteBehaviorIcon  {...restProps}>
         <FontAwesomeIcon icon={faMinusCircle} />
     </DeleteBehaviorIcon>
     )

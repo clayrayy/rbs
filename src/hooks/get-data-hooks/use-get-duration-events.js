@@ -2,7 +2,7 @@ import { FirebaseContext } from 'context/firebase'
 import { useAuthListener } from 'hooks'
 import { useContext, useState, useEffect } from 'react'
 
-export default function useGetDurationEvents(openClient, behaviorName) {
+export default function useGetDurationEvents(openClient, behaviorName, sessionId) {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
     const [durations, setDurations] = useState([])
@@ -19,6 +19,7 @@ export default function useGetDurationEvents(openClient, behaviorName) {
         .where('createdBy', '==', user.email)
         .where('clientId', '==', openClient)
         .where('behaviorName', '==', behaviorName)
+        .where('sessionId', '==', sessionId)
         
 
     useEffect(() => {

@@ -100,7 +100,7 @@ export function SignupFormContainer() {
                     autoComplete='off'
                     onChange={({ target }) => { setVerifiedPassword(target.value) }}
                 />
-                <Form.Submit disabled={isInvalid}>Sign Up</Form.Submit>
+                <Form.Button disabled={isInvalid}>Sign Up</Form.Button>
                 {error && <Form.Error>{error}</Form.Error>}
             </Form.Base>
         </Form>

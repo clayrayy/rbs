@@ -111,12 +111,15 @@ export const IconContainer = styled.div`
     /* border: solid red; */
     display: flex;
     position: relative;
-    justify-content: space-between;
-    align-items: flex-end;
-    flex-direction: column;
-    align-self: flex-start;
+    justify-content: flex-end;
+    /* align-items: flex-start; */
+    /* flex-direction: column; */
+    /* align-self: flex-start; */
     margin: 0;
     flex: 1;
+    align-self: flex-start;
+    /* padding: 2em; */
+    /* bordeR: solid 1px magenta; */
     /* padding-left: 1em; */
 `
 
@@ -125,7 +128,7 @@ width: 100%;
 overflow: hidden;
 opacity: ${({ open }) => open ? '1' : '0'};
 transition: all .25s linear;
-height: ${({ open }) => open ? '100%' : '0'};
+height: ${({ open }) => open ? '100%' : '0px'};
 `
 
 export const DropdownIcon = styled.span`
@@ -135,36 +138,48 @@ export const DropdownIcon = styled.span`
     display: inline-block;
     background-color: ${({ open }) => open ? `${colors.btnActive}` : `${colors.lightText}`};
     border-radius: ${({ open }) => open ? '10px' : '50%'};
-    position: absolute;
+    /* position: absolute; */
     right: 15px;
     top: 5px;
-    /* z-index:3; */
+    font-size: 1.5em;
+    /* line-height: 20px; */
+    z-index:9999;
     transition: all .25s ease;
 
     &::before,
     &::after {
         content: '';
         background-color: ${({ open }) => open ? `${colors.btnActive}` : `${colors.lightText}`};
+        line-height: 20px;
         border-radius: ${({ open }) => open ? '10px' : '50%'};
         height: 5px;
-        width: ${({ open }) => open ? '8px' : '5px'};
+        width: ${({ open }) => open ? '15px' : '5px'};
         position: absolute;
         transition: all .25s ease;
     }
 
     &::after {
-        transform: translateX(5px);
+        transform: ${({open}) => open ? 'translateX(0px)':'translateX(5px)'};
     }
 
     &::before {
         transform: translateX(-10px);
     }
 `
+
+export const IconPositioner = styled.div`
+    z-index: 99; 
+    padding: 0 .25em;
+    margin: 0; 
+    position: absolute;
+    top: -1em;
+`
+
 export const DropdownContainer = styled.div`
     align-self: flex-end;
     position: relative;
     /* border: solid 1px magenta; */
-    padding: 20px;
+    /* padding: 20px; */
 
 
 `
@@ -172,24 +187,29 @@ export const DropdownContainer = styled.div`
 export const Dropdown = styled.div`
     position: absolute;
     right: -.5em;
-    top: -.2em;
-    /* width: 100%; */
-    background: rgba(0, 0, 0, .55);
+    top: -5.5em;
+    display:flex;
+    
+    justify-content: center;
+    width: ${({expand}) => expand ? '300px' : '200px'};
+    background: rgba(0, 0, 0, .75);
     overflow: hidden;
     opacity: ${({ visible }) => visible ? '1' : '0'};
     /* padding: 1.25em 1em; */
     min-width: 90%;
-    max-width: 800px;
+    max-width: 500px;
     z-index: 50;
     font-size: .5em;
     color: ${colors.btnActive};
     text-align: left;
     border-radius: 15px;
-    padding: .2em 5em;
+    padding: 1em;
     /* max-height: ${({ visible }) => visible ? '3em' : '.5em'}; */
-    transform: ${({ visible }) => visible ? 'scaleY(1)' : 'scaleY(0)'};
+    /* transform: ${({ visible }) => visible ? '' : ''}; */
     transform-origin: top;
     transition: all  .25s ease-in;
+    /* border: solid 1px magenta; */
+    transform: ${({visible}) => visible ? 'scale(1) scaleY(1)' : 'scale(.5) scaleY(0) translateX(25%)'}
 `
 
 

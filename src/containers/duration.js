@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useBehaviorTimer } from 'hooks'
-import { BehaviorTimer } from 'components'
+import { BehaviorTimer, Card, CardModal } from 'components'
 import { FirebaseContext } from 'context/firebase'
 import { useGetSessionsData } from 'hooks/get-data-hooks/use-get-sessions'
 
-export function BehaviorTimerContainer({ name, client, behaviorName, customItem }) {
+export function BehaviorTimerContainer({ name, client, behaviorName, behaviorId, isCustomDuration, sessionId }) {
   const { toggleActive,
     displayTime,
     toggleOpen,
@@ -23,100 +23,131 @@ export function BehaviorTimerContainer({ name, client, behaviorName, customItem 
     setDeleteBehaviorDD,
     editOpen,
     setEditOpen
-  } = useBehaviorTimer(client.docId, behaviorName)
+  } = useBehaviorTimer(client, behaviorName, sessionId, behaviorId)
 
   const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false)
   const [bringUpModal, setBringUpModal] = useState(false)
 
   useEffect(() => {
-    if(durations.length === 0) {
+    if (durations.length === 0) {
       setIsOpen(false)
     }
   }, [editEventsActive])
 
+
+
   return (
 
-    <BehaviorTimer>
 
+    <Card>
       {/*_______ Confirm Delete Duration Modal Start _______*/}
-      <BehaviorTimer.Inner
+      <CardModal
         blackout={showConfirmDeleteModal}
         bringForward={bringUpModal}
       >
-        <BehaviorTimer.ModalTextContainer>
-          <BehaviorTimer.ModalText className='modal-text'>
+        {showConfirmDeleteModal &&
+          <>
+            <CardModal.LeftContainer>
+              <Card.Text >
 
-            You are about to permanently delete behavior <strong>"{behaviorName[0]}"</strong> and all data associated with it.
-          </BehaviorTimer.ModalText>
-        </BehaviorTimer.ModalTextContainer>
-        <BehaviorTimer.ModalButtonContainer>
-          <BehaviorTimer.ModalButton className='delete' onClick={() => deleteBehaviorEvents(behaviorName[0], behaviorName[1])}>Confirm</BehaviorTimer.ModalButton>
-          <BehaviorTimer.ModalButton className='cancel' onClick={() => {
-            setShowConfirmDeleteModal(false)
-            setDeleteBehaviorDD(false)
-            setBringUpModal(false)
-          }}>Cancel</BehaviorTimer.ModalButton>
-        </BehaviorTimer.ModalButtonContainer>
-      </BehaviorTimer.Inner>
+                Delete duration <strong>"{behaviorName}"</strong>?
+          </Card.Text>
+            </CardModal.LeftContainer>
+            <CardModal.RightContainer modalType='delete-duration'>
+              <BehaviorTimer.ModalButton className='delete' onClick={() => deleteBehaviorEvents(behaviorName)}>Confirm</BehaviorTimer.ModalButton>
+              <BehaviorTimer.ModalButton className='cancel' onClick={() => {
+                setShowConfirmDeleteModal(false)
+                setDeleteBehaviorDD(false)
+                setBringUpModal(false)
+              }}>Cancel</BehaviorTimer.ModalButton>
+            </CardModal.RightContainer>
+
+          </>}
+      </CardModal>
+
       {/*_______ Confirm Delete Duration Modal End _______*/}
 
 
       {/*_______ Duration Dropdown Menu Start _______*/}
-      {customItem &&
-        <BehaviorTimer.DropdownContainer >
-          <BehaviorTimer.IconContainer onClick={() => setDeleteBehaviorDD(!deleteBehaviorDD)}>
-            <BehaviorTimer.DropdownIcon open={deleteBehaviorDD} />
-          </BehaviorTimer.IconContainer>
 
-          <BehaviorTimer.Dropdown visible={deleteBehaviorDD} editOpen={editOpen} altBorder={isOpen}>
-            <BehaviorTimer.DropdownItem
-              onClick={() => {
-                setDeleteBehaviorDD(!deleteBehaviorDD)
-                setIsOpen(true)
-                setEditEventsActive(!editEventsActive)
-              }}>
-              {editEventsActive ? null : 'Edit Events'}
-            </BehaviorTimer.DropdownItem>
-            <BehaviorTimer.DropdownItem
-              onClick={() => {
-                setShowConfirmDeleteModal(true)
-                setDeleteBehaviorDD(false)
-                setBringUpModal(true)
-                setIsOpen(false)
-              }}
-            >
-              Delete Behavior
-          </BehaviorTimer.DropdownItem>
-          </BehaviorTimer.Dropdown>
-        </BehaviorTimer.DropdownContainer>
-      }
+
       {/*_______ Duration Dropdown Menu End _______*/}
 
-      <BehaviorTimer.Frame>
+      <Card.Top>
+        <Card.LeftContainer>
+          <BehaviorTimer.ButtonContainer>
+            <BehaviorTimer.TimerButton
+              onClick={() => (toggleActive())}
+              active={isActive}
+            >
+              {isActive ? (
+                <BehaviorTimer.ButtonText>
+                  {displayTime}
+                </BehaviorTimer.ButtonText>
+              ) : (
+                <BehaviorTimer.ButtonText>
+                  Start
+                </BehaviorTimer.ButtonText>
+              )
+              }
+              {isActive && <BehaviorTimer.Seconds secondHandType='clockwise'/>}
+            </BehaviorTimer.TimerButton>
+          </BehaviorTimer.ButtonContainer>
+        </Card.LeftContainer>
+        <Card.CenterContainer>
 
-        <BehaviorTimer.ButtonContainer>
-          <BehaviorTimer.TimerButton onClick={() => (toggleActive())} active={isActive}>
-            {isActive ? <BehaviorTimer.ButtonText>{displayTime}</BehaviorTimer.ButtonText> : <BehaviorTimer.ButtonText>Start</BehaviorTimer.ButtonText>}
-            {isActive && <BehaviorTimer.Seconds />}
-          </BehaviorTimer.TimerButton>
-        </BehaviorTimer.ButtonContainer>
-
-        <BehaviorTimer.TitleFrame>
           <BehaviorTimer.Header>{behaviorName}</BehaviorTimer.Header>
           {durations.length === 0
             ? <BehaviorTimer.Text>No Records</BehaviorTimer.Text>
             : <BehaviorTimer.Text>{timePreview()}</BehaviorTimer.Text>
           }
-        </BehaviorTimer.TitleFrame>
 
-        
-          <BehaviorTimer.MoreInfo onClick={() => { toggleOpen(name) }} moveToBack={deleteBehaviorDD} open={isOpen} />
-          
-        
 
-      </BehaviorTimer.Frame>
+        </Card.CenterContainer>
 
-      <BehaviorTimer.ItemsContainer open={isOpen} durations={durations}>
+        <Card.RightContainer>
+          {isCustomDuration &&
+            <>
+              <BehaviorTimer.IconContainer iconType='delete'
+                onClick={() => setDeleteBehaviorDD(!deleteBehaviorDD)}
+              >
+
+                <BehaviorTimer.DropdownIcon open={deleteBehaviorDD} />
+              </BehaviorTimer.IconContainer>
+              <BehaviorTimer.DropdownContainer >
+
+                <BehaviorTimer.Dropdown visible={deleteBehaviorDD} editOpen={editOpen} altBorder={isOpen}>
+                  <BehaviorTimer.DropdownItem
+                    hide={durations.length === 0}
+                    onClick={() => {
+                      setDeleteBehaviorDD(!deleteBehaviorDD)
+                      setIsOpen(true)
+                      setEditEventsActive(!editEventsActive)
+                    }}>
+                    {editEventsActive || durations.length === 0 ? null : <p>Edit Events</p>}
+                  </BehaviorTimer.DropdownItem>
+                  <BehaviorTimer.DropdownItem
+                    onClick={() => {
+                      setShowConfirmDeleteModal(true)
+                      setDeleteBehaviorDD(false)
+                      setBringUpModal(true)
+                      setIsOpen(false)
+                    }}
+                  >
+                    Delete Behavior
+            </BehaviorTimer.DropdownItem>
+                </BehaviorTimer.Dropdown>
+              </BehaviorTimer.DropdownContainer>
+            </>
+          }
+          <BehaviorTimer.IconContainer iconType='more-info' onClick={() => { toggleOpen(name) }} moveToBack={deleteBehaviorDD} >
+            <BehaviorTimer.MoreInfo open={isOpen} /></BehaviorTimer.IconContainer>
+        </Card.RightContainer>
+
+
+      </Card.Top>
+
+      <Card.Dropdown open={isOpen} durations={durations}>
 
         {durations.sort((a, b) => a.serverTimestamp - b.serverTimestamp).map((item) => {
           return (
@@ -132,19 +163,19 @@ export function BehaviorTimerContainer({ name, client, behaviorName, customItem 
         })}
 
         <BehaviorTimer.TotalTimeContainer>
-          <BehaviorTimer.TimeData>{/*spacer div*/}</BehaviorTimer.TimeData>
+          <BehaviorTimer.TimeData></BehaviorTimer.TimeData>{/*spacer div*/}
           <BehaviorTimer.TimeData>
             {durations.length === 0
               ? 'No Data'
-              : `${durations.length} Event  ${formatTotalTime(totalSeconds)}`
+              : `${durations.length} ${durations.length > 1 ? 'Trial' : 'Trials'} - ${formatTotalTime(totalSeconds)}`
             }
           </BehaviorTimer.TimeData>
           <BehaviorTimer.TimeData>
-            {durations.length !== 0 && !isActive && <BehaviorTimer.EditButton active={editEventsActive} onClick={() => setEditEventsActive(!editEventsActive)}>{editEventsActive ? 'Done' : 'Edit Events'}</BehaviorTimer.EditButton>}
+            {durations.length !== 0 && !isActive && <BehaviorTimer.EditButton active={editEventsActive} onClick={() => setEditEventsActive(!editEventsActive)}>{editEventsActive ? 'Done' : 'Edit Trials'}</BehaviorTimer.EditButton>}
           </BehaviorTimer.TimeData>
 
         </BehaviorTimer.TotalTimeContainer>
-      </BehaviorTimer.ItemsContainer>
-    </BehaviorTimer>
+      </Card.Dropdown>
+    </Card>
   )
 }

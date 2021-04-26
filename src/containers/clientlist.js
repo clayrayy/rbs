@@ -1,10 +1,11 @@
 import React, { useState, useContext } from 'react'
-import { ClientCard, Form } from '../components'
+import { Card, ClientCard, Form } from '../components'
 import { useGetSessionsData } from 'hooks/get-data-hooks/use-get-sessions'
 import { ButtonSpacer } from 'components/clientcard/styles/clientcard'
 import { useHistory } from 'react-router'
 import { FirebaseContext } from 'context/firebase'
 import { useAuthListener } from 'hooks'
+import AnimateHeight from 'react-animate-height'
 import * as ROUTES from '../constants/routes'
 
 
@@ -18,19 +19,21 @@ export function ClientListContainer({ client }) {
     const [showAddSessionModal, setShowAddSessionModal] = useState(false)
     const [bringUpModal, setBringUpModal] = useState(false)
     const { user } = useAuthListener()
+    const { sessions, loading } = useGetSessionsData(client.docId)
 
     const clientName = `${client.first} ${client.last}`
 
     const toggleAddSession = () => {
         setShowAddSessionModal(!showAddSessionModal)
         setBringUpModal(!bringUpModal)
+        setShowSessions(false)
     }
 
     const handleStartNewSession = (e) => {
         e.preventDefault()
         sessionRef
             .add({
-                sessionName: `${sessionName || new Date().toLocaleString()}`,
+                sessionName: `${sessionName || null}`,
                 takenBy: takenBy,
                 clientId: client.docId,
                 clientName: clientName,
@@ -54,31 +57,65 @@ export function ClientListContainer({ client }) {
 
 
     return (
-        <ClientCard open={showSessions}>
+        <Card open={showSessions} expandForSmallScreen={showAddSessionModal}>
+            <Card.Top>
 
-            <ClientCard.Frame>
                 <ClientCard.Modal blackout={showAddSessionModal} bringForward={bringUpModal}>
-                    <form onSubmit={handleStartNewSession}>
-                        <input
-                            placeholder='Session Name (optional)'
-                            name='sessionName'
-                            value={sessionName}
-                            onChange={({ target }) => setSessionName(target.value)}
-                        />
-                        <input
-                            placeholder='Taken By'
-                            name='takenBy'
-                            value={takenBy}
-                            onChange={({ target }) => setTakenBy(target.value)}
-                        />
-                        <button type='submit'>Start Session</button>
-                    </form>
-                    <button onClick={toggleAddSession}>Cancel</button>
+
+                    <Form formType="add-session" >
+                        <Form.Title>New Session for {clientName}</Form.Title>
+                        <Form.Base formType="add-session" expandForSmallScreen={showAddSessionModal}>
+
+                            <Form.Input
+                                formType="add-session"
+                                placeholder='Session Name (optional)'
+                                name='sessionName'
+                                gridArea='n'
+                                // style={{ gridRow: 1 / 1 }}
+                                value={sessionName}
+                                onChange={({ target }) => setSessionName(target.value)}
+                            />
+                            <Form.Input
+                                formType="add-session"
+                                placeholder='Taken By (optional)'
+                                name='takenBy'
+                                gridArea='t'
+                                value={takenBy}
+                                addMarginLeft={true}
+                                onChange={({ target }) => setTakenBy(target.value)}
+                            />
+
+
+                            <Form.Button
+                                type='submit'
+                                gridArea='s'
+                                buttonType='confirm'
+                                formType='add-session'
+                                onClick={handleStartNewSession}
+                            >
+                                Start Session
+                            </Form.Button>
+                            <Form.Button
+                                buttonType='cancel'
+                                gridArea='c'
+                                formType='add-session'
+                                onClick={(e) => {
+                                    e.preventDefault()
+                                    toggleAddSession()
+                                }}
+                            >
+                                Cancel
+                            </Form.Button>
+                        </Form.Base>
+                    </Form>
+                    {/* <br />
+                         */}
                 </ClientCard.Modal>
 
-                <ClientCard.IconContainer onClick={() => setShowSessions(!showSessions)}>
-                    <ClientCard.Text>Past Sessions</ClientCard.Text>
-                    <ClientCard.DownArrow />
+                <ClientCard.IconContainer containerType='past-sessions-icon' onClick={() => setShowSessions(!showSessions)}>
+                    <ClientCard.IconContainer><ClientCard.Text>Previous<br />Sessions</ClientCard.Text>
+                        <ClientCard.DownArrow open={showSessions} /></ClientCard.IconContainer>
+
                 </ClientCard.IconContainer>
 
                 <ClientCard.TitleContainer >
@@ -92,16 +129,21 @@ export function ClientListContainer({ client }) {
                         </ClientCard.SessionButton>
                     </ClientCard.ButtonSpacer>
                 </ClientCard.ButtonContainer>
+            </Card.Top>
 
-            </ClientCard.Frame>
-            <ClientCard.SessionsContainer open={showSessions}>
 
-                {/* <p>{sessions.map((session, index) => {
-                    return <p key={index}>session run by: {session.createdBy}<br />length: {session.sessionLength}<br />includes duration data: {session.dataTypes.duration.toString()}</p>
-                })}</p> */}
+            <ClientCard.SessionsContainer sessions={sessions} open={showSessions}>
+                <AnimateHeight
+                    duration={500}
+                    height={'auto'}
+                >{loading ? <p>Loading</p> : sessions.map((session, index) => {
+                    return <p key={index}>session run by: {session.createdBy}<br />length: {session.sessionLength}<br />{session.date}<br /></p>
+                })}</AnimateHeight>
+                <p>{ }</p>
                 <p>populate using sessions data make a {`<Link to={ROUTES.DATASHEET} state={session} />`} passing state information to datasheet for each session</p>
             </ClientCard.SessionsContainer>
-        </ClientCard>
+
+        </Card>
 
 
     )

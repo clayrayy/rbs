@@ -19,10 +19,16 @@ export const Container = styled.section`
     margin: 0 auto 1em auto;
     padding: 1em;
     transition: all .25s linear;
-    border-radius: 15px;
+    /* border-radius: 15px; */
     /* border: solid 1px magenta; */
     -webkit-box-shadow: 5px 5px 15px -1px rgba(0,0,0,0.16); 
     box-shadow: 5px 5px 15px -1px rgba(0,0,0,0.16);
+
+    ${({expandForSmallScreen}) => expandForSmallScreen && `
+        @media (max-width: 700px) {
+            height: 250px
+        }
+    `}
 `
 export const Modal = styled.div`
     position: absolute;
@@ -33,12 +39,11 @@ export const Modal = styled.div`
     transition: all .35s ease-in-out;
     opacity: ${({blackout}) => blackout ? '1' : '0'};
     width: 100%;
-    height: 100%;
     display: flex;
     align-items: center;
-    flex-direction: column;
-    justify-content: space-evenly;
-    border-radius: 15px;
+    justify-content: center;
+    /* height: 100%; */
+    /* border-radius: 15px; */
     background-color: rgba(0,0,0,.9);
     /* border: solid 1px green; */
     z-index: ${({bringForward}) => bringForward ? '10' : '-1'};
@@ -110,16 +115,22 @@ export const Link = styled(ReachRouterLink)`
 
 export const SessionsContainer = styled.div`
     overflow: hidden;
-    height: ${({open}) => open ? '15em' : '0'};
-    opacity: ${({open}) => open ? '1' : '0'};
-    transition: all .25s linear;
+    height: ${({open}) => open ? `${({sessions}) => sessions.length * 30}px` : '0'};
+    /* height: 0; */
+    /* opacity: ${({open}) => open ? '1' : '0'}; */
+    transition: all 1.25s linear;
 
 `
 export const DownArrow = styled.span`
     font-size: 30px;
     text-align: center;
-    margin-left: 1.4em;
+    /* margin-left: 1.4em; */
     /* padding-left: 1em; */
+    margin: 0 auto;
+    transition: all .25s ease;
+    ${({open}) => open && `
+        transform: scaleY(-1);
+    `}
 `
 
 export const SessionButton = styled.button`
@@ -177,8 +188,9 @@ export const ButtonText = styled.p`
 export const Text = styled.p`
     padding: 0;
     margin: 0;
-    font-size: 1rem;
+    font-size: .75rem;
     text-align: center;
+    /* bordeR: solid 1px; */
 
     @media (max-width: 600px) {
         font-size: .75rem;

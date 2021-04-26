@@ -32,7 +32,7 @@ export function SigninFormContainer() {
     }
     return (
             <Form>
-                <Form.Base onSubmit={handleSignin} method="POST">
+                <Form.Base formType='sign-in' onSubmit={handleSignin} method="POST">
                     <Form.Input
                         placeholder='Email'
                         value={emailAddress}
@@ -46,7 +46,7 @@ export function SigninFormContainer() {
                         onChange={({ target }) => setPassword(target.value)}
                     />
 
-                    <Form.Submit  type='submit'>Sign In</Form.Submit>
+                    <Form.Button  type='submit'>Sign In</Form.Button>
                     {error && <Form.Error>{error}</Form.Error>}
                 </Form.Base>
             </Form>

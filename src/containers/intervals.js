@@ -1,7 +1,7 @@
 import { FirebaseContext } from 'context/firebase'
 import { useAuthListener, useGetSessionIntervals } from 'hooks'
 import React, { useState, useEffect, useContext } from 'react'
-import { Intervals, BehaviorTimer } from '../components'
+import { Intervals, BehaviorTimer, Card, CardModal } from '../components'
 
 
 //Create Second hand that goes counter clockwise from 12 to 12
@@ -15,17 +15,17 @@ export function IntervalsContainer({ behaviorName, client, sessionId }) {
     const [displayTime, setDisplayTime] = useState(0)
     const [timerActive, setTimerActive] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
-    const [result, setResult] = useState(false)
+    // const [result, setResult] = useState(false)
     const [addSecondsActive, setAddSecondsActive] = useState(false) //used to animate add button
     const [subtractSecondsActive, setSubtractSecondsActive] = useState(false) //used to animate subtract button
-    const [intervalResult, setIntervalResult] = useState('')
+    // const [intervalResult, setIntervalResult] = useState('')
     const [clockSeconds, setClockSeconds] = useState(0)
     const [showResultModal, setShowResultModal] = useState(false)//tells modal component to set opacity from 0 to 1
     const [bringUpModal, setBringUpModal] = useState(false) // tells modal component to increase z-index from -1 to 10
     const { user } = useAuthListener()
 
-const {intervals, loading} = useGetSessionIntervals(client.docId, sessionId, behaviorName)
-// console.log(intervals)
+    const { intervals, loading } = useGetSessionIntervals(client.docId, sessionId, behaviorName)
+    // console.log(intervals)
     // converts seconds to hh:mm:ss format
     function formatTotalTime(t) {
         const h = (Math.floor(t / 3600)).toString().padStart(2, '0')
@@ -92,7 +92,7 @@ const {intervals, loading} = useGetSessionIntervals(client.docId, sessionId, beh
     }
 
     //used to handle the results of the interval test
-    function handleResult() {
+    function handleResult(result) {
         setShowResultModal(false)
         setBringUpModal(false)
 
@@ -112,45 +112,65 @@ const {intervals, loading} = useGetSessionIntervals(client.docId, sessionId, beh
                 result: result
 
             })
+
+
     }
 
     function resetTimer() {
         setSeconds(0)
     }
-//CHANGE VALUES HERE ***************************
+    //CHANGE VALUES HERE ***************************
     return (
-        <Intervals>
-            <Intervals.Inner blackout={showResultModal} bringForward={bringUpModal}><p style={{color: 'white'}}>Did the behavior occur for the entire interval?</p>
-                <Intervals.ResultButton className='yes' onClick={()=>setResult(true)}>Yes</Intervals.ResultButton>
-                <Intervals.ResultButton className='no' onClick={()=>setResult(false)}>No</Intervals.ResultButton>
-                <Intervals.ResultButton className='submit' onClick={handleResult}>Submit</Intervals.ResultButton>
+        <Card>
+            <Card.Top>
+                <CardModal blackout={showResultModal} bringForward={bringUpModal}>
+                    <CardModal.LeftContainer>
+                        <Card.Text>
+                            Did the behavior occur for the entire interval?
+                    </Card.Text>
+                    </CardModal.LeftContainer>
+                    <CardModal.RightContainer modalType='interval'>
+                        <Intervals.ResultButton
+                            onClick={() => {
+                                handleResult(true)
+                            }}>
+                            Yes
+                    </Intervals.ResultButton>
+                        <Intervals.ResultButton
+                            onClick={() => {
+                                handleResult(false)
+                            }}>
+                            No
+                    </Intervals.ResultButton>
+                    </CardModal.RightContainer>
 
-            </Intervals.Inner>
-            <Intervals.Frame>
-                <Intervals.StartButtonContainer >
-                    
-                    <Intervals.StartButton disabled={seconds === 0} active={timerActive} onClick={startTimer}>
-                        {timerActive && <Intervals.Seconds time={clockSeconds} />}
-                        {!timerActive
-                            ? (
-                                <Intervals.ButtonText>
-                                    Start
-                                    <br />
-                                    {formatTotalTime(seconds)}
-                                </Intervals.ButtonText>
-                            )
-                            : (
-                                <Intervals.ButtonText>
-                                    {formatTotalTime(seconds)}
-                                </Intervals.ButtonText>
-                            )
+                </CardModal>
 
-                        }
+                <Card.LeftContainer>
+                    <Intervals.StartButtonContainer >
+                        <Intervals.StartButton disabled={seconds === 0} active={timerActive} onClick={startTimer}>
+                            {timerActive && <Intervals.Seconds time={clockSeconds} />}
+                            {!timerActive
+                                ? (
+                                    <Intervals.ButtonText>
+                                        Start
+                                        <br />
+                                        {formatTotalTime(seconds)}
+                                    </Intervals.ButtonText>
+                                )
+                                : (
+                                    <Intervals.ButtonText>
+                                        {formatTotalTime(seconds)}
+                                    </Intervals.ButtonText>
+                                )
 
-                    </Intervals.StartButton>
-                </Intervals.StartButtonContainer>
-                <Intervals.TitleFrame>
-                    <BehaviorTimer.Header onClick={()=>setIsOpen(!isOpen)}>{behaviorName}</BehaviorTimer.Header>
+                            }
+
+                        </Intervals.StartButton>
+                    </Intervals.StartButtonContainer>
+                </Card.LeftContainer>
+                <Card.CenterContainer>
+                    <BehaviorTimer.Header onClick={() => setIsOpen(!isOpen)}>{behaviorName}</BehaviorTimer.Header>
                     <Intervals.ButtonContainer>
                         <Intervals.SelectorButton minusActive={subtractSecondsActive} onClick={subtractTime}>
                             <Intervals.MinusIcon reduce={subtractSecondsActive} />
@@ -168,21 +188,24 @@ const {intervals, loading} = useGetSessionIntervals(client.docId, sessionId, beh
                             : <Intervals.Text className='running'>trial running</Intervals.Text>
                         }
                     </Intervals.ResetContainer>
-                </Intervals.TitleFrame>
-                <Intervals.MoreInfo  onClick={()=> setIsOpen(!isOpen)}/>
-            </Intervals.Frame>
-            <Intervals.ResultsContainer open={isOpen}>{
-                intervals.map((interval, index) => {
-                    return (<>
-                    <p>{interval.date}
-                    {interval.result ? 'true' : 'false'}</p>
-                    </>
+                </Card.CenterContainer>
+                <Card.RightContainer>
+                    <Intervals.MoreInfo onClick={() => setIsOpen(!isOpen)} />
+                </Card.RightContainer>
+            </Card.Top>
+            <Card.Dropdown open={isOpen}>
+                {
+                    intervals.map((interval, index) => {
+                        return (<>
+                            <p>{interval.date}
+                                {interval.result ? 'true' : 'false'}</p>
+                        </>
                         )
-                })
+                    })
+                }
+            </Card.Dropdown>
+        </Card>
 
-            }</Intervals.ResultsContainer>
-
-        </Intervals>
 
     )
 }

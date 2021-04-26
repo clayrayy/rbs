@@ -19,9 +19,9 @@ export function useGetSessionsData(id) {
                     ...doc.data(),
                     clientId: doc.data().clientId
                 })
-                setSessions(sessionsData)
-                setLoading(false)
             })
+            setSessions(sessionsData)
+            setLoading(false)
         })
     }, [])
     return { sessions, loading }

@@ -2,32 +2,33 @@
 //REFACTOR FOR THE RADIO BUTTONS TO NOT BE GLOBALLY STYLED
 
 import React, { useState, useContext } from 'react'
-import { Header, AddItemForm } from '../components'
+import { Header, AddItemForm, Form, CardModal } from '../components'
 import { FirebaseContext } from '../context/firebase'
 import { useHistory } from 'react-router-dom'
 import { useAuthListener } from 'hooks'
 import * as ROUTES from '../constants/routes'
 
-export function HeaderContainer({ data, title, addIcon, name, backIcon, showMenu, backFromDatasheet, openClient, subtitle }) {
+export function HeaderContainer({ data, title, addIcon, name, backIcon, showMenu, backFromDatasheet, sessionActive, subtitle }) {
     const [menuOpen, setMenuOpen] = useState(false) // activates slideout menu
     const [addClientFormOpen, setAddClientFormOpen] = useState(false) // activates slideout menu to add client
     const [firstName, setFirstName] = useState('') //sets add client first name
     const [lastName, setLastName] = useState('') //sets add client first name
-    const [showEditBehaviors, setShowEditBehaviors] = useState(false)
-    const [inputType, setInputType] = useState('') //sets whether to add rate or duration tracker
+    const [confirmEndSessionActive, setConfirmEndSessionActive] = useState(false)
     const [backActive, setBackActive] = useState(false) //activates change to animate back icon
-    const [behaviorName, setBehaviorName] = useState('')
     let history = useHistory()
     const { user } = useAuthListener()
     const { firebase } = useContext(FirebaseContext)
     const db = firebase.firestore()
 
     function goBack() {
-        // setBackActive(true)
-        setTimeout(() => {
-            history.goBack()
-        }, 400)
-
+        if (sessionActive) {
+            setConfirmEndSessionActive(true)
+        }
+        else {
+            setTimeout(() => {
+                history.goBack()
+            }, 400)
+        }
     }
 
     function formatClientName(name) {
@@ -56,36 +57,38 @@ export function HeaderContainer({ data, title, addIcon, name, backIcon, showMenu
             });
     }
 
-    const handleAddNewTracker = (e) => {
-        e.preventDefault()
-
-        if (inputType === 'duration') {
-            setAddClientFormOpen(false)
-            db.collection('behaviors').add({
-                behaviorName: behaviorName,
-                clientId: openClient.id,
-            })
-                .then(() => {
-                    setInputType('')
-                    setBehaviorName('')
-                }
-                )
-        }
-    }
-
     return (
         <Header>
+            <CardModal blackout={confirmEndSessionActive} bringForward={confirmEndSessionActive}>
+                <CardModal.CenterContainer>
+                    <Form>
+                        <Form.Title>
+                            Navigating to previous page will end current session
+                            <br />
+                            Any trials running will be lost
+                        </Form.Title>
+                        <Form.Button buttonType='confirm' onClick={(e) =>{
+                            e.preventDefault()
+                            history.goBack()
+                            }}>Confirm</Form.Button>
+                        <Form.Button buttonType='cancel' onClick={(e)=> {
+                            e.preventDefault()
+                            setConfirmEndSessionActive(false)
+                        }}>Cancel</Form.Button>
+                    </Form>
+                </CardModal.CenterContainer>
+            </CardModal>
             <Header.IconSpacer>
                 {backIcon &&
-                    (<Header.BackIcon active={backActive} onClick={backFromDatasheet ? backFromDatasheet : () => {
+                    (<Header.BackIcon active={backActive} onClick={() => {
                         goBack()
-                        setBackActive(true)
+                        !sessionActive && setBackActive(true)
                     }} />)
                 }
             </Header.IconSpacer>
             <Header.TitleContainer>
                 <Header.Title>{title}</Header.Title>
-               {subtitle && <Header.Subtitle>{subtitle}</Header.Subtitle>}
+                {subtitle && <Header.Subtitle>{subtitle}</Header.Subtitle>}
             </Header.TitleContainer>
             <Header.IconSpacer>
                 {addIcon && (
@@ -99,62 +102,26 @@ export function HeaderContainer({ data, title, addIcon, name, backIcon, showMenu
                     </Header.IconContainer>}
             </Header.IconSpacer>
             <Header.AddItemForm open={addClientFormOpen}>
-                {name === 'behaviors' &&
-                    (
-                        <AddItemForm>
-                            <AddItemForm.Base onSubmit={handleAddNewTracker}>
-                                <AddItemForm.Title>Type</AddItemForm.Title>
-                                <AddItemForm.TypeButtonContainer>
-                                    <AddItemForm.TypeSelectorFrame>
-                                        <label className='radio'><AddItemForm.TypeSelector
-                                            id='frequency'
-                                            name='frequency'
-                                            onChange={({ target }) => { setInputType(target.name) }}
-                                            value={inputType}
-                                            checked={inputType === 'frequency'}
-
-                                        /><span>Rate</span></label>
-                                    </AddItemForm.TypeSelectorFrame>
-                                    <AddItemForm.TypeSelectorFrame>
-                                        <label className='radio'>
-                                            <AddItemForm.TypeSelector
-                                                id='duration'
-                                                name='duration'
-                                                onChange={({ target }) => setInputType(target.name)}
-                                                value={inputType}
-                                                checked={inputType === 'duration'}
-                                            /><span>Duration</span></label>
-                                    </AddItemForm.TypeSelectorFrame>
-                                </AddItemForm.TypeButtonContainer>
-                                <AddItemForm.Title>Behavior name</AddItemForm.Title>
-                                <AddItemForm.Input
-                                    onChange={({ target }) => setBehaviorName(target.value)}
-                                    value={behaviorName}
-                                    placeholder='Behavior Name'
-
-                                />
-                                <AddItemForm.Submit type='submit'>Add Tracker</AddItemForm.Submit>
-                            </AddItemForm.Base>
-                        </AddItemForm>
-                    )}
                 {name === 'clients' &&
                     (
-                        <AddItemForm>
-                            <AddItemForm.Base onSubmit={addNewClient}>
-                                <AddItemForm.Title>Enter Client Name</AddItemForm.Title>
-                                <AddItemForm.Input
+                        <Form>
+                            <Form.Base formType='add-client' >
+                                <Form.Title>Enter Client Name</Form.Title>
+                                <Form.Input
+                                    formType='add-client'
                                     placeholder='First Name'
                                     value={firstName}
                                     onChange={({ target }) => setFirstName(formatClientName(target.value))}
                                 />
-                                <AddItemForm.Input
+                                <Form.Input
+                                    formType='add-client'
                                     placeholder='Last Name'
                                     value={lastName}
                                     onChange={({ target }) => setLastName(formatClientName(target.value))}
                                 />
-                                <AddItemForm.Submit>Add Client</AddItemForm.Submit>
-                            </AddItemForm.Base>
-                        </AddItemForm>
+                                <Form.Button formType='add-client' onClick={addNewClient}>Add Client</Form.Button>
+                            </Form.Base>
+                        </Form>
                     )
                 }
             </Header.AddItemForm >
@@ -165,9 +132,6 @@ export function HeaderContainer({ data, title, addIcon, name, backIcon, showMenu
                     </Header.MenuItem>
                     <Header.MenuItem>
                         <p>About RBS Data</p>
-                    </Header.MenuItem>
-                    <Header.MenuItem>
-                        {/* <p onClick={setShowEditBehaviors(true)}>Edit Behaviors</p> */}
                     </Header.MenuItem>
                     <Header.MenuItem>
                         <p onClick={signOut}>Sign Out</p>

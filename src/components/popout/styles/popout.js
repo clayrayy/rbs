@@ -4,7 +4,7 @@ import colors from "constants/colors";
 export const Container = styled.div`
 position: fixed;
 left: 0;
-top: 10%;
+top: 15%;
 display: flex;
 flex-direction: column;
 transform: ${({open}) => !open ? 'translateX(-100%)' : 'none'};

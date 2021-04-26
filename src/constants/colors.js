@@ -1,6 +1,6 @@
 const colors = {
-    headerBackground: '#183a55',
-    pageBackground: '#e0623c',
+    headerBackground: '#113577',
+    pageBackground: '#bdbdbd',
     cardBackground: '#eeeeee',
     // pageBackground: '#f7d540',
     darkText: '#252525',

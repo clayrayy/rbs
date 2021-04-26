@@ -42,12 +42,13 @@ export const Inner = styled.div`
 `
 export const ResultButton = styled.button`
 
-    background-color: ${colors.btnPrimary};
+    background-color: ${colors.accent};
     color: ${colors.lightText};
     padding: 1em 2.5em;
     border: none;
     transition: all .25s ease;
     border-radius: 15px;
+    /* border: solid .01em white; */
 
     &:focus {
         background-color: ${colors.accent};
@@ -165,7 +166,6 @@ font-family: inherit;
     border: none;
     color: ${colors.lightText};
     height: 70px;
-    font-weight: 700;
     width: 70px;
     background: ${({ active }) => active ? `${colors.btnActive}` : `${colors.btnPrimary}`};
     border-radius: ${({ active }) => active ? '50%' : '15%'};
@@ -173,7 +173,7 @@ font-family: inherit;
     /* border: ${({active, disabled}) => !active && !disabled ? 'solid green 3px' : 'none'}; */
     font-size: 1.2rem;
     font-weight: 200;
-    justify-self: flex-start;
+    /* justify-self: flex-start; */
     justify-content: center;
     align-items: center;
     letter-spacing: 1px;
@@ -257,6 +257,7 @@ user-select: none;
 
 export const Text = styled.p`
 /* font-weight: bold; */
+text-align: center;
 margin: 0 1em;
     @media (max-width: 600px) {
         font-size: .85rem;

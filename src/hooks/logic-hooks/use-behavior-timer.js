@@ -5,7 +5,7 @@ import { FirebaseContext } from 'context/firebase'
 import { useAuthListener } from 'hooks'
 
 
-export default function useBehaviorTimer(client, behaviorName) {
+export default function useBehaviorTimer(client, behaviorName, sessionId, behaviorId) {
     const [isActive, setIsActive] = useState(false)
     const [time, setTime] = useState(0)
     const [history, setHistory] = useState([])
@@ -18,9 +18,10 @@ export default function useBehaviorTimer(client, behaviorName) {
     const [editOpen, setEditOpen] = useState(false)
     const [deleteBehaviorDD, setDeleteBehaviorDD] = useState(false)
     const [openBehavior, setOpenBehavior] = useState('')
-    const { durations, loading } = useGetDurationEvents(client, behaviorName)
+    const { durations, loading } = useGetDurationEvents(client, behaviorName, sessionId)
     const { firebase } = useContext(FirebaseContext)
     const { user } = useAuthListener()
+    console.log(client)
 
     let durationsTime = durations.map((duration) => duration.seconds)
     let totalSeconds = 0;
@@ -82,6 +83,7 @@ export default function useBehaviorTimer(client, behaviorName) {
                 createdBy: user.email,
                 eventType: 'duration',
                 seconds: time,
+                sessionId: sessionId,
                 name: behaviorName,
                 behaviorName: behaviorName,
                 timestamp:date,
@@ -127,7 +129,7 @@ export default function useBehaviorTimer(client, behaviorName) {
           .then(firebase
             .firestore()
             .collection('behaviors')
-            .doc(id)
+            .doc(behaviorId)
             .delete()
           )
     

@@ -1,6 +1,7 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
+// import AnimateHeight from 'react-animate-height';
 
 import {
     Container,
@@ -13,12 +14,14 @@ import {
     Frame,
     DropdownIcon,
     DropdownContainer,
-    Dropdown
+    Dropdown,
+    IconPositioner
 } from './styles/accordion'
 
 export default function Accordion({children, ...restProps}) {
     return <Container {...restProps}>{children}</Container>
 }
+
 
 Accordion.ItemsContainer = function AccordionItemsContainer({children, ...restProps}) {
     return <ItemsContainer {...restProps}>{children}</ItemsContainer>
@@ -46,13 +49,18 @@ Accordion.Frame = function AccordionFrame({children, ...restProps}) {
 }
 
 Accordion.DropdownContainer = function AccordionDropdownContainer({children, ...restProps}) {
-    return <DropdownContainer {...restProps}>{children}</DropdownContainer>
+    return (
+    <DropdownContainer {...restProps}>{children}</DropdownContainer>)
 }
 Accordion.DropdownIcon = function AccordionDropdownIcon({children, ...restProps}) {
     return <DropdownIcon {...restProps}>{children}</DropdownIcon>
 }
 Accordion.Dropdown = function AccordionDropdown({children, ...restProps}) {
     return <Dropdown {...restProps}>{children}</Dropdown>
+}
+
+Accordion.IconPositioner = function AccordionIconPositioner({children, ...restProps}) {
+    return <IconPositioner {...restProps}>{children}</IconPositioner>
 }
 
 
