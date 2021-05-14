@@ -1,32 +1,54 @@
-import React from 'react'
-import { ClientListContainer } from 'containers/clientlist'
-import useClientData from 'hooks/get-data-hooks/use-get-clients'
-import { HeaderContainer } from 'containers/header'
-import { BehaviorTimerContainer } from 'containers/deprecated.../behaviortimer'
-import { Loading } from 'components'
-import LoadingContainer from 'containers/loading'
-// import { DurationContainer } from 'containers/duration'
+import React from "react";
+import { ClientListContainer } from "containers/clientlist";
+import useClientData from "hooks/get-data-hooks/use-get-clients";
+import { HeaderContainer } from "containers/header";
+import { Card, Header, Loading } from "components";
+import LoadingContainer from "containers/loading";
+import useGetSessionEvents from "hooks/get-data-hooks/use-getsessionevents";
+import { AnimateSharedLayout, motion } from "framer-motion";
+import { pageTransitions } from "constants/motionVariants";
 
 export default function NewClientList() {
-    const { clients, loading } = useClientData()
+  const { clients, loading } = useClientData();
 
-    return (
-        <>
-        
-            <HeaderContainer 
-                backIcon={false}
-                addIcon={true}
-                title='Clients'
-                name='clients'
-            />
-            {loading && <LoadingContainer />}
-            {!loading && clients.map((client, index) => {
-                return (
-                    <ClientListContainer client={client} key={index} />
-                    
-                )
-            })}
-            
-        </>
-    )
+  // console.log(durationsData)
+
+  return (
+    <>
+      <HeaderContainer
+        backIcon={false}
+        addIcon={true}
+        title="Clients"
+        name="clients"
+      />
+      {loading ? (
+        <LoadingContainer />
+      ) : (
+        <AnimateSharedLayout>
+          <motion.div
+            variants={pageTransitions}
+            initial="hidden"
+            animate="show"
+            exit="exit"
+          >
+            {!loading && clients.length === 0 && (
+              <Card>
+                <Card.CenterContainer>
+                  <Card.Title>
+                    Click or tap <Header.AddItemIcon iconType="example" /> to
+                    get started
+                  </Card.Title>
+                </Card.CenterContainer>
+              </Card>
+            )}
+            {!loading &&
+              clients.map((client, index) => {
+                const curClient = client;
+                return <ClientListContainer client={curClient} key={index} />;
+              })}
+          </motion.div>
+        </AnimateSharedLayout>
+      )}
+    </>
+  );
 }

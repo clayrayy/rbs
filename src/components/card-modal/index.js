@@ -1,24 +1,33 @@
-import React from 'react'
+import React from "react";
 import {
-    Container,
-    LeftContainer,
-    RightContainer,
-    CenterContainer
-    
-} from './styles/card-modal'
+  Container,
+  LeftContainer,
+  RightContainer,
+  CenterContainer,
+  Text,
+} from "./styles/card-modal";
 
-export default function CardModal({ children, ...restProps }) {
-    return <Container {...restProps}>{children}</Container>
+export default function Modal({ children, ...restProps }) {
+  return <Container {...restProps}>{children}</Container>;
 }
 
-CardModal.LeftContainer = function CardModalLeftContainer({children, ...restProps}) {
-    return <LeftContainer {...restProps}>{children}</LeftContainer>
-}
+Modal.LeftContainer = function ModalLeftContainer({ children, ...restProps }) {
+  return <LeftContainer {...restProps}>{children}</LeftContainer>;
+};
 
-CardModal.CenterContainer = function CardModalCenterContainer({children, ...restProps}) {
-    return <CenterContainer {...restProps}>{children}</CenterContainer>
-}
+Modal.CenterContainer = function ModalCenterContainer({
+  children,
+  ...restProps
+}) {
+  return <CenterContainer {...restProps}>{children}</CenterContainer>;
+};
 
-CardModal.RightContainer = function CardModalRightContainer({children, ...restProps}) {
-    return <RightContainer {...restProps}>{children}</RightContainer>
-}
+Modal.RightContainer = function ModalRightContainer({
+  children,
+  ...restProps
+}) {
+  return <RightContainer {...restProps}>{children}</RightContainer>;
+};
+Modal.Text = function ModalText({ children, ...restProps }) {
+  return <Text {...restProps}>{children}</Text>;
+};

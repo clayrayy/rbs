@@ -1,65 +1,119 @@
-import { EditButton, ModalButton } from 'components/behaviortimer/styles/behaviortimer'
-import { SessionButton } from 'components/clientcard/styles/clientcard'
-import Popout from 'components/popout'
-import { HeaderContainer } from 'containers/header'
-import { DurationsAccordion } from 'pages'
-import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router'
-import IntervalsAccordion from './intervalsaccordion'
-
+import { EditButton, ModalButton } from "components/duration/styles/duration";
+import { SessionButton } from "components/clientcard/styles/clientcard";
+import Popout from "components/popout";
+import { HeaderContainer } from "containers/header";
+import { DurationsAccordion } from "pages";
+import React, { useContext, useEffect, useState } from "react";
+import { useLocation, Prompt, useHistory } from "react-router";
+import IntervalsAccordion from "./intervalsaccordion";
+import { useInterval } from "hooks/use-interval";
+import { AnimatePresence, AnimateSharedLayout, motion } from "framer-motion";
+import { FirebaseContext } from "context/firebase";
+import * as ROUTES from "../constants/routes";
+import { pageTransitions } from "constants/motionVariants";
+// import { RateCardContainer } from "containers/card-components/ratecard";
 
 export default function Session() {
-    const location = useLocation()
-    const client = (location.state.client)
-    const currentSessionId = (location.state.currentSessionId)
-    const currentSessionName = (location.state.sessionName)
-    const [subtitle, setSubtite] = useState('')
-    const [popoutOpen, setPopoutOpen] = useState(false)
-    const [sessionsLength, setSessionLength] = useState(0)
-    const [sessionsIsRunning, setSessionIsRunning] = useState(true)
-    const [isPaused, setIsPaused] = useState(false)
-
-    useEffect(() => {
-        let timerId = null
-        if (sessionsIsRunning) {
-            timerId = setInterval(() => {
-                setSessionLength(sessionLength => sessionLength + 1)
-            }, 1000)
-        } return () => clearInterval(timerId)
-    }, [sessionsIsRunning])
-
-    function formatTotalTime(t) {
-        const h = (Math.floor(t / 3600)).toString().padStart(2, '0')
-        t %= 3600
-        const m = (Math.floor(t / 60)).toString().padStart(2, '0')
-        const s = (t % 60).toString().padStart(2, '0')
-
-        return `${h > 0 ? `${h.padStart()}:${m}:${s}` : `${m}:${s}`}`
+  const location = useLocation();
+  const client = location.state.client;
+  const currentSessionId = location.state.currentSessionId;
+  const sessionName = location.state.sessionName;
+  const currentSessionName = location.state.sessionName;
+  const [subtitle, setSubtite] = useState("");
+  const [popoutOpen, setPopoutOpen] = useState(false);
+  const [sessionLength, setSessionLength] = useState(0);
+  const [sessionIsRunning, setSessionIsRunning] = useState(true);
+  const [isPaused, setIsPaused] = useState(false);
+  const { firebase } = useContext(FirebaseContext);
+  const history = useHistory();
+  const currentSessionData = {
+    sessionId: currentSessionId,
+    sessionLength: sessionLength,
+  };
+  let [count, setCount] = useState(0);
+  useInterval(() => {
+    if (sessionIsRunning) {
+      setSessionLength(sessionLength + 1);
     }
+  }, 1000);
 
-    return (
-        <>
-            <HeaderContainer
-                title='Session'
-                sessionActive={true}
-                subtitle={isPaused ? `Paused: ${formatTotalTime(sessionsLength)}`: `Elapsed Time: ${formatTotalTime(sessionsLength)}`}
-                backIcon={true}
-            />
-            <Popout open={popoutOpen}>
-                <Popout.HeaderContainer onClick={() => setPopoutOpen(!popoutOpen)}>
-                    <Popout.Header>Session Menu</Popout.Header>
-                    <Popout.OpenButton>{popoutOpen ? 'close' : 'open'}</Popout.OpenButton>
-                </Popout.HeaderContainer>
-                <Popout.List>
-                    <Popout.ListItem onClick={() => {
-                        setSessionIsRunning(!sessionsIsRunning)
-                        setIsPaused(!isPaused)
-                        }}>{sessionsIsRunning ? 'Pause' : 'Resume'} Session</Popout.ListItem>
-                    <Popout.ListItem>End Session</Popout.ListItem>
-                </Popout.List>
-            </Popout>
-            <IntervalsAccordion isRunning={sessionsIsRunning} client={client} sessionId={currentSessionId} />
-            <DurationsAccordion isRunning={sessionsIsRunning} client={client} sessionId={currentSessionId} />
-        </>
-    )
+  const endSession = () => {
+    firebase.firestore().collection("sessions").doc(currentSessionId).update({
+      sessionId: currentSessionId, //adds sessionId to session document when session is completed so ID can be pushed via useHistory to session datasheet
+      sessionLength: sessionLength, // sets session length upon session completion
+    });
+  };
+  function formatTotalTime(t) {
+    const h = Math.floor(t / 3600)
+      .toString()
+      .padStart(2, "0");
+    t %= 3600;
+    const m = Math.floor(t / 60)
+      .toString()
+      .padStart(2, "0");
+    const s = (t % 60).toString().padStart(2, "0");
+
+    return `${h > 0 ? `${h.padStart()}:${m}:${s}` : `${m}:${s}`}`;
+  }
+
+  return (
+    <>
+      <HeaderContainer
+        title={sessionName}
+        sessionActive={true}
+        subtitle={
+          isPaused
+            ? `Paused: ${formatTotalTime(sessionLength)}`
+            : `Elapsed Time: ${formatTotalTime(sessionLength)}`
+        }
+        backIcon={true}
+        sessionData={currentSessionData}
+      />
+      <Popout open={popoutOpen}>
+        <Popout.HeaderContainer onClick={() => setPopoutOpen(!popoutOpen)}>
+          <Popout.Header>Session Menu</Popout.Header>
+          <Popout.OpenButton>{popoutOpen ? "close" : "open"}</Popout.OpenButton>
+        </Popout.HeaderContainer>
+        <Popout.List>
+          <Popout.ListItem
+            onClick={() => {
+              setSessionIsRunning(!sessionIsRunning);
+              setIsPaused(!isPaused);
+            }}
+          >
+            {sessionIsRunning ? "Pause" : "Resume"} Session
+          </Popout.ListItem>
+          <Popout.ListItem onClick={() => history.push(ROUTES.CLIENT_LIST)}>
+            End Session
+          </Popout.ListItem>
+        </Popout.List>
+      </Popout>
+          <motion.div
+            variants={pageTransitions}
+            initial="hidden"
+            animate="show"
+            exit="exit"
+          >
+      <Prompt
+        message={(location, action) => {
+          endSession();
+          return `Navigating away from this page will end current session - All running trials will be lost`;
+        }}
+      />
+        <IntervalsAccordion
+          key="intervalsacc"
+          isRunning={sessionIsRunning}
+          client={client}
+          sessionId={currentSessionId}
+        />
+        <DurationsAccordion
+          key="durationsacc"
+          isRunning={sessionIsRunning}
+          client={client}
+          sessionId={currentSessionId}
+        />
+        {/* <RateCardContainer /> */}
+      </motion.div>
+    </>
+  );
 }

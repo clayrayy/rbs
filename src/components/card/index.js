@@ -1,58 +1,89 @@
-import React from 'react'
-import {motion, AnimatePresence} from 'framer-motion'
+import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
-    Container,
-    Title,
-    Text,
-    LeftContainer,
-    CenterContainer,
-    RightContainer,
-    Top,
-    Dropdown
-} from './styles/card'
+  Container,
+  Title,
+  Text,
+  LeftContainer,
+  CenterContainer,
+  RightContainer,
+  Top,
+  Dropdown,
+  SessionItem,
+  ColumnsLabels,
+  ListText,
+  IntervalResultContainer,
+  IntervalResultItem,
+} from "./styles/card";
 
-export default function Card({ isVisible, children, ...restProps }) {
-    const variants = {
-        hidden: { opacity: 0, x:-100 },
-        visible: { opacity: 1, x: 0},
-        exit: { opacity: 0 }
-      }
-        
-      
-    return (
-        
-    <Container as={motion.div} initial="hidden" variants={variants} animate="visible"  {...restProps}>{children}</Container>
-    )
+export default function Card({ children, ...restProps }) {
+  // const variants = {
+  //     hidden: { opacity: 0, x:-100 },
+  //     visible: { opacity: 1, x: 0},
+  //     exit: { opacity: 0 },
+  //   }
+
+  return <Container {...restProps}>{children}</Container>;
 }
 
-Card.Title = function CardContainer({children, ...restProps}) {
-    return <Title {...restProps}>{children}</Title>
-}
+Card.Title = function CardTitle({ children, ...restProps }) {
+  return <Title {...restProps}>{children}</Title>;
+};
 
-Card.Top = function CardTop({children, ...restProps}) {
-    return <Top {...restProps}>{children}</Top>
-}
+Card.Top = function CardTop({ children, ...restProps }) {
+  return <Top {...restProps}>{children}</Top>;
+};
 
-Card.Dropdown = function CardDropdown({children, ...restProps}) {
-    return <Dropdown {...restProps}>{children}</Dropdown>
-}
+Card.Dropdown = function CardDropdown({ children, ...restProps }) {
+  return <Dropdown {...restProps}>{children}</Dropdown>;
+};
 
-Card.Text = function CardText({children, ...restProps}) {
-    return <Text {...restProps}>{children}</Text>
-}
+Card.Text = function CardText({ children, ...restProps }) {
+  return <Text {...restProps}>{children}</Text>;
+};
 
-Card.LeftContainer = function CardLeftContainer({children, ...restProps}) {
-    return <LeftContainer {...restProps}>{children}</LeftContainer>
-}
+Card.IntervalResultItem = function CardIntervalResultItem({
+  children,
+  ...restProps
+}) {
+  return <IntervalResultItem {...restProps}>{children}</IntervalResultItem>;
+};
 
-Card.CenterContainer = function CardCenterContainer({children, ...restProps}) {
-    return <CenterContainer {...restProps}>{children}</CenterContainer>
-}
+Card.IntervalResultContainer = function CardIntervalResultContainer({
+  children,
+  ...restProps
+}) {
+  return (
+    <IntervalResultContainer {...restProps}>{children}</IntervalResultContainer>
+  );
+};
 
-Card.RightContainer = function CardRightContainer({children, ...restProps}) {
-    return <RightContainer {...restProps}>{children}</RightContainer>
-}
+Card.LeftContainer = function CardLeftContainer({ children, ...restProps }) {
+  return <LeftContainer {...restProps}>{children}</LeftContainer>;
+};
 
+Card.CenterContainer = function CardCenterContainer({
+  children,
+  ...restProps
+}) {
+  return <CenterContainer {...restProps}>{children}</CenterContainer>;
+};
+
+Card.RightContainer = function CardRightContainer({ children, ...restProps }) {
+  return <RightContainer {...restProps}>{children}</RightContainer>;
+};
+
+Card.ColumnsLabels = function CardColumnsLabels({ children, ...restProps }) {
+  return <ColumnsLabels {...restProps}>{children}</ColumnsLabels>;
+};
+
+Card.SessionItem = function CardSessionItem({ children, ...restProps }) {
+  return <SessionItem {...restProps}>{children}</SessionItem>;
+};
+
+Card.ListText = function CardListText({ children, ...restProps }) {
+  return <ListText {...restProps}>{children}</ListText>;
+};
 
 // export const Container = styled.div`
 //     display: flex;

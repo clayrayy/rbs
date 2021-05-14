@@ -1,16 +1,15 @@
 const colors = {
-    headerBackground: '#113577',
-    pageBackground: '#bdbdbd',
-    cardBackground: '#eeeeee',
-    // pageBackground: '#f7d540',
-    darkText: '#252525',
-    lightText: '#F5F5F5',
-    accent: '#6E3B55',
-    btnActive: '#C33C54',
-    btnPrimary: 'rgba(0,0,0,.75)',
-    dropdown: 'rgba(0, 0, 0, 0.85)'
-}
+  headerBackground: "#14213D",
+  pageBackground: "#FCA311 ",
+  cardBackground: "#E5E5E5",
+  // pageBackground: '#f7d540',
+  darkText: "#393e46",
+  lightText: "#E7E6E1",
+  startButton: "#003C5E",
+  accent: "#7E2C5B",
+  btnActive: "#C42021",
+  btnPrimary: "#000000",
+  dropdown: "rgba(0, 0, 0, 0.85)",
+};
 
-
-
-export default colors
+export default colors;
