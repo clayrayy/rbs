@@ -26,16 +26,14 @@ export const Container = styled(motion.div)`
 
   ${({ expandForSmallScreen }) =>
     expandForSmallScreen &&
-    `
-        height: 175px;
-
+    ` height: 175px;
         @media (max-width: 700px) {
-           
             height: 300px
         }
         
     `}
 `;
+
 export const Title = styled.h1`
   color: ${colors.darkText};
   font-family: Arial, Helvetica, sans-serif;
@@ -59,7 +57,7 @@ export const Text = styled.p`
   color: ${colors.darkText};
 
   @media (min-width: 600px) {
-    font-size: 1rem;
+    font-size: 0.85rem;
   }
 
   ${({ textType }) =>
@@ -100,7 +98,8 @@ export const Text = styled.p`
     `}
 `;
 export const LeftContainer = styled(motion.div)`
-  flex: ${({ itemType }) => (itemType === "history" ? "4" : "1")};
+  flex: 1;
+  ${({ itemType }) => (itemType === "history" ? "flex: 4" : "flex: 1")};
   display: flex;
   flex-direction: column;
   ${({ itemType }) => itemType === "history" && `flex-direction: row;`}
@@ -115,15 +114,16 @@ export const LeftContainer = styled(motion.div)`
     `
     align-items: center;
     
-`} /* border: solid 1px orange; */
+`}
 `;
 export const CenterContainer = styled(motion.div)`
-  flex: 1;
+  flex: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+  /* border: solid pink; */
 
   ${({ containerType }) =>
     containerType === "datasheet" &&
@@ -131,6 +131,24 @@ export const CenterContainer = styled(motion.div)`
     align-items: center;
     
 `}
+
+  ${({ containerType }) =>
+    containerType === "datasheet-title" &&
+    `
+    // border: solid;
+    // align-items: flex-start;
+    // display: none;
+    width: 100%;
+    justify-self: flex-start;
+    
+`}
+
+  ${({ containerType }) =>
+    containerType === "results-title" &&
+    `
+    border-solid 1px;
+    position: relative;
+  `}
 `;
 export const RightContainer = styled(motion.div)`
   flex: 1;
@@ -139,7 +157,6 @@ export const RightContainer = styled(motion.div)`
   justify-content: space-between;
   align-items: flex-end;
   text-align: center;
-  /* border: solid 1px magenta; */
 
   ${({ itemType }) =>
     itemType === "edit-container" &&
@@ -151,6 +168,12 @@ export const RightContainer = styled(motion.div)`
   ${({ containerType }) =>
     containerType === "datasheet" &&
     `
+    align-items: center;
+`}
+  ${({ containerType }) =>
+    containerType === "interval-dropdown" &&
+    `
+    // border: solid 1px;
     align-items: center;
 `}
 `;
@@ -171,10 +194,14 @@ export const SessionItem = styled(motion.div)`
   display: flex;
   align-items: center;
   justify-content: center;
-  /* transition: all .15s ease; */
-  /* width: 80%; */
   max-width: 90%;
   margin: 0 auto;
+  /* border: solid 1px; */
+  ${({ itemType }) =>
+    itemType === "duration-result" &&
+    `
+        width: 100%;
+    `}
 
   &:last-of-type {
     border-bottom: none;
@@ -207,14 +234,11 @@ export const ColumnsLabels = styled.div`
     `}
 `;
 
-export const ListText = styled.p`
+export const ListText = styled(motion.p)`
   font-size: clamp(0.75rem, -0.875rem + 8.333vw, 0.1rem);
   text-align: center;
-  /* transition: all .25s ease; */
   max-width: 100%;
-  /* width: 80%; */
   font-size: 0.75rem;
-  /* border: solid 1px; */
   color: ${colors.darkText};
 
   @media (min-width: 835px) {
@@ -232,31 +256,39 @@ export const ListText = styled.p`
     `}
 
   ${({ textType }) =>
-    textType === "interval-result" &&
+    textType === "total-behaviors" &&
     `
-       
+       position: absolue;
+    `}
+
+    
+`;
+
+export const DownArrow = styled.span`
+  font-size: 30px;
+  text-align: center;
+  margin: 0 auto;
+  transition: all 0.25s ease;
+  ${({ open }) =>
+    open &&
+    `
+        transform: scaleY(-1);
     `}
 `;
+
 export const IntervalResultContainer = styled.div`
   margin: 0 auto;
   display: grid;
   width: 90%;
-  /* background: yellow; */
   grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
   grid-auto-flow: column;
   text-align: center;
-  /* justify-items: center; */
-  /* border: solid 1px; */
 `;
+
 export const IntervalResultItem = styled.div`
-  /* margin: 0 auto; */
   margin-top: 2em;
-  /* background: green; */
   border-bottom: solid 1px;
   border-right: solid 1px;
-  /* text-align: center; */
-  /* padding:  0 .5em; */
-  /* font-weight: bold; */
   display: flex;
   flex-direction: column;
   &:first-of-type {

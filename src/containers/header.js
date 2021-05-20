@@ -6,6 +6,8 @@ import { FirebaseContext } from "../context/firebase";
 import { useHistory, useLocation } from "react-router-dom";
 import { useAuthListener } from "hooks";
 import * as ROUTES from "../constants/routes";
+import Popout from "components/popout";
+import { SessionContext } from "context/session";
 
 export function HeaderContainer({
   data,
@@ -18,6 +20,7 @@ export function HeaderContainer({
   sessionActive,
   subtitle,
   sessionData,
+  sessionFunctions,
 }) {
   const [menuOpen, setMenuOpen] = useState(false); // activates slideout menu
   const [addClientFormOpen, setAddClientFormOpen] = useState(false); // activates slideout menu to add client
@@ -26,15 +29,15 @@ export function HeaderContainer({
   const [confirmEndSessionActive, setConfirmEndSessionActive] = useState(false);
   const [backActive, setBackActive] = useState(false); //activates change to animate back icon
   let history = useHistory();
+  const location = useLocation();
+  // const { sessionIsRunning, setSessionIsRunning, isPaused, setIsPaused } =
+  //   sessionFunctions;
+
   const { user } = useAuthListener();
   const { firebase } = useContext(FirebaseContext);
   const db = firebase.firestore();
-  // const location = useLocation()
-  // console.log(location)
-
   function goBack() {
     history.push(ROUTES.CLIENT_LIST);
-    
   }
 
   function formatClientName(name) {
@@ -105,6 +108,47 @@ export function HeaderContainer({
                 </CardModal.CenterContainer>
             </CardModal> */}
 
+      {/* Client List Menu */}
+      {location.pathname === "/clientlist" && (
+        <Header.MenuDiv open={menuOpen}>
+          <Header.Menu>
+            <Header.MenuItem key="profile">
+              <Header.MenuLink to={ROUTES.PROFILE}>Profile</Header.MenuLink>
+            </Header.MenuItem>
+            <Header.MenuItem key="about">
+              <p>About RBS Data</p>
+            </Header.MenuItem>
+            <Header.MenuItem key="signout">
+              <p onClick={signOut}>Sign Out</p>
+            </Header.MenuItem>
+          </Header.Menu>
+        </Header.MenuDiv>
+      )}
+
+      {/* Session Menu */}
+      {location.pathname === "/session" && (
+        <Header.MenuDiv open={menuOpen}>
+          <Header.Menu>
+            <Header.MenuItem
+              onClick={() => {
+                sessionFunctions.setSessionIsRunning(
+                  !sessionFunctions.sessionIsRunning
+                );
+                sessionFunctions.setIsPaused(!sessionFunctions.isPaused);
+              }}
+            >
+              Pause Session
+            </Header.MenuItem>
+            <Header.MenuItem
+              key="about"
+              onClick={() => history.push(ROUTES.CLIENT_LIST)}
+            >
+              End Session
+            </Header.MenuItem>
+          </Header.Menu>
+        </Header.MenuDiv>
+      )}
+
       <Header.IconSpacer>
         {backIcon && (
           <Header.BackIcon
@@ -170,19 +214,6 @@ export function HeaderContainer({
           </Form>
         )}
       </Header.AddItemForm>
-      <Header.MenuDiv open={menuOpen}>
-        <Header.Menu>
-          <Header.MenuItem>
-            <Header.MenuLink to={ROUTES.PROFILE}>Profile</Header.MenuLink>
-          </Header.MenuItem>
-          <Header.MenuItem>
-            <p>About RBS Data</p>
-          </Header.MenuItem>
-          <Header.MenuItem>
-            <p onClick={signOut}>Sign Out</p>
-          </Header.MenuItem>
-        </Header.Menu>
-      </Header.MenuDiv>
     </Header>
   );
 }

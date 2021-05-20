@@ -2,13 +2,12 @@ import React, { Fragment } from "react";
 import { deleteEventVariant, textDisappear } from "constants/motionVariants";
 import { AnimatePresence, AnimateSharedLayout, motion } from "framer-motion";
 import { useIntervalLogic } from "hooks/logic-hooks/use-interval";
-import { formatTotalTime } from "utils/formatTime";
 import { Intervals, Duration, Card, CardModal } from "../../components";
 import { formatIntervalTime } from "utils/formatIntervalTime";
 
 //add interval time preset buttons and make a 'custom time' button that brings up add and subtract time buttons
 
-export function WholeIntervalCardContainer({
+export function PartialIntervalCardContainer({
   behaviorName,
   client,
   sessionId,
@@ -32,10 +31,10 @@ export function WholeIntervalCardContainer({
     startTimer,
     addTime,
     subtractTime,
-    handleWholeIntervalResult,
+    handlePartialIntervalResult,
     resetTimer,
     deleteEvent,
-  } = useIntervalLogic(behaviorName, client, sessionId, 'wholeInterval');
+  } = useIntervalLogic(behaviorName, client, sessionId, "partialInterval");
 
   return (
     <Card>
@@ -53,20 +52,20 @@ export function WholeIntervalCardContainer({
             >
               <CardModal.LeftContainer>
                 <CardModal.Text>
-                  Did the behavior occur for the entire interval?
+                  Did the behavior occur one or more time during the interval?
                 </CardModal.Text>
               </CardModal.LeftContainer>
               <CardModal.RightContainer modalType="interval">
                 <Intervals.ResultButton
                   onClick={() => {
-                    handleWholeIntervalResult(true);
+                    handlePartialIntervalResult(true);
                   }}
                 >
                   Yes
                 </Intervals.ResultButton>
                 <Intervals.ResultButton
                   onClick={() => {
-                    handleWholeIntervalResult(false);
+                    handlePartialIntervalResult(false);
                   }}
                 >
                   No
@@ -80,7 +79,13 @@ export function WholeIntervalCardContainer({
             <Intervals.StartButton
               disabled={seconds === 0}
               active={timerActive}
-              onClick={startTimer}
+              onClick={
+                !timerActive
+                  ? startTimer
+                  : () => {
+                      handlePartialIntervalResult(true);
+                    }
+              }
             >
               {timerActive && <Intervals.Seconds time={clockSeconds} />}
               {!timerActive ? (
@@ -91,6 +96,7 @@ export function WholeIntervalCardContainer({
                 </Intervals.ButtonText>
               ) : (
                 <Intervals.ButtonText>
+                  Stop<br/>
                   {formatIntervalTime(seconds)}
                 </Intervals.ButtonText>
               )}
@@ -101,7 +107,7 @@ export function WholeIntervalCardContainer({
           <Duration.Header onClick={() => setIsOpen(!isOpen)}>
             {behaviorName}
           </Duration.Header>
-          {!lockInIntervalTime && (
+          {!lockInIntervalTime ? (
             <Fragment>
               <Intervals.ButtonContainer>
                 <Intervals.SelectorButton
@@ -123,7 +129,7 @@ export function WholeIntervalCardContainer({
                 </Intervals.SelectorButton>
               </Intervals.ButtonContainer>
 
-              <Intervals.ResetContainer>
+              <Intervals.ResetContainer layout>
                 <AnimatePresence>
                   {!timerActive && seconds !== 0 && (
                     <Intervals.Text
@@ -142,13 +148,29 @@ export function WholeIntervalCardContainer({
                 </AnimatePresence>
               </Intervals.ResetContainer>
             </Fragment>
+          ) : (
+            <AnimatePresence exitBeforeEnter>
+              
+                <Card.ListText
+                  initial="hidden"
+                  animate="show"
+                  exit="hidden"
+                  variants={textDisappear}
+                  style={{ fontSize: ".85rem" }}
+                >
+                  Press Start to begin timer.<br />
+                  Press Stop if behavior occurs.
+                </Card.ListText>
+              
+              
+            </AnimatePresence>
           )}
         </Card.CenterContainer>
         <Card.RightContainer>
           <Intervals.MoreInfo onClick={() => setIsOpen(!isOpen)} />
         </Card.RightContainer>
       </Card.Top>
-      <AnimatePresence >
+      <AnimatePresence>
         {isOpen && (
           <Card.Dropdown
             key="sessions"
@@ -164,6 +186,17 @@ export function WholeIntervalCardContainer({
             open={isOpen}
             intervals={intervals}
           >
+            <Card.SessionItem>
+              {" "}
+              <Card.ColumnsLabels>
+                <Card.LeftContainer containerType="interval-dropdown">
+                  <Card.ListText>Time</Card.ListText>
+                </Card.LeftContainer>
+                <Card.RightContainer containerType="interval-dropdown">
+                  <Card.ListText>Did behavior occur?</Card.ListText>
+                </Card.RightContainer>
+              </Card.ColumnsLabels>
+            </Card.SessionItem>
             {!loading &&
               intervals
                 .sort((a, b) => a.epochDate - b.epochDate)
@@ -177,50 +210,56 @@ export function WholeIntervalCardContainer({
                         exit="exit"
                         variants={deleteEventVariant}
                         key={item.docId}
-                        layout
                       >
-                        <Card.LeftContainer itemType="history">
-                          <AnimateSharedLayout>
-                          <AnimatePresence>
-                          {editEventsActive && (
-                              <Duration.DeleteBehaviorIcon
-                                key={item.docId}
-                                animate="show"
-                                initial="hidden"
-                                exit="exit"
-                                variants={deleteEventVariant}
-                                onClick={() => deleteEvent(item.docId)}
-                                active={editEventsActive}
-                                layout
-                              />
-                              )}
+                        <Card.ColumnsLabels>
+                          <Card.LeftContainer
+                            itemType="history"
+                            containerType="interval-dropdown"
+                          >
+                            <AnimateSharedLayout>
+                              <AnimatePresence>
+                                {editEventsActive && (
+                                  <Duration.DeleteBehaviorIcon
+                                    key={item.docId}
+                                    animate="show"
+                                    initial="hidden"
+                                    exit="exit"
+                                    variants={deleteEventVariant}
+                                    onClick={() => deleteEvent(item.docId)}
+                                    active={editEventsActive}
+                                  />
+                                )}
                               </AnimatePresence>
-                          <Card.ListText
-                            as={motion.p}
-                            key={`timestamp${item.docId}`}
-                            initial="hidden"
-                            animate="show"
-                            variants={deleteEventVariant}
-                            exit="exit"
-                            layout
+                              <Card.ListText
+                                as={motion.p}
+                                key={`timestamp${item.docId}`}
+                                initial="hidden"
+                                animate="show"
+                                variants={deleteEventVariant}
+                                exit="exit"
+                                // layout
+                              >
+                                {item.date.slice(-7)}
+                              </Card.ListText>
+                            </AnimateSharedLayout>
+                          </Card.LeftContainer>
+                          {/* <Card.CenterContainer>hi</Card.CenterContainer> */}
+                          <Card.RightContainer
+                            containerType="interval-dropdown"
+                             layout
                           >
-                            {item.date}
-                          </Card.ListText></AnimateSharedLayout>
-                        </Card.LeftContainer>
-
-                        <Card.RightContainer layout>
-                          <Card.ListText
-                            key={`event-time${item.docId}`}
-                            as={motion.p}
-                            animate="show"
-                            // initial='hidden'
-                            exit="exit"
-                            variants={deleteEventVariant}
-                            layout
-                          >
-                            {item.result ? "True" : "False"}
-                          </Card.ListText>
-                        </Card.RightContainer>
+                            <Card.ListText
+                              key={`event-time${item.docId}`}
+                              as={motion.p}
+                              animate="show"
+                              // initial='hidden'
+                              exit="exit"
+                              variants={deleteEventVariant}
+                            >
+                              {item.result ? "Yes" : "No"}
+                            </Card.ListText>
+                          </Card.RightContainer>
+                        </Card.ColumnsLabels>
                       </Card.SessionItem>
                     </AnimatePresence>
                     // </AnimateSharedLayout>

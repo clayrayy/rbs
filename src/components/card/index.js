@@ -9,12 +9,15 @@ import {
   RightContainer,
   Top,
   Dropdown,
+  DownArrow,
   SessionItem,
   ColumnsLabels,
   ListText,
   IntervalResultContainer,
   IntervalResultItem,
 } from "./styles/card";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
 export default function Card({ children, ...restProps }) {
   // const variants = {
@@ -36,6 +39,15 @@ Card.Top = function CardTop({ children, ...restProps }) {
 
 Card.Dropdown = function CardDropdown({ children, ...restProps }) {
   return <Dropdown {...restProps}>{children}</Dropdown>;
+};
+
+Card.DownArrow = function ClientDownArrow({ children, ...restProps }) {
+  return (
+    <DownArrow {...restProps}>
+      
+      <FontAwesomeIcon icon={faAngleDown} />
+    </DownArrow>
+  );
 };
 
 Card.Text = function CardText({ children, ...restProps }) {

@@ -14,7 +14,7 @@ export const Container = styled(motion.div)`
   bottom: 0;
   left: 0;
   right: 0;
-  /* border-radius: 25px; */
+  /* border-radius: 15%; */
 
   z-index: ${({ bringForward }) =>
     bringForward

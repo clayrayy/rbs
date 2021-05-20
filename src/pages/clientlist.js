@@ -4,7 +4,7 @@ import { ClientCard } from "../components";
 import DataSheet from "./datasheet";
 import * as ROUTES from "../constants/routes";
 import useClientData from "hooks/get-data-hooks/use-get-clients";
-import { ClientListContainer } from "containers/clientlist";
+import { ClientCardContainer } from "containers/card-components/clientcard";
 import { motion } from "framer-motion";
 import { pageTransitions } from "constants/motionVariants";
 // import { DataSheet } from 'pages'

@@ -2,18 +2,19 @@ import { Card } from "components";
 import React from "react";
 import { formatTotalTime } from "utils/formatTime";
 
-export function IntervalResultContainer({ behavior, name }) {
+export function IntervalResultContainer({ behavior, name, intervalType }) {
   const results = behavior.filter((item) => item[0].behaviorName === name);
+  console.log(results)
 
   // console.log(totalOccurances)
-  return results.map((result) => {
+  return results.map((result, index) => {
     let totalOccurrances = 0;
 
     result.forEach((item) => item.result && totalOccurrances++);
     // if value of result == true, increment totalOccurrances
 
     return (
-      <Card>
+      <Card key={index}>
         <Card.ColumnsLabels>
           <Card.LeftContainer containerType="datasheet">
             <Card.Text>Behavior</Card.Text>

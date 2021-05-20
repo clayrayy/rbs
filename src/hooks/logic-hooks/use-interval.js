@@ -5,7 +5,7 @@ import useGetSessionIntervals from "hooks/get-data-hooks/get-session-intervals";
 import { useInterval } from "hooks/use-interval";
 import { useContext, useState } from "react";
 
-export function useIntervalLogic(behaviorName, client, sessionId) {
+export function useIntervalLogic(behaviorName, client, sessionId, intervalType) {
   const { firebase } = useContext(FirebaseContext);
   const [seconds, setSeconds] = useState(0);
   const [initialSeconds, setInitialSeconds] = useState(0);
@@ -28,7 +28,8 @@ export function useIntervalLogic(behaviorName, client, sessionId) {
   const { intervals, loading } = useGetSessionIntervals(
     client.docId,
     sessionId,
-    behaviorName
+    behaviorName,
+    intervalType
   );
   // console.log(intervals)
   // converts seconds to hh:mm:ss format
@@ -80,20 +81,41 @@ export function useIntervalLogic(behaviorName, client, sessionId) {
   }
 
   //used to handle the results of the interval test
-  function handleResult(result) {
+  function handleWholeIntervalResult(result) {
     firebase.firestore().collection("events").doc().set({
       behaviorName: behaviorName,
       createdBy: user.email,
       sessionId: sessionId,
       clientId: client.docId,
       intervalLength: initialSeconds,
-      eventType: "interval",
+      eventType: "wholeInterval",
       serverTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
       date: eventTime,
       epochDate: new Date().getTime(),
       result: result,
     });
     setTimeout(() => {
+      setShowResultModal(false);
+      setBringUpModal(false);
+      setSeconds(initialSeconds);
+    }, 150);
+  }
+
+  function handlePartialIntervalResult(result) {
+    firebase.firestore().collection("events").doc().set({
+      behaviorName: behaviorName,
+      createdBy: user.email,
+      sessionId: sessionId,
+      clientId: client.docId,
+      intervalLength: initialSeconds,
+      eventType: "partialInterval",
+      serverTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      date: eventTime,
+      epochDate: new Date().getTime(),
+      result: result,
+    });
+    setTimeout(() => {
+      setTimerActive(false)
       setShowResultModal(false);
       setBringUpModal(false);
       setSeconds(initialSeconds);
@@ -138,8 +160,9 @@ export function useIntervalLogic(behaviorName, client, sessionId) {
     startTimer,
     addTime,
     subtractTime,
-    handleResult,
+    handleWholeIntervalResult,
     resetTimer,
     deleteEvent,
+    handlePartialIntervalResult
   };
 }

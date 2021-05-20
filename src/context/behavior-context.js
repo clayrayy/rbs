@@ -1,2 +1,1 @@
-import { createContext } from "react";
-export const BehaviorContext = createContext(null);
+import { createContext } from 'react'

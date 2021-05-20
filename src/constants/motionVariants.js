@@ -43,21 +43,7 @@ export const item = {
   hidden: { opacity: 0, x: -50 },
 };
 
-export const textDisappear = {
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-    },
-  },
-  hidden: {
-    opacity: 0,
-    transition: {
-      duration: 0.5,
-    },
-  },
-};
+
 
 export const trialRunning = {
   show: {
@@ -99,21 +85,37 @@ export const deleteEventVariant = {
     x: 0,
     transition: {
       type: "linear",
-      duration: 0.5,
+      duration: 0.3,
     },
   },
   hidden: {
-    x: -500,
+    x: -100,
     opacity: 0,
     transition: {
-      duration: 0.5,
+      duration: 0.3,
     },
   },
   exit: {
     opacity: 0,
-
+    x: -100,
     transition: {
-      // duration: .5,
+      duration: 0.3,
+    },
+  },
+};
+
+export const textDisappear = {
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+    },
+  },
+  hidden: {
+    opacity: 0,
+    transition: {
+      duration: 0.5,
     },
   },
 };
@@ -125,21 +127,27 @@ export const modalVariants = {
     height: "auto",
     scale: 1,
     transition: {
-      duration: 0.5,
+      duration: .5,
+      delay: .25
     },
   },
-  collapsed: {
+  hidden: {
     opacity: 0,
     scale: 0.5,
-    transition: {},
+    transition: {
+      duration: 2,
+      delay: .5
+    },
   },
   exit: {
     opacity: 0,
     scale: 0,
+    height: 'auto',
     y: 50,
     transition: {
+      delay: .5,
       // type: 'linear',
-      duration: 0.5,
+      duration: .5,
     },
   },
 };
@@ -151,21 +159,32 @@ export const pageTransitions = {
     x: 0,
     transition: {
       duration: 0.3,
-      
     },
   },
   hidden: {
     opacity: 0,
-    y: '10%',
+    y: "10%",
     transition: {
       duration: 0.3,
     },
   },
   exit: {
     opacity: 0,
-    y: '10%',
+    y: "10%",
     transition: {
       duration: 0.3,
     },
   },
 };
+
+export const modalFade = {
+  show: {
+
+  },
+  hidden: {
+
+  },
+  exit: {
+
+  }
+}

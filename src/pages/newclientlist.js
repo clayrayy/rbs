@@ -1,5 +1,5 @@
 import React from "react";
-import { ClientListContainer } from "containers/clientlist";
+import { ClientCardContainer } from "containers/card-components/clientcard";
 import useClientData from "hooks/get-data-hooks/use-get-clients";
 import { HeaderContainer } from "containers/header";
 import { Card, Header, Loading } from "components";
@@ -44,7 +44,7 @@ export default function NewClientList() {
             {!loading &&
               clients.map((client, index) => {
                 const curClient = client;
-                return <ClientListContainer client={curClient} key={index} />;
+                return <ClientCardContainer client={curClient} key={index} />;
               })}
           </motion.div>
         </AnimateSharedLayout>

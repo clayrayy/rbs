@@ -233,6 +233,7 @@ export const Seconds = styled.div`
 export const Header = styled.h1``;
 
 export const Input = styled.input``;
+
 export const ResetContainer = styled(motion.div)`
   /* border: solid 1px red; */
   /* height: 1em; */

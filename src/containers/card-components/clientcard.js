@@ -1,10 +1,10 @@
-import React, { useState, useContext } from "react";
-import { Card, CardModal, ClientCard, Form } from "../components";
+import React, { useState, useContext, Fragment } from "react";
+import { Card, CardModal, ClientCard, Form } from "../../components";
 import { useGetSessionsData } from "hooks/get-data-hooks/use-get-sessions";
 import { useHistory } from "react-router";
 import { FirebaseContext } from "context/firebase";
 import { useAuthListener } from "hooks";
-import * as ROUTES from "../constants/routes";
+import * as ROUTES from "../../constants/routes";
 import { formatTotalTime } from "utils/formatTime";
 import dayjs from "dayjs";
 import { AnimatePresence, motion } from "framer-motion";
@@ -12,10 +12,12 @@ import {
   accordionVariants,
   item,
   list,
+  modalFade,
   modalVariants,
+  textDisappear,
 } from "constants/motionVariants";
 
-export function ClientListContainer({ client }) {
+export function ClientCardContainer({ client }) {
   /* ---Begin State Variable Declarations--- */
 
   const [sessionName, setSessionName] = useState("");
@@ -114,7 +116,7 @@ export function ClientListContainer({ client }) {
           <CardModal
             key={"cardboi"}
             // as={motion.div}
-            initial="collapsed"
+            initial="hidden"
             animate="open"
             exit="exit"
             variants={modalVariants}
@@ -122,81 +124,99 @@ export function ClientListContainer({ client }) {
 
             bringForward={bringUpModal}
           >
-            <Form formType="add-session">
-              <Form.Title>New Session for {clientName}</Form.Title>
-              <Form.Base
-                formType="add-session"
-                expandForSmallScreen={expandCardForModal}
-              >
-                <Form.Input
+            <AnimatePresence>
+              {expandCardForModal && bringUpModal && (
+                <Form
+                key='modal-form'
                   formType="add-session"
-                  placeholder="Session Name (optional)"
-                  name="sessionName"
-                  gridArea="n"
-                  value={sessionName}
-                  onChange={({ target }) => setSessionName(target.value)}
-                />
-                <Form.Input
-                  formType="add-session"
-                  placeholder="Taken By (optional)"
-                  name="takenBy"
-                  gridArea="t"
-                  value={takenBy}
-                  addMarginLeft={true}
-                  onChange={({ target }) => setTakenBy(target.value)}
-                />
-                <Form.Button
-                  type="submit"
-                  gridArea="s"
-                  buttonType="confirm"
-                  formType="add-session"
-                  onClick={handleStartNewSession}
+                  initial="hidden"
+                  animate="show"
+                  exit="hidden"
+                  variants={textDisappear}
                 >
-                  Start
-                </Form.Button>
-                <Form.Button
-                  buttonType="cancel"
-                  gridArea="c"
-                  formType="add-session"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    toggleAddSession();
-                  }}
-                >
-                  Cancel
-                </Form.Button>
-              </Form.Base>
-            </Form>
+                  <Form.Title>New Session for {clientName}</Form.Title>
+                  <Form.Base
+                    formType="add-session"
+                    expandForSmallScreen={expandCardForModal}
+                  >
+                    <Form.Input
+                      formType="add-session"
+                      placeholder="Session Name (optional)"
+                      name="sessionName"
+                      gridArea="n"
+                      value={sessionName}
+                      onChange={({ target }) => setSessionName(target.value)}
+                    />
+                    <Form.Input
+                      formType="add-session"
+                      placeholder="Taken By (optional)"
+                      name="takenBy"
+                      gridArea="t"
+                      value={takenBy}
+                      addMarginLeft={true}
+                      onChange={({ target }) => setTakenBy(target.value)}
+                    />
+                    <Form.Button
+                      type="submit"
+                      gridArea="s"
+                      buttonType="confirm"
+                      formType="add-session"
+                      onClick={handleStartNewSession}
+                    >
+                      Start
+                    </Form.Button>
+                    <Form.Button
+                      buttonType="cancel"
+                      gridArea="c"
+                      formType="add-session"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        toggleAddSession();
+                      }}
+                    >
+                      Cancel
+                    </Form.Button>
+                  </Form.Base>
+                </Form>
+              )}
+            </AnimatePresence>
           </CardModal>
         )}
       </AnimatePresence>
-      <Card.Top>
-        {/* End add new session modal */}
+      {/* End add new session modal */}
+      <AnimatePresence exitBeforeEnter>
+        {!expandCardForModal && (
+          <Card.Top
+            initial="hidden"
+            animate="show"
+            exit="hidden"
+            variants={textDisappear}
+          >
+            <Card.LeftContainer>
+              <ClientCard.SessionButton onClick={toggleAddSession}>
+                <ClientCard.ButtonText>New Session</ClientCard.ButtonText>
+              </ClientCard.SessionButton>
+            </Card.LeftContainer>
 
-        <Card.LeftContainer
-          containerType="past-sessions-icon"
-          onClick={() => setShowSessions(!showSessions)}
-        >
-          <ClientCard.IconContainer>
-            <ClientCard.Text>
-              Previous
-              <br />
-              Sessions
-            </ClientCard.Text>
-            <ClientCard.DownArrow open={showSessions} />
-          </ClientCard.IconContainer>
-        </Card.LeftContainer>
-
-        <Card.CenterContainer>
-          <ClientCard.Title>{clientName}</ClientCard.Title>
-        </Card.CenterContainer>
-
-        <Card.RightContainer>
-          <ClientCard.SessionButton onClick={toggleAddSession}>
-            <ClientCard.ButtonText>New Session</ClientCard.ButtonText>
-          </ClientCard.SessionButton>
-        </Card.RightContainer>
-      </Card.Top>
+            <Card.CenterContainer>
+              <ClientCard.Title>{clientName}</ClientCard.Title>
+            </Card.CenterContainer>
+            <Card.RightContainer
+              containerType="past-sessions-icon"
+              onClick={() => setShowSessions(!showSessions)}
+            >
+              <ClientCard.IconContainer>
+                <ClientCard.Text>
+                  Previous
+                  <br />
+                  Sessions
+                </ClientCard.Text>
+                <ClientCard.DownArrow open={showSessions} />
+              </ClientCard.IconContainer>
+            </Card.RightContainer>
+          </Card.Top>
+        )}
+      </AnimatePresence>
 
       <AnimatePresence initial={false}>
         {showSessions && !expandCardForModal && (

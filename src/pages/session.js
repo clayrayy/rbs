@@ -68,40 +68,32 @@ export default function Session() {
         }
         backIcon={true}
         sessionData={currentSessionData}
+        sessionFunctions={{sessionIsRunning, setSessionIsRunning, setIsPaused, isPaused}}
       />
-      <Popout open={popoutOpen}>
-        <Popout.HeaderContainer onClick={() => setPopoutOpen(!popoutOpen)}>
-          <Popout.Header>Session Menu</Popout.Header>
-          <Popout.OpenButton>{popoutOpen ? "close" : "open"}</Popout.OpenButton>
-        </Popout.HeaderContainer>
-        <Popout.List>
-          <Popout.ListItem
-            onClick={() => {
-              setSessionIsRunning(!sessionIsRunning);
-              setIsPaused(!isPaused);
-            }}
-          >
-            {sessionIsRunning ? "Pause" : "Resume"} Session
-          </Popout.ListItem>
-          <Popout.ListItem onClick={() => history.push(ROUTES.CLIENT_LIST)}>
-            End Session
-          </Popout.ListItem>
-        </Popout.List>
-      </Popout>
-          <motion.div
-            variants={pageTransitions}
-            initial="hidden"
-            animate="show"
-            exit="exit"
-          >
-      <Prompt
-        message={(location, action) => {
-          endSession();
-          return `Navigating away from this page will end current session - All running trials will be lost`;
-        }}
-      />
+
+      <motion.div
+        variants={pageTransitions}
+        initial="hidden"
+        animate="show"
+        exit="exit"
+      >
+        <Prompt
+          message={(location, action) => {
+            endSession();
+            return `Navigating away from this page will end current session - All running trials will be lost`;
+          }}
+        />
         <IntervalsAccordion
-          key="intervalsacc"
+          key="wholeintervalsacc"
+          intervalType='wholeInterval'
+          isRunning={sessionIsRunning}
+          client={client}
+          sessionId={currentSessionId}
+        />
+
+        <IntervalsAccordion
+          key="partialintervalsacc"
+          intervalType='partialInterval'
           isRunning={sessionIsRunning}
           client={client}
           sessionId={currentSessionId}
@@ -112,6 +104,7 @@ export default function Session() {
           client={client}
           sessionId={currentSessionId}
         />
+        
         {/* <RateCardContainer /> */}
       </motion.div>
     </>

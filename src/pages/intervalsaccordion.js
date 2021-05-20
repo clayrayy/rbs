@@ -1,14 +1,22 @@
 import React, { useContext, useState } from "react";
 import { Accordion, Duration, Form, Intervals } from "components";
 import { WholeIntervalCardContainer } from "containers/card-components/wholeintervalcard";
-import { DurationCardContainer } from "containers/card-components/durationcard";
-// import { TestCardContainer } from 'containers/testcard'
 import { FirebaseContext } from "context/firebase";
 import { useGetBehaviorsData } from "hooks/get-data-hooks/use-get-behaviors-data";
-import { AnimatePresence, AnimateSharedLayout, motion } from "framer-motion";
-import { accordionVariants, deleteEventVariant, pageTransitions } from "constants/motionVariants";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  accordionVariants,
+  deleteEventVariant,
+  pageTransitions,
+} from "constants/motionVariants";
+import { PartialIntervalCardContainer } from "containers/card-components/partialintervalcard";
 
-export default function IntervalsAccordion({ client, sessionId, isRunning }) {
+export default function IntervalsAccordion({
+  client,
+  sessionId,
+  isRunning,
+  intervalType,
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [newBehaviorName, setNewBehaviorName] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -17,7 +25,6 @@ export default function IntervalsAccordion({ client, sessionId, isRunning }) {
     client.docId,
     sessionId
   );
-  let lengthCalcVar = behaviorsList;
 
   const { firebase } = useContext(FirebaseContext);
   const handleAddNewInterval = (e) => {
@@ -32,7 +39,7 @@ export default function IntervalsAccordion({ client, sessionId, isRunning }) {
         behaviorName: newBehaviorName,
         clientId: client.docId,
         sessionId: sessionId,
-        type: "interval",
+        type: intervalType,
       })
       .then(() => {
         setNewBehaviorName("");
@@ -48,12 +55,14 @@ export default function IntervalsAccordion({ client, sessionId, isRunning }) {
       animate="show"
       exit="exit"
     >
-      <Accordion layoutId="intervals-accordion" open={isOpen}>
+      <Accordion open={isOpen}>
         <Accordion.TitleContainer>
           <Accordion.IconContainer />
           <Accordion.Frame>
             <Accordion.Title onClick={() => setIsOpen(!isOpen)} open={isOpen}>
-              Whole Interval
+              {intervalType === "wholeInterval"
+                ? "Whole Interval"
+                : "Partial Interval"}
             </Accordion.Title>
 
             <Intervals.MoreInfo
@@ -75,10 +84,7 @@ export default function IntervalsAccordion({ client, sessionId, isRunning }) {
               <Accordion.DropdownIcon open={dropdownOpen} />
             </Accordion.IconPositioner>
           </Accordion.IconContainer>
-          <Accordion.DropdownContainer
-            visible={dropdownOpen}
-            
-          >
+          <Accordion.DropdownContainer visible={dropdownOpen}>
             <AnimatePresence>
               <Accordion.Dropdown
                 as={motion.div}
@@ -122,44 +128,89 @@ export default function IntervalsAccordion({ client, sessionId, isRunning }) {
           variants={accordionVariants}
           open={isOpen}
         >
-          <WholeIntervalCardContainer
-            behaviorName="Elopement"
-            client={client}
-            sessionId={sessionId}
-            isRunning={isRunning}
-            layout
-          />
-          <WholeIntervalCardContainer
-            behaviorName="Tantrum"
-            client={client}
-            sessionId={sessionId}
-            isRunning={isRunning}
-            layout
-          />
-          <WholeIntervalCardContainer
-            behaviorName="Pooping"
-            client={client}
-            sessionId={sessionId}
-            isRunning={isRunning}
-            layout
-          />
-          {!loading &&
-            behaviorsList
-              .filter((behavior) => behavior.type === "interval")
-              .map((behavior, index) => {
-                return (
-                  <WholeIntervalCardContainer
-                    key={index}
-                    behaviorName={behavior.behaviorName}
-                    behaviorId={behavior.docId}
-                    isCustomInterval={true}
-                    client={client}
-                    sessionId={sessionId}
-                    isRunning={isRunning}
-                    layout
-                  />
-                );
-              })}
+          {intervalType === "wholeInterval" ? (
+            <>
+              <WholeIntervalCardContainer
+                behaviorName="Elopement"
+                client={client}
+                sessionId={sessionId}
+                isRunning={isRunning}
+                layout
+              />
+              <WholeIntervalCardContainer
+                behaviorName="Tantrum"
+                client={client}
+                sessionId={sessionId}
+                isRunning={isRunning}
+                layout
+              />
+              <WholeIntervalCardContainer
+                behaviorName="Pooping"
+                client={client}
+                sessionId={sessionId}
+                isRunning={isRunning}
+                layout
+              />
+              {!loading &&
+                behaviorsList
+                  .filter((behavior) => behavior.type === "wholeInterval")
+                  .map((behavior, index) => {
+                    return (
+                      <WholeIntervalCardContainer
+                        key={index}
+                        behaviorName={behavior.behaviorName}
+                        behaviorId={behavior.docId}
+                        isCustomInterval={true}
+                        client={client}
+                        sessionId={sessionId}
+                        isRunning={isRunning}
+                        layout
+                      />
+                    );
+                  })}
+            </>
+          ) : (
+            <>
+              <PartialIntervalCardContainer
+                behaviorName="Elopement"
+                client={client}
+                sessionId={sessionId}
+                isRunning={isRunning}
+                layout
+              />
+              <PartialIntervalCardContainer
+                behaviorName="Tantrum"
+                client={client}
+                sessionId={sessionId}
+                isRunning={isRunning}
+                layout
+              />
+              <PartialIntervalCardContainer
+                behaviorName="Pooping"
+                client={client}
+                sessionId={sessionId}
+                isRunning={isRunning}
+                layout
+              />
+              {!loading &&
+                behaviorsList
+                  .filter((behavior) => behavior.type === "partialInterval")
+                  .map((behavior, index) => {
+                    return (
+                      <PartialIntervalCardContainer
+                        key={index}
+                        behaviorName={behavior.behaviorName}
+                        behaviorId={behavior.docId}
+                        isCustomInterval={true}
+                        client={client}
+                        sessionId={sessionId}
+                        isRunning={isRunning}
+                        layout
+                      />
+                    );
+                  })}
+            </>
+          )}
         </Accordion.ItemsContainer>
       </Accordion>
     </motion.div>

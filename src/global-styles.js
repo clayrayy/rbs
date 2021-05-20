@@ -5,7 +5,7 @@ import colors from "constants/colors";
 export const GlobalStyles = createGlobalStyle`
     * {
         box-sizing: border-box;
-
+		user-select: none;
     }
 
     
@@ -20,7 +20,15 @@ export const GlobalStyles = createGlobalStyle`
         font-family: 'Montserrat', sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        background: ${colors.pageBackground};
+        background: hsla(217, 100%, 50%, 1);
+
+background: linear-gradient(240deg, hsla(217, 100%, 50%, 1) 0%, hsla(186, 100%, 69%, 1) 100%);
+
+background: -moz-linear-gradient(240deg, hsla(217, 100%, 50%, 1) 0%, hsla(186, 100%, 69%, 1) 100%);
+
+background: -webkit-linear-gradient(240deg, hsla(217, 100%, 50%, 1) 0%, hsla(186, 100%, 69%, 1) 100%);
+
+filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#0061ff", endColorstr="#60efff", GradientType=1 );
     }
 
     .cssload-container{

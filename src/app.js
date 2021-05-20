@@ -37,7 +37,7 @@ function App() {
               </IsUserRedirect>
 
               <ProtectedRoute user={user} path={ROUTES.DATASHEET}>
-                <DataSheet key="datasheet" />
+                <DataSheet />
               </ProtectedRoute>
 
               <ProtectedRoute user={user} path={ROUTES.CLIENT_LIST}>

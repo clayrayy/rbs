@@ -11,7 +11,7 @@ import { DurationCardContainer } from "containers/card-components/durationcard";
 import { FirebaseContext } from "context/firebase";
 import { useGetBehaviorsData } from "hooks/get-data-hooks/use-get-behaviors-data";
 import { AnimatePresence, AnimateSharedLayout, motion } from "framer-motion";
-import { accordionVariants } from "constants/motionVariants";
+import { accordionVariants, pageTransitions } from "constants/motionVariants";
 
 export default function DurationsAccordion({ client, sessionId }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,6 +46,13 @@ export default function DurationsAccordion({ client, sessionId }) {
   };
 
   return (
+    <motion.div
+      variants={pageTransitions}
+      initial="hidden"
+      animate="show"
+      exit="exit"
+    >
+      
     <Accordion layout open={isOpen}>
       {/* <CardModal
         blackout={dropdownOpen}
@@ -165,5 +172,6 @@ export default function DurationsAccordion({ client, sessionId }) {
             })}
       </Accordion.ItemsContainer>
     </Accordion>
+    </motion.div>
   );
 }

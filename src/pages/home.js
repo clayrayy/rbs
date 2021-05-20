@@ -3,7 +3,7 @@ import Homepage from "components/homepage";
 import { HeaderContainer } from "containers/header";
 import * as ROUTES from "constants/routes";
 import { SigninFormContainer } from "../containers/formcontainers/signin.js";
-import { motion } from 'framer-motion'
+import { motion } from "framer-motion";
 import { pageTransitions } from "constants/motionVariants.js";
 
 export default function Home() {

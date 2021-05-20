@@ -164,7 +164,7 @@ export const Button = styled.button`
   border-radius: 15px;
   /* width: 100%; */
   background-color: ${({ buttonType }) =>
-    buttonType === "cancel" ? colors.headerBackground : colors.btnActive};
+    buttonType === "cancel" ? colors.btnPrimary : colors.btnActive};
   color: ${colors.lightText};
   font-size: 1rem;
   transition: all 150ms cubic-bezier(0.5, 0, 0.5, 1);

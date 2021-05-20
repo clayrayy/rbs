@@ -5,7 +5,8 @@ import { useContext, useEffect, useState } from "react";
 export default function useGetSessionIntervals(
   clientId,
   sessionId,
-  behaviorName
+  behaviorName,
+  intervalType
 ) {
   const [intervals, setIntervals] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,7 +17,7 @@ export default function useGetSessionIntervals(
     .firestore()
     .collection("events")
     .where("clientId", "==", clientId)
-    .where("eventType", "==", "interval")
+    .where("eventType", "==", intervalType)
     .where("sessionId", "==", sessionId)
     .where("behaviorName", "==", behaviorName);
 
