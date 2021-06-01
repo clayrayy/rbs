@@ -12,6 +12,7 @@ export const Container = styled.div`
 `;
 
 export const BackLink = styled(ReachRouterLink)``;
+
 export const Inner = styled.div`
   display: flex;
   justify-content: space-between;
@@ -125,7 +126,7 @@ export const IconSpacer = styled.div`
 export const IconContainer = styled.div`
   padding: 12px 16px;
   /* margin: 0; */
-  transition: all 0.1s ease-in-out;
+  /* transition: all 0.1s ease-in-out; */
 
   z-index: ${({ hideWhen }) => (hideWhen ? "0" : "1000")};
 `;
@@ -199,8 +200,8 @@ export const MenuDiv = styled.div`
   position: fixed;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  padding-top: 6em;
+  align-items: center;
+  /* padding-top: 6em; */
   background-color: ${colors.dropdown};
 
   top: 0;
@@ -210,7 +211,7 @@ export const MenuDiv = styled.div`
   z-index: 100;
 
   transform: ${({ open }) => (!open ? "translateX(100%)" : "none")};
-  transition: transform 250ms cubic-bezier(0.5, 0, 0.5, 1);
+  /* transition: transform 250ms cubic-bezier(0.5, 0, 0.5, 1); */
 `;
 
 export const Menu = styled.ul`
@@ -220,7 +221,10 @@ export const Menu = styled.ul`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  /* transform: translateY(.5vh); */
+border: solid 1px;
   margin: 0;
+  /* position: fixed; */
   padding: 0;
 `;
 

@@ -6,19 +6,19 @@ import {
   Frame,
   Item,
   Header,
-  TimerButton,
+  // TimerButton,
   TimeStamp,
   TimeData,
   ItemsContainer,
-  MoreInfo,
-  ButtonContainer,
+  // MoreInfo,
+  // ButtonContainer,
   TitleFrame,
   TotalTimeContainer,
   Text,
   DeleteBehaviorIcon,
   EditButton,
   Seconds,
-  ButtonText,
+  // ButtonText,
   DropdownContainer,
   DropdownIcon,
   Dropdown,
@@ -88,16 +88,16 @@ Duration.ConfirmDelete = function DurationConfirmDelete({
   return <ConfirmDelete {...restProps}>{children}</ConfirmDelete>;
 };
 
-Duration.ButtonText = function DurationButtonText({ children, ...restProps }) {
-  return <ButtonText {...restProps}>{children}</ButtonText>;
-};
+// Duration.ButtonText = function DurationButtonText({ children, ...restProps }) {
+//   return <ButtonText {...restProps}>{children}</ButtonText>;
+// };
 
-Duration.ButtonContainer = function DurationButtonContainer({
-  children,
-  ...restProps
-}) {
-  return <ButtonContainer {...restProps}>{children}</ButtonContainer>;
-};
+// Duration.ButtonContainer = function DurationButtonContainer({
+//   children,
+//   ...restProps
+// }) {
+//   return <ButtonContainer {...restProps}>{children}</ButtonContainer>;
+// };
 Duration.IconContainer = function DurationIconContainer({
   children,
   ...restProps
@@ -105,12 +105,12 @@ Duration.IconContainer = function DurationIconContainer({
   return <IconContainer {...restProps}>{children}</IconContainer>;
 };
 
-Duration.TimerButton = function DurationTimerButton({
-  children,
-  ...restProps
-}) {
-  return <TimerButton {...restProps}>{children}</TimerButton>;
-};
+// Duration.TimerButton = function DurationTimerButton({
+//   children,
+//   ...restProps
+// }) {
+//   return <TimerButton {...restProps}>{children}</TimerButton>;
+// };
 
 Duration.TimeStamp = function DurationTimeStamp({ children, ...restProps }) {
   return <TimeStamp {...restProps}>{children}</TimeStamp>;
@@ -191,16 +191,12 @@ Duration.DropdownContainer = function DurationDropdownContainer({
   return <DropdownContainer {...restProps}>{children}</DropdownContainer>;
 };
 
-Duration.MoreInfo = function DurationMoreInfo({ children, ...restProps }) {
-  const [isOpen, setIsOpen] = useState(false);
+// Duration.MoreInfo = function DurationMoreInfo({ children, ...restProps }) {
 
-  function handleClick() {
-    setIsOpen(!isOpen);
-  }
 
-  return (
-    <MoreInfo {...restProps}>
-      <FontAwesomeIcon onClick={handleClick} icon={faAngleDown} />
-    </MoreInfo>
-  );
-};
+//   return (
+//     <MoreInfo {...restProps}>
+//       <FontAwesomeIcon icon={faAngleDown} />
+//     </MoreInfo>
+//   );
+// };

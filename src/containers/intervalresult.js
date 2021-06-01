@@ -4,7 +4,7 @@ import { formatTotalTime } from "utils/formatTime";
 
 export function IntervalResultContainer({ behavior, name, intervalType }) {
   const results = behavior.filter((item) => item[0].behaviorName === name);
-  console.log(results)
+  console.log(results);
 
   // console.log(totalOccurances)
   return results.map((result, index) => {
@@ -16,26 +16,31 @@ export function IntervalResultContainer({ behavior, name, intervalType }) {
     return (
       <Card key={index}>
         <Card.ColumnsLabels>
-          <Card.LeftContainer containerType="datasheet">
+          <Card.LeftContainer containerType="interval-dropdown">
             <Card.Text>Behavior</Card.Text>
           </Card.LeftContainer>
-          <Card.CenterContainer>
-            <Card.Text>Interval Length</Card.Text>
+          <Card.CenterContainer containerType="interval-dropdown">
+            <Card.Text>
+              Interval <br />
+              Length
+            </Card.Text>
           </Card.CenterContainer>
-          <Card.RightContainer containerType="datasheet">
-            <Card.Text>Total Occurrances (X)</Card.Text>
+          <Card.RightContainer containerType="interval-dropdown">
+            <Card.Text>Total</Card.Text>
           </Card.RightContainer>
         </Card.ColumnsLabels>
         <Card.Dropdown open={true}>
           <Card.SessionItem>
             <Card.LeftContainer containerType="datasheet">
-              {name}
+              <Card.ListText>{name}</Card.ListText>
             </Card.LeftContainer>
             <Card.CenterContainer containerType="datasheet">
-              {formatTotalTime(result[0].intervalLength)}
+              <Card.ListText>
+                {formatTotalTime(result[0].intervalLength)}
+              </Card.ListText>
             </Card.CenterContainer>
             <Card.RightContainer containerType="datasheet">
-              {totalOccurrances}
+              <Card.ListText>{totalOccurrances}</Card.ListText>
             </Card.RightContainer>
           </Card.SessionItem>
           <Card.IntervalResultContainer>

@@ -2,9 +2,11 @@ import { HeaderContainer } from "containers/header";
 import { ProfileContainer } from "containers/profile";
 import React from "react";
 import { motion } from 'framer-motion'
-import { pageTransitions } from "constants/motionVariants";
+import { MotionVariants } from "constants/motionVariants";
 
 export default function Profile() {
+  const { pageTransitions } =
+    MotionVariants();
   return (
     <>
       <HeaderContainer backIcon="true" title="Profile" />

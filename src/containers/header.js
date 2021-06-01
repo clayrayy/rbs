@@ -8,6 +8,7 @@ import { useAuthListener } from "hooks";
 import * as ROUTES from "../constants/routes";
 import Popout from "components/popout";
 import { SessionContext } from "context/session";
+import { AnimationsContext } from "context/animations";
 
 export function HeaderContainer({
   data,
@@ -32,7 +33,7 @@ export function HeaderContainer({
   const location = useLocation();
   // const { sessionIsRunning, setSessionIsRunning, isPaused, setIsPaused } =
   //   sessionFunctions;
-
+  const { toggleAnimations } = useContext(AnimationsContext);
   const { user } = useAuthListener();
   const { firebase } = useContext(FirebaseContext);
   const db = firebase.firestore();
@@ -71,17 +72,17 @@ export function HeaderContainer({
       });
   };
 
-  const endSession = () => {
-    // TODO: make this function fire when current page changes via router instead of a modal that pops up when back button is pressed
-    firebase
-      .firestore()
-      .collection("sessions")
-      .doc(sessionData.sessionId)
-      .update({
-        sessionId: sessionData.sessionId, //adds sessionId to session document when session is completed so ID can be pushed via useHistory to session datasheet
-        sessionLength: sessionData.sessionLength, // sets session length upon session completion
-      });
-  };
+  // const endSession = () => {
+  //   // TODO: make this function fire when current page changes via router instead of a modal that pops up when back button is pressed
+  //   firebase
+  //     .firestore()
+  //     .collection("sessions")
+  //     .doc(sessionData.sessionId)
+  //     .update({
+  //       sessionId: sessionData.sessionId, //adds sessionId to session document when session is completed so ID can be pushed via useHistory to session datasheet
+  //       sessionLength: sessionData.sessionLength, // sets session length upon session completion
+  //     });
+  // };
 
   return (
     <Header>
@@ -115,9 +116,10 @@ export function HeaderContainer({
             <Header.MenuItem key="profile">
               <Header.MenuLink to={ROUTES.PROFILE}>Profile</Header.MenuLink>
             </Header.MenuItem>
-            <Header.MenuItem key="about">
-              <p>About RBS Data</p>
+            <Header.MenuItem key="about" onClick={toggleAnimations}>
+              Enable Fancy Animations
             </Header.MenuItem>
+
             <Header.MenuItem key="signout">
               <p onClick={signOut}>Sign Out</p>
             </Header.MenuItem>
@@ -145,6 +147,7 @@ export function HeaderContainer({
             >
               End Session
             </Header.MenuItem>
+            <Header.MenuItem>How To Use</Header.MenuItem>
           </Header.Menu>
         </Header.MenuDiv>
       )}

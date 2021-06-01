@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./app";
 import { GlobalStyles } from "./global-styles";
 import { FirebaseContext } from "./context/firebase";
+import { AnimationsContextProvider } from "context/animations";
 
 var config = {
   apiKey: "AIzaSyAWH3XiyBQjQFDbxKrEJNTh0z-SpSOueF8",
@@ -21,7 +22,9 @@ ReactDOM.render(
   <>
     <FirebaseContext.Provider value={{ firebase: window.firebase }}>
       <GlobalStyles />
-      <App />
+      <AnimationsContextProvider>
+        <App />
+      </AnimationsContextProvider>
     </FirebaseContext.Provider>
   </>,
 

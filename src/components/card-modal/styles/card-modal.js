@@ -8,7 +8,8 @@ export const Container = styled(motion.div)`
   background-color: rgba(0, 0, 0, 0.9);
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 2em;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -22,6 +23,11 @@ export const Container = styled(motion.div)`
       : "-1"}; //brings modal z-index forward when modal is active
   //specifies whether modal should be active
   /* transition: all .35s ease-in-out;  */
+
+  ${({containerType}) => containerType=== 'add-session-modal' &&`
+    align-items: center;
+    padding: 0;
+  `}
 `;
 
 export const LeftContainer = styled.div`
@@ -57,6 +63,7 @@ export const Text = styled.p`
   max-width: 80%;
   width: 80%;
   font-size: 0.75rem;
+  margin: 0;
 
   @media (min-width: 600px) {
     font-size: 1rem;

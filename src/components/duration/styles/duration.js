@@ -157,74 +157,74 @@ export const TitleFrame = styled.div`
   margin: 0;
 `;
 
-export const ButtonContainer = styled.div`
-  flex: 1;
-  /* padding-right: 15px; */
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  /* margin-top: 1em; */
-  margin: 0;
-`;
+// export const ButtonContainer = styled.div`
+//   flex: 1;
+//   /* padding-right: 15px; */
+//   display: flex;
+//   align-items: center;
+//   justify-content: flex-start;
+//   /* margin-top: 1em; */
+//   margin: 0;
+// `;
 
-export const TimerButton = styled.button`
-  border: none;
-  height: 70px;
-  width: 70px;
-  background: ${({ active }) =>
-    active ? `${colors.btnActive}` : `${colors.startButton}`};
-  border-radius: ${({ active }) => (active ? "50%" : "15%")};
-  display: flex;
-  font-size: 1.2rem;
-  font-weight: 200;
-  font-family: inherit;
-  justify-self: flex-start;
-  justify-content: center;
-  align-items: center;
-  letter-spacing: 1px;
-  transition: all 0.3s linear;
-  position: relative;
+// export const TimerButton = styled.button`
+//   border: none;
+//   height: 70px;
+//   width: 70px;
+//   background: ${({ active }) =>
+//     active ? `${colors.btnActive}` : `${colors.startButton}`};
+//   border-radius: ${({ active }) => (active ? "50%" : "15%")};
+//   display: flex;
+//   font-size: 1.2rem;
+//   font-weight: 200;
+//   font-family: inherit;
+//   justify-self: flex-start;
+//   justify-content: center;
+//   align-items: center;
+//   letter-spacing: 1px;
+//   transition: all 0.3s linear;
+//   position: relative;
 
-  -webkit-box-shadow: inset 0px 5px 17px 0px rgba(0, 0, 0, 0.1);
-  box-shadow: inset 0px 5px 17px 0px rgba(0, 0, 0, 0.3);
+//   -webkit-box-shadow: inset 0px 5px 17px 0px rgba(0, 0, 0, 0.1);
+//   box-shadow: inset 0px 5px 17px 0px rgba(0, 0, 0, 0.3);
 
-  &:hover {
-    outline: none;
-  }
+//   &:hover {
+//     outline: none;
+//   }
 
-  &:active {
-    transform: scale(0.95);
-    outline: none;
-    background: ${colors.accent};
-    box-shadow: 26px 23px 37px -18px rgba(0, 0, 0, 0.46) inset;
-    -webkit-box-shadow: 26px 23px 37px -18px rgba(0, 0, 0, 0.46) inset;
-    -moz-box-shadow: 26px 23px 37px -18px rgba(0, 0, 0, 0.46) inset;
-  }
+//   &:active {
+//     transform: scale(0.95);
+//     outline: none;
+//     background: ${colors.accent};
+//     box-shadow: 26px 23px 37px -18px rgba(0, 0, 0, 0.46) inset;
+//     -webkit-box-shadow: 26px 23px 37px -18px rgba(0, 0, 0, 0.46) inset;
+//     -moz-box-shadow: 26px 23px 37px -18px rgba(0, 0, 0, 0.46) inset;
+//   }
 
-  &:focus {
-    outline: none;
-  }
+//   &:focus {
+//     outline: none;
+//   }
 
-  @media (max-width: 600px) {
-    height: 60px;
-    width: 60px;
-  }
-`;
+//   @media (max-width: 600px) {
+//     height: 60px;
+//     width: 60px;
+//   }
+// `;
 
-export const MoreInfo = styled.div`
-  font-size: 32px;
-  color: ${colors.darkText};
-  text-align: right;
-  /* flex: 1; */
-  margin: 0;
-  padding: 0;
-  /* border: 1px solid magenta; */
-  z-index: ${({ moveToBack }) => (moveToBack ? "0" : "1")};
-  transition: all 0.3s ease-out;
-  transform: ${({ open }) => (open ? "scaleY(-1)" : "none")};
-  /* padding-top: 10px; */
-  /* padding-right: 8px; */
-`;
+// export const MoreInfo = styled.div`
+//   font-size: 32px;
+//   color: ${colors.darkText};
+//   text-align: right;
+//   /* flex: 1; */
+//   margin: 0;
+//   padding: 0;
+//   /* border: 1px solid magenta; */
+//   z-index: ${({ moveToBack }) => (moveToBack ? "0" : "1")};
+//   transition: all 0.3s ease-out;
+//   transform: ${({ open }) => (open ? "scaleY(-1)" : "none")};
+//   /* padding-top: 10px; */
+//   /* padding-right: 8px; */
+// `;
 
 export const ItemsContainer = styled.div`
   flex-direction: column;
@@ -274,16 +274,16 @@ export const Seconds = styled.div`
   }
 `;
 
-export const ButtonText = styled.p`
-  font-family: inherit;
-  font-weight: 400;
-  z-index: 5;
-  color: ${colors.lightText};
+// export const ButtonText = styled.p`
+//   font-family: inherit;
+//   font-weight: 400;
+//   z-index: 5;
+//   color: ${colors.lightText};
 
-  @media (max-width: 600px) {
-    font-size: 0.85rem;
-  }
-`;
+//   @media (max-width: 600px) {
+//     font-size: 0.85rem;
+//   }
+// `;
 
 export const Item = styled(motion.div)`
   display: flex;

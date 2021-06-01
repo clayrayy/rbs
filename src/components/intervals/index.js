@@ -5,19 +5,19 @@ import {
   Container,
   SelectorButton,
   Header,
-  StartButton,
+  // StartButton,
   ButtonContainer,
   Text,
   TitleFrame,
   MoreInfo,
   ResultsContainer,
-  StartButtonContainer,
+  // StartButtonContainer,
   Label,
-  ButtonText,
+  // ButtonText,
   PlusIcon,
   MinusIcon,
   Inner,
-  Seconds,
+  // Seconds,
   ResetContainer,
   ResultButton,
   Frame,
@@ -27,22 +27,13 @@ export default function Intervals({ children, ...restProps }) {
   return <Container {...restProps}>{children}</Container>;
 }
 
-//Template:
-/*
-Intervals. = function Intervals({ children, ...restProps }) {
-    return < {...restProps}>{children}</>
-}
-
-
-*/
-
 Intervals.Inner = function IntervalsInner({ children, ...restProps }) {
   return <Inner {...restProps}>{children}</Inner>;
 };
 
-Intervals.Seconds = function IntervalsSeconds({ children, ...restProps }) {
-  return <Seconds {...restProps}>{children}</Seconds>;
-};
+// Intervals.Seconds = function IntervalsSeconds({ children, ...restProps }) {
+//   return <Seconds {...restProps}>{children}</Seconds>;
+// };
 
 Intervals.ResultButton = function IntervalsResultButton({
   children,
@@ -73,19 +64,19 @@ Intervals.ResultsContainer = function IntervalsResultsContainer({
   return <ResultsContainer {...restProps}>{children}</ResultsContainer>;
 };
 
-Intervals.StartButton = function IntervalsStartButton({
-  children,
-  ...restProps
-}) {
-  return <StartButton {...restProps}>{children}</StartButton>;
-};
+// Intervals.StartButton = function IntervalsStartButton({
+//   children,
+//   ...restProps
+// }) {
+//   return <StartButton {...restProps}>{children}</StartButton>;
+// };
 
-Intervals.ButtonContainer = function IntervalsButtonContainer({
-  children,
-  ...restProps
-}) {
-  return <ButtonContainer {...restProps}>{children}</ButtonContainer>;
-};
+// Intervals.ButtonContainer = function IntervalsButtonContainer({
+//   children,
+//   ...restProps
+// }) {
+//   return <ButtonContainer {...restProps}>{children}</ButtonContainer>;
+// };
 
 Intervals.Text = function IntervalsText({ children, ...restProps }) {
   return <Text {...restProps}>{children}</Text>;
@@ -117,19 +108,19 @@ Intervals.MinusIcon = function IntervalsMinusIcon({ children, ...restProps }) {
   return <MinusIcon {...restProps}>{children}</MinusIcon>;
 };
 
-Intervals.ButtonText = function IntervalsButtonText({
-  children,
-  ...restProps
-}) {
-  return <ButtonText {...restProps}>{children}</ButtonText>;
-};
+// Intervals.ButtonText = function IntervalsButtonText({
+//   children,
+//   ...restProps
+// }) {
+//   return <ButtonText {...restProps}>{children}</ButtonText>;
+// };
 
-Intervals.StartButtonContainer = function IntervalsStartButtonContainer({
-  children,
-  ...restProps
-}) {
-  return <StartButtonContainer {...restProps}>{children}</StartButtonContainer>;
-};
+// Intervals.StartButtonContainer = function IntervalsStartButtonContainer({
+//   children,
+//   ...restProps
+// }) {
+//   return <StartButtonContainer {...restProps}>{children}</StartButtonContainer>;
+// };
 
 Intervals.MoreInfo = function IntervalsMoreInfo({ children, ...restProps }) {
   return (

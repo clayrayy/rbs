@@ -1,8 +1,6 @@
 import React, { useContext, useState } from "react";
 import {
   Accordion,
-  AddItemForm,
-  CardModal,
   Duration,
   Form,
   Intervals,
@@ -10,8 +8,8 @@ import {
 import { DurationCardContainer } from "containers/card-components/durationcard";
 import { FirebaseContext } from "context/firebase";
 import { useGetBehaviorsData } from "hooks/get-data-hooks/use-get-behaviors-data";
-import { AnimatePresence, AnimateSharedLayout, motion } from "framer-motion";
-import { accordionVariants, pageTransitions } from "constants/motionVariants";
+import {  motion } from "framer-motion";
+import {  MotionVariants } from "constants/motionVariants";
 
 export default function DurationsAccordion({ client, sessionId }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,6 +21,8 @@ export default function DurationsAccordion({ client, sessionId }) {
     client.docId,
     sessionId
   );
+  const { accordionVariants, pageTransitions } =
+    MotionVariants();
 
   const handleAddNewDuration = (e) => {
     e.preventDefault();
@@ -98,7 +98,7 @@ export default function DurationsAccordion({ client, sessionId }) {
           }}
         >
           <Accordion.IconPositioner>
-            <Accordion.DropdownIcon open={dropdownOpen} />
+            <Accordion.DropdownIcon isOpen={dropdownOpen} />
           </Accordion.IconPositioner>
         </Accordion.IconContainer>
 
@@ -131,7 +131,6 @@ export default function DurationsAccordion({ client, sessionId }) {
         </Accordion.DropdownContainer>
       </Accordion.TitleContainer>
       <Accordion.ItemsContainer
-        as={motion.div}
         initial="collapsed"
         animate={isOpen ? "open" : "collapsed"}
         variants={accordionVariants}

@@ -140,95 +140,95 @@ export const MinusIcon = styled.span`
   transform: ${({ reduce }) => (reduce ? "scale(.8)" : "none")};
 `;
 
-export const StartButtonContainer = styled.div`
-  display: flex;
-  position: relative;
-  /* align-items: center; */
-  flex-direction: column;
-  /* justify-content: center; */
-  flex: 1;
-`;
+// export const StartButtonContainer = styled.div`
+//   display: flex;
+//   position: relative;
+//   /* align-items: center; */
+//   flex-direction: column;
+//   /* justify-content: center; */
+//   flex: 1;
+// `;
 
-export const ButtonText = styled.p`
-  font-family: inherit;
-  font-weight: 400;
-  z-index: 5;
-  color: ${colors.lightText};
+// export const ButtonText = styled.p`
+//   font-family: inherit;
+//   font-weight: 400;
+//   z-index: 5;
+//   color: ${colors.lightText};
 
-  @media (max-width: 600px) {
-    font-size: 0.85rem;
-  }
-`;
+//   @media (max-width: 600px) {
+//     font-size: 0.85rem;
+//   }
+// `;
 
-export const StartButton = styled.button`
-  font-family: inherit;
-  border: none;
-  color: ${colors.lightText};
-  height: 70px;
-  width: 70px;
-  border-radius: ${({ active }) => (active ? "50%" : "15%")};
-  display: flex;
-  font-size: 1.2rem;
-  font-weight: 200;
-  /* justify-self: flex-start; */
-  justify-content: center;
-  align-items: center;
-  letter-spacing: 1px;
-  position: relative;
-  background: ${({ disabled, active }) => {
-    if (disabled) {
-      return "#a0a0a0;";
-    }
-    if (active) {
-      return `${colors.btnActive};`;
-    } else return `${colors.startButton}`;
-  }};
+// export const StartButton = styled.button`
+//   font-family: inherit;
+//   border: none;
+//   color: ${colors.lightText};
+//   height: 70px;
+//   width: 70px;
+//   border-radius: ${({ active }) => (active ? "50%" : "15%")};
+//   display: flex;
+//   font-size: 1.2rem;
+//   font-weight: 200;
+//   /* justify-self: flex-start; */
+//   justify-content: center;
+//   align-items: center;
+//   letter-spacing: 1px;
+//   position: relative;
+//   background: ${({ disabled, active }) => {
+//     if (disabled) {
+//       return "#a0a0a0;";
+//     }
+//     if (active) {
+//       return `${colors.btnActive};`;
+//     } else return `${colors.startButton}`;
+//   }};
 
-  -webkit-box-shadow: inset 0px 5px 17px 0px rgba(0, 0, 0, 0.1);
-  box-shadow: inset 0px 5px 17px 0px rgba(0, 0, 0, 0.3);
+//   -webkit-box-shadow: inset 0px 5px 17px 0px rgba(0, 0, 0, 0.1);
+//   box-shadow: inset 0px 5px 17px 0px rgba(0, 0, 0, 0.3);
 
-  transition: all 0.3s ease-in-out;
+//   transition: all 0.3s ease-in-out;
 
-  &:hover {
-    outline: none;
-  }
+//   &:hover {
+//     outline: none;
+//   }
 
-  &:active {
-    transform: scale(0.95);
-    outline: none;
-    background: ${colors.accent};
-    box-shadow: 26px 23px 37px -18px rgba(0, 0, 0, 0.46) inset;
-    -webkit-box-shadow: 26px 23px 37px -18px rgba(0, 0, 0, 0.46) inset;
-    -moz-box-shadow: 26px 23px 37px -18px rgba(0, 0, 0, 0.46) inset;
-  }
+//   &:active {
+//     transform: scale(0.95);
+//     outline: none;
+//     background: ${colors.accent};
+//     box-shadow: 26px 23px 37px -18px rgba(0, 0, 0, 0.46) inset;
+//     -webkit-box-shadow: 26px 23px 37px -18px rgba(0, 0, 0, 0.46) inset;
+//     -moz-box-shadow: 26px 23px 37px -18px rgba(0, 0, 0, 0.46) inset;
+//   }
 
-  &:focus {
-    outline: none;
-  }
+//   &:focus {
+//     outline: none;
+//   }
 
-  @media (max-width: 600px) {
-    height: 60px;
-    width: 60px;
-  }
-`;
-export const Seconds = styled.div`
-  display: none;
-  background: #eab3bb;
-  height: 45%;
-  left: 49.5%;
-  position: absolute;
-  top: 14%;
-  transform-origin: 50% 80%;
-  width: 1%;
-  z-index: 0;
-  animation: rotate ${({ time }) => time + 0.5}s linear infinite;
+//   @media (max-width: 600px) {
+//     height: 60px;
+//     width: 60px;
+//   }
+// `;
+// export const Seconds = styled.div`
+//   display: none;
+//   background: #eab3bb;
+//   height: 45%;
+//   left: 49.5%;
+//   position: absolute;
+//   top: 14%;
+//   transform-origin: 50% 80%;
+//   width: 1%;
+//   z-index: 0;
+//   animation: rotate ${({ time }) => time + 0.5}s linear infinite;
 
-  @keyframes rotate {
-    100% {
-      transform: rotateZ(-360deg);
-    }
-  }
-`;
+//   @keyframes rotate {
+//     100% {
+//       transform: rotateZ(-360deg);
+//     }
+//   }
+// `;
 
 export const Header = styled.h1``;
 
@@ -245,14 +245,14 @@ align-items: center; */
   position: relative;
   margin-top: 0.5em;
 `;
-export const ButtonContainer = styled.div`
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  /* margin: 0; */
-  user-select: none;
-  /* margin-bottom: 1em; */
-`;
+// export const ButtonContainer = styled.div`
+//   display: flex;
+//   align-items: baseline;
+//   justify-content: center;
+//   /* margin: 0; */
+//   user-select: none;
+//   /* margin-bottom: 1em; */
+// `;
 
 export const Text = styled.p`
   /* font-weight: bold; */

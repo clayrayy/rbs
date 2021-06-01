@@ -2,16 +2,14 @@ import React, { Fragment, useState } from "react";
 import { HeaderContainer } from "containers/header";
 import { useLocation } from "react-router";
 import useGetSessionEvents from "hooks/get-data-hooks/use-getsessionevents";
-import { Accordion, Card, ClientCard, Duration } from "components";
+import { Accordion, Card, ClientCard} from "components";
 import LoadingContainer from "containers/loading";
 import { formatTotalTime } from "utils/formatTime";
 import { IntervalResultContainer } from "containers/intervalresult";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  accordionVariants,
-  pageTransitions,
-  textDisappear,
-} from "constants/motionVariants";
+import { MotionVariants } from "constants/motionVariants";
+import { DownArrowIcon } from "components/icons";
+
 
 export default function Datasheet() {
   const location = useLocation();
@@ -20,6 +18,12 @@ export default function Datasheet() {
   const [durationsOpen, setDurationsOpen] = useState(false);
   const session = location.state.session;
   const { eventsData, loading } = useGetSessionEvents(session.sessionId);
+  const { accordionVariants, pageTransitions } = MotionVariants();
+  let uniqueWIBehaviorsArr = [];
+  let uniquePIBehaviorsArr = [];
+  let wholeIntervalGraphs = [];
+  let partialIntervalGraphs = [];
+  const subtitle = `${session.date} - ${session.tod}`;
   const wholeIntervalsData = eventsData.filter(
     (event) => event.eventType === "wholeInterval"
   );
@@ -29,11 +33,6 @@ export default function Datasheet() {
   const durationsData = eventsData.filter(
     (event) => event.eventType === "duration"
   );
-  const subtitle = `${session.date} - ${session.tod}`;
-  let uniqueWIBehaviorsArr = [];
-  let uniquePIBehaviorsArr = [];
-  let wholeIntervalGraphs = [];
-  let partialIntervalGraphs = [];
 
   wholeIntervalsData.forEach((interval) => {
     if (!uniqueWIBehaviorsArr.includes(interval.behaviorName)) {
@@ -90,13 +89,13 @@ export default function Datasheet() {
               <Card.RightContainer></Card.RightContainer>
               <Card>
                 <Card.ColumnsLabels>
-                  <Card.LeftContainer>
-                    <Card.Text>Date</Card.Text>
+                  <Card.LeftContainer containerType="interval-dropdown">
+                    <Card.Text style={{ textAlign: "center" }}>Date</Card.Text>
                   </Card.LeftContainer>
                   <Card.CenterContainer>
                     <Card.Text>Taken By</Card.Text>
                   </Card.CenterContainer>
-                  <Card.RightContainer>
+                  <Card.RightContainer containerType="interval-dropdown">
                     <Card.Text>Session Length</Card.Text>
                   </Card.RightContainer>
                 </Card.ColumnsLabels>
@@ -131,9 +130,10 @@ export default function Datasheet() {
                   </Accordion.Title>
                 </Card.CenterContainer>
                 <Card.RightContainer>
-                  <ClientCard.DownArrow
-                    open={wholeIntervalsOpen}
+                  <DownArrowIcon
+                    isOpen={wholeIntervalsOpen}
                     onClick={() => setWholeIntervalsOpen(!wholeIntervalsOpen)}
+                    color="light"
                   />
                 </Card.RightContainer>
               </Card.Top>
@@ -170,11 +170,12 @@ export default function Datasheet() {
                   <Accordion.Title>P. Intervals</Accordion.Title>
                 </Card.CenterContainer>
                 <Card.RightContainer>
-                  <ClientCard.DownArrow
-                    open={partialIntervalsOpen}
+                  <DownArrowIcon
+                    isOpen={partialIntervalsOpen}
                     onClick={() =>
                       setPartialIntervalsOpen(!partialIntervalsOpen)
                     }
+                    color='light'
                   />
                 </Card.RightContainer>
               </Card.Top>
@@ -212,9 +213,10 @@ export default function Datasheet() {
                     <Accordion.Title>Durations</Accordion.Title>
                   </Card.CenterContainer>
                   <Card.RightContainer>
-                    <Card.DownArrow
-                      open={durationsOpen}
+                    <DownArrowIcon
+                      isOpen={durationsOpen}
                       onClick={() => setDurationsOpen(!durationsOpen)}
+                      color='light'
                     />
                   </Card.RightContainer>
                 </Card.Top>
@@ -232,15 +234,13 @@ export default function Datasheet() {
                       <Card>
                         <Card.ColumnsLabels>
                           <Card.LeftContainer containerType="datasheet">
-                            <Card.ListText textType="column-label">
+                            <Card.Text textType="column-label">
                               Behavior
-                            </Card.ListText>
+                            </Card.Text>
                           </Card.LeftContainer>
                           <Card.CenterContainer></Card.CenterContainer>
                           <Card.RightContainer containerType="datasheet">
-                            <Card.ListText textType="column-label">
-                              Time
-                            </Card.ListText>
+                            <Card.Text textType="column-label">Time</Card.Text>
                           </Card.RightContainer>
                         </Card.ColumnsLabels>
                         {durationsData.map((event, index) => (

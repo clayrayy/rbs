@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+// import { motion, AnimatePresence } from "framer-motion";
 import {
   Container,
   Title,
@@ -11,10 +11,14 @@ import {
   Dropdown,
   DownArrow,
   SessionItem,
+  ButtonText,
   ColumnsLabels,
   ListText,
   IntervalResultContainer,
   IntervalResultItem,
+  StartButton,
+  ButtonContainer,
+  IconContainer
 } from "./styles/card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
@@ -33,12 +37,28 @@ Card.Title = function CardTitle({ children, ...restProps }) {
   return <Title {...restProps}>{children}</Title>;
 };
 
+Card.IconContainer = function CardIconContainer({ children, ...restProps }) {
+  return <IconContainer {...restProps}>{children}</IconContainer>;
+};
+
 Card.Top = function CardTop({ children, ...restProps }) {
   return <Top {...restProps}>{children}</Top>;
 };
 
 Card.Dropdown = function CardDropdown({ children, ...restProps }) {
   return <Dropdown {...restProps}>{children}</Dropdown>;
+};
+
+Card.ButtonText = function CardButtonText({ children, ...restProps }) {
+  return <ButtonText {...restProps}>{children}</ButtonText>;
+};
+
+Card.ButtonContainer = function CardButtonContainer({ children, ...restProps }) {
+  return <ButtonContainer {...restProps}>{children}</ButtonContainer>;
+};
+
+Card.StartButton = function CardStartButton({ children, ...restProps }) {
+  return <StartButton {...restProps}>{children}</StartButton>;
 };
 
 Card.DownArrow = function ClientDownArrow({ children, ...restProps }) {

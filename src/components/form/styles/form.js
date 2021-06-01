@@ -22,8 +22,13 @@ export const Frame = styled.div`
 
 export const Error = styled.div`
   color: red;
+  justify-self: center;
   text-align: center;
-  margin: 1em;
+  margin: 0em;
+  padding: .5em;
+  border-radius: 15px;
+  max-width: 100%;
+  background: rgba(0,0,0,.65);
 `;
 
 export const Base = styled.form`

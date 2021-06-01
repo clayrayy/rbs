@@ -1,16 +1,12 @@
-import { EditButton, ModalButton } from "components/duration/styles/duration";
-import { SessionButton } from "components/clientcard/styles/clientcard";
-import Popout from "components/popout";
 import { HeaderContainer } from "containers/header";
 import { DurationsAccordion } from "pages";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useLocation, Prompt, useHistory } from "react-router";
 import IntervalsAccordion from "./intervalsaccordion";
 import { useInterval } from "hooks/use-interval";
-import { AnimatePresence, AnimateSharedLayout, motion } from "framer-motion";
+import {  motion } from "framer-motion";
 import { FirebaseContext } from "context/firebase";
-import * as ROUTES from "../constants/routes";
-import { pageTransitions } from "constants/motionVariants";
+import { MotionVariants } from "constants/motionVariants";
 // import { RateCardContainer } from "containers/card-components/ratecard";
 
 export default function Session() {
@@ -31,6 +27,8 @@ export default function Session() {
     sessionLength: sessionLength,
   };
   let [count, setCount] = useState(0);
+  const { accordionVariants, pageTransitions, textDisappear } =
+    MotionVariants();
   useInterval(() => {
     if (sessionIsRunning) {
       setSessionLength(sessionLength + 1);

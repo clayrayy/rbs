@@ -1,15 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDuration } from "hooks";
 import { Duration, Card, CardModal } from "components";
-import { FirebaseContext } from "context/firebase";
-import { useGetSessionsData } from "hooks/get-data-hooks/use-get-sessions";
-import { AnimatePresence, motion, AnimateSharedLayout } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import {
-  deleteDisappear,
-  textDisappear,
-  deleteEventVariant,
-  accordionVariants,
+
+  MotionVariants
 } from "constants/motionVariants";
+import { DeleteIcon, DownArrowIcon } from "components/icons";
 
 export function DurationCardContainer({
   name,
@@ -37,12 +34,12 @@ export function DurationCardContainer({
     deleteBehaviorDD,
     setDeleteBehaviorDD,
     editOpen,
-    setEditOpen,
     loading,
   } = useDuration(client, behaviorName, sessionId, behaviorId);
 
   const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
   const [bringUpModal, setBringUpModal] = useState(false);
+const { accordionVariants, deleteEventVariant } = MotionVariants();
 
   // useEffect(() => {
   //   if (durations.length === 0) {
@@ -87,21 +84,18 @@ export function DurationCardContainer({
 
       <Card.Top>
         <Card.LeftContainer>
-          <Duration.ButtonContainer>
-            <Duration.TimerButton
-              onClick={() => toggleActive()}
-              active={isActive}
-            >
+          <Card.ButtonContainer>
+            <Card.StartButton onClick={() => toggleActive()} active={isActive}>
               {isActive ? (
-                <Duration.ButtonText altColor={isActive}>
+                <Card.ButtonText altColor={isActive}>
                   {displayTime}
-                </Duration.ButtonText>
+                </Card.ButtonText>
               ) : (
-                <Duration.ButtonText>Start</Duration.ButtonText>
+                <Card.ButtonText>Start</Card.ButtonText>
               )}
               {isActive && <Duration.Seconds secondHandType="clockwise" />}
-            </Duration.TimerButton>
-          </Duration.ButtonContainer>
+            </Card.StartButton>
+          </Card.ButtonContainer>
         </Card.LeftContainer>
         <Card.CenterContainer>
           <Duration.Header>{behaviorName}</Duration.Header>
@@ -160,7 +154,7 @@ export function DurationCardContainer({
             }}
             moveToBack={deleteBehaviorDD}
           >
-            <Duration.MoreInfo open={isOpen} />
+            <DownArrowIcon isOpen={isOpen} />
           </Duration.IconContainer>
         </Card.RightContainer>
       </Card.Top>
@@ -173,7 +167,6 @@ export function DurationCardContainer({
             exit="collapsed"
             variants={accordionVariants}
             transition={{ duration: 0.35 }}
-            as={motion.div}
             open={isOpen}
             durations={durations}
           >
@@ -192,9 +185,9 @@ export function DurationCardContainer({
                         key={item.docId}
                         layout
                       >
-                        <Card.LeftContainer itemType="history">
+                        <Card.LeftContainer containerType="interval-dropdown">
                           {editEventsActive && (
-                            <Duration.DeleteBehaviorIcon
+                            <DeleteIcon
                               key={`delete-icon${item.docId}`}
                               animate="show"
                               initial="hidden"
@@ -215,7 +208,7 @@ export function DurationCardContainer({
                             // exit='exit'
                             layout
                           >
-                            {item.timestamp}
+                            {item.timestamp.slice(-8)}
                           </Card.ListText>
                         </Card.LeftContainer>
 

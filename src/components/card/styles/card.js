@@ -99,15 +99,20 @@ export const Text = styled.p`
 `;
 export const LeftContainer = styled(motion.div)`
   flex: 1;
-  ${({ itemType }) => (itemType === "history" ? "flex: 4" : "flex: 1")};
   display: flex;
   flex-direction: column;
-  ${({ itemType }) => itemType === "history" && `flex-direction: row;`}
   justify-content: center;
   align-items: flex-start;
-  ${({ itemType }) =>
-    itemType === "history" &&
-    `justify-content: flex-start; align-items: center;`}
+  ${({ containerType }) =>
+    containerType === "interval-dropdown" ? "flex: 1" : "flex: 1"};
+  ${({ containerType }) =>
+    containerType === "interval-dropdown" &&
+    `
+      flex-direction: row;
+      margin-left: 1em;
+      justify-content: flex-start; 
+      align-items: center;
+    `}
 
   ${({ containerType }) =>
     containerType === "datasheet" &&
@@ -174,7 +179,8 @@ export const RightContainer = styled(motion.div)`
     containerType === "interval-dropdown" &&
     `
     // border: solid 1px;
-    align-items: center;
+    align-items: flex-end;
+    margin-right: 1em;
 `}
 `;
 
@@ -194,7 +200,7 @@ export const SessionItem = styled(motion.div)`
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 90%;
+  width: 95%;
   margin: 0 auto;
   /* border: solid 1px; */
   ${({ itemType }) =>
@@ -220,7 +226,7 @@ export const SessionItem = styled(motion.div)`
     `}
 `;
 export const ColumnsLabels = styled.div`
-  width: 90%;
+  width: 100%;
   border-bottom: solid 1px;
   text-align: center;
   display: flex;
@@ -258,17 +264,15 @@ export const ListText = styled(motion.p)`
   ${({ textType }) =>
     textType === "total-behaviors" &&
     `
-       position: absolue;
+       position: absolute;
     `}
-
-    
 `;
 
 export const DownArrow = styled.span`
   font-size: 30px;
   text-align: center;
   margin: 0 auto;
-  transition: all 0.25s ease;
+  /* transition: all 0.25s ease; */
   ${({ open }) =>
     open &&
     `
@@ -276,22 +280,118 @@ export const DownArrow = styled.span`
     `}
 `;
 
+export const StartButton = styled.button`
+  font-family: inherit;
+  border: none;
+  color: ${colors.lightText};
+  height: 70px;
+  width: 70px;
+  border-radius: ${({ active }) => (active ? "50%" : "15%")};
+  display: flex;
+  font-size: 1.2rem;
+  font-weight: 200;
+  /* justify-self: flex-start; */
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 1px;
+  position: relative;
+  background: ${({ disabled, active }) => {
+    if (disabled) {
+      return "#a0a0a0;";
+    }
+    if (active) {
+      return `${colors.btnActive};`;
+    } else return `${colors.startButton}`;
+  }};
+
+  -webkit-box-shadow: inset 0px 5px 17px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0px 5px 17px 0px rgba(0, 0, 0, 0.3);
+
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    outline: none;
+  }
+
+  &:active {
+    transform: scale(0.95);
+    outline: none;
+    background: ${colors.accent};
+    box-shadow: 26px 23px 37px -18px rgba(0, 0, 0, 0.46) inset;
+    -webkit-box-shadow: 26px 23px 37px -18px rgba(0, 0, 0, 0.46) inset;
+    -moz-box-shadow: 26px 23px 37px -18px rgba(0, 0, 0, 0.46) inset;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  @media (max-width: 600px) {
+    height: 60px;
+    width: 60px;
+  }
+`;
+
+export const ButtonText = styled.p`
+  font-family: inherit;
+  font-weight: 400;
+  z-index: 5;
+  font-size: 1rem;
+  color: ${colors.lightText};
+
+  @media (max-width: 600px) {
+    font-size: 0.85rem;
+  }
+`;
+
 export const IntervalResultContainer = styled.div`
   margin: 0 auto;
   display: grid;
-  width: 90%;
+  width: 100%;
   grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
   grid-auto-flow: column;
   text-align: center;
 `;
 
+export const IconContainer = styled.div`
+  /* border: solid 1px; */
+  align-self: flex-end;
+  padding: 1em;
+  flex: 1;
+  z-index: 150;
+
+  ${({ iconType }) =>
+    iconType === "delete" &&
+    `
+        padding: 1em;
+        height: 20px;
+    `}
+  ${({ iconType }) =>
+    iconType === "more-info" &&
+    `
+        padding: 0 .58em;
+    `}
+`;
+
+export const ButtonContainer = styled.div`
+  flex: 1;
+  /* padding-right: 15px; */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  /* margin-top: 1em; */
+  margin: 0;
+`;
+
 export const IntervalResultItem = styled.div`
   margin-top: 2em;
+  padding: 0;
   border-bottom: solid 1px;
   border-right: solid 1px;
   display: flex;
   flex-direction: column;
   &:first-of-type {
     border-left: solid 1px;
+    /* border: 1px magenta solid; */
   }
 `;
