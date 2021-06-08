@@ -8,7 +8,8 @@ import { Container,
          Submit,
          TypeSelector,
          TypeButtonContainer,
-         TypeSelectorFrame
+         TypeSelectorFrame,
+         TitleContainer
 } from './styles/additemform'
 
 export default function AddItemForm({ children, ...restProps }) {
@@ -32,6 +33,10 @@ AddItemForm.Base = function AddItemFormBase({ children, ...restProps }) {
 }
 AddItemForm.Text = function AddItemFormText({ children, ...restProps }) {
     return <Text {...restProps}>{children}</Text>
+}
+
+AddItemForm.TitleContainer = function AddItemTitleContainer({ children, ...restProps }) {
+    return <TitleContainer {...restProps}>{children}</TitleContainer>
 }
 
 AddItemForm.Submit = function AddItemFormSubmit({ children, ...restProps }) {

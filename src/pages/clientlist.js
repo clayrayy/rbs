@@ -1,97 +1,58 @@
-import React, { useState, useContext } from 'react'
-// import { ClientListContainer } from '../containers/clientlist'
-import { HeaderContainer } from '../containers/header'
-import { ClientCard } from '../components'
-import DataSheet from './datasheet'
-import * as ROUTES from '../constants/routes'
-import useClientData from 'hooks/get-data-hooks/use-get-clients'
-import { ClientListContainer } from 'containers/clientlist'
-
-
-//
+import React from "react";
+import { ClientCardContainer } from "containers/card-components/clientcard";
+import useClientData from "hooks/get-data-hooks/use-get-clients";
+import { HeaderContainer } from "containers/header";
+import { Card, Header } from "components";
+import LoadingContainer from "containers/loading";
+// import useGetSessionEvents from "hooks/get-data-hooks/use-getsessionevents";
+import { AnimateSharedLayout, motion } from "framer-motion";
+import { MotionVariants} from "constants/motionVariants";
 
 export default function ClientList() {
-    const [datasheetOpen, setDatasheetOpen] = useState(false)
-    const [data, setData] = useState({})
-    const [showSessions, setShowSessions] = useState(false)
-    const [backActive, setBackActive] = useState(false) //activates change to animate back icon
-    const [openClient, setOpenClient] = useState()
-    // const [durationData, setDurationData] = useState([])
-    const { clients } = useClientData()
+  const { clients, loading } = useClientData();
+  const { pageTransitions } =
+    MotionVariants();
 
-    function showClientDatasheet() {
-        setDatasheetOpen(!datasheetOpen)
-    }
+  // console.log(durationsData)
 
-    console.log(showSessions)
-
-    return (
-        <>
-            <HeaderContainer
-                backIcon={datasheetOpen ? 'true' : 'false'}
-                title={datasheetOpen ? data.clientName : 'Clients'}
-                name={datasheetOpen ? 'behaviors' : 'clients'}
-                addIcon='true'
-                data={data}
-                backFromDatasheet={() => {
-                    setTimeout(() => {
-                        setDatasheetOpen(false)
-                    }, 400)
-                }}
-                openClient={openClient}
-            />
-            {datasheetOpen === true ? (
-
-                <DataSheet data={data} openClient={openClient} />
-
-            )
-                : (
-                    clients.map(client => {
-                        const isOpen = showSessions
-                        const clientName = `${client.first} ${client.last}`
-                        return (
-                            <ClientCard
-                                key={client.docId}
-                                open={isOpen}>
-
-                                <ClientCard.Frame>
-
-                                    <ClientCard.TitleContainer>
-                                        <ClientCard.Title>
-                                            {clientName}
-                                        </ClientCard.Title>
-                                    </ClientCard.TitleContainer>
-
-                                    <p onClick={() => setShowSessions(!showSessions)}>
-                                        Open sessions
-                                        </p>
-                                    <ClientCard.IconContainer>
-
-                                        <ClientCard.OpenClientIcon onClick={() => {
-                                            setDatasheetOpen(true)
-                                            setOpenClient({
-                                                id: client.docId
-                                            })
-                                            setData({
-                                                id: client.docId,
-                                                clientName: clientName,
-                                                behaviors: client.durations
-                                            })
-                                        }} />
-
-                                    </ClientCard.IconContainer>
-
-                                </ClientCard.Frame>
-                                <ClientCard.SessionsContainer open={showSessions}>
-                                        <p>test</p>
-                                </ClientCard.SessionsContainer>
-                                
-                            </ClientCard>
-                        )
-                    })
-                )
-            }
-            <ClientListContainer clients={}/>
-        </>
-    )
+  return (
+    <>
+      <HeaderContainer
+        backIcon={false}
+        addIcon={true}
+        title="Clients"
+        name="clients"
+      />
+      <motion.div
+        variants={pageTransitions}
+        initial="hidden"
+        animate="show"
+        exit="exit"
+      >
+        {loading ? (
+          <LoadingContainer />
+        ) : (
+          // <AnimateSharedLayout>
+            <>
+              {!loading && clients.length === 0 && (
+                <Card>
+                  <Card.CenterContainer>
+                    <Card.Title>
+                      Click or tap <Header.AddItemIcon iconType="example" /> to
+                      get started
+                    </Card.Title>
+                  </Card.CenterContainer>
+                </Card>
+              )}
+              {!loading &&
+                clients.map((client, index) => {
+                  const curClient = client;
+                  return <ClientCardContainer client={curClient} key={index} />;
+                })}
+            </>
+          // </AnimateSharedLayout>
+        )}
+      </motion.div>
+    </>
+  );
 }
