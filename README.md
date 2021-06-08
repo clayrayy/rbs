@@ -1,5 +1,5 @@
 # rbs
-Ready Behavioral Services data tracking app
+<h1>Ready Behavioral Services data tracking app</h1>
 
 Latest deployed version: https://rbsdata-b02f7.web.app/
 
