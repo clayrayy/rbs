@@ -15,6 +15,7 @@ export const Container = styled(motion.div)`
   overflow: hidden;
   margin: 0 auto 1em auto;
   border-radius: 5px;
+  z-index: 2;
 
   -webkit-box-shadow: 5px 5px 15px -1px rgba(0, 0, 0, 0.16);
   box-shadow: 5px 5px 15px -1px rgba(0, 0, 0, 0.16);
@@ -162,6 +163,7 @@ export const RightContainer = styled(motion.div)`
   justify-content: space-between;
   align-items: flex-end;
   text-align: center;
+  position: relative;
 
   ${({ itemType }) =>
     itemType === "edit-container" &&
@@ -194,6 +196,52 @@ export const Top = styled(motion.div)`
 export const Dropdown = styled(motion.div)`
   width: ${({ dropdownType }) =>
     dropdownType === "session-list" ? "80%" : "100%"};
+`;
+
+export const DropdownIcon = styled.span`
+  height: 5px;
+  /* justify-self: flex-end; */
+  position: relative;
+  width: ${({ open }) => (open ? "15px" : "5px")};
+  display: block;
+  background-color: ${({ open, iconColor }) =>
+    open
+      ? `${colors.btnActive}`
+      : `${
+          iconColor === "light" ? colors.lightText : colors.headerBackground
+        }`};
+  border-radius: ${({ open }) => (open ? "10px" : "50%")};
+  /* transform: translateY(-0.55em); */
+  transition: all 0.25s ease;
+  z-index: 153;
+
+  &::before,
+  &::after {
+    content: "";
+    background-color: ${({ open, iconColor }) =>
+      open
+        ? `${colors.btnActive}`
+        : `${
+            iconColor === "light" ? colors.lightText : colors.headerBackground
+          }`};
+    transition: all 0.25s ease;
+    border-radius: ${({ open }) => (open ? "10px" : "50%")};
+    height: 5px;
+    width: ${({ open }) => (open ? "10px" : "5px")};
+    position: absolute;
+    z-index: 999;
+    transition: all 0.25s ease;
+  }
+
+  &::after {
+    /* background-color: green; */
+    left: 7px;
+  }
+
+  &::before {
+    right: 7px;
+    /* background-color: red; */
+  }
 `;
 
 export const SessionItem = styled(motion.div)`
@@ -272,7 +320,8 @@ export const DownArrow = styled.span`
   font-size: 30px;
   text-align: center;
   margin: 0 auto;
-  /* transition: all 0.25s ease; */
+  color: ${({iconColor}) => iconColor === 'light' ? `${colors.lightText}` : 'inherit'};
+  transition: all 0.25s ease;
   ${({ open }) =>
     open &&
     `
@@ -354,22 +403,40 @@ export const IntervalResultContainer = styled.div`
 `;
 
 export const IconContainer = styled.div`
-  /* border: solid 1px; */
+  /* border: solid 1px pink; */
   align-self: flex-end;
   padding: 1em;
   flex: 1;
-  z-index: 150;
+  z-index: 15;
 
   ${({ iconType }) =>
     iconType === "delete" &&
     `
-        padding: 1em;
-        height: 20px;
+    z-index: 155;
+    position: absolute;
+    top: -100%;
+    // right: 0;
+    padding: 1em;
+    height: 20px;
+    // border: solid;
     `}
   ${({ iconType }) =>
     iconType === "more-info" &&
     `
-        padding: 0 .58em;
+      padding: 0 .58em;
+    `}
+
+  ${({ iconType }) =>
+    iconType === "add-tracker" &&
+    `
+    // background-color: green;
+    position: absolute;
+    top: -2.2em;
+    right: -.75em;
+    // top: -100%;
+    // bottom: 100%;
+      z-index: 160;
+     
     `}
 `;
 

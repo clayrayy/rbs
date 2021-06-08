@@ -48,7 +48,7 @@ export function IntervalCardContainer({
           {/* ----Interval Result Modal---- */}
           {showResultModal && bringUpModal && (
             <CardModal
-              // as={motion.div}
+              modalType="card-modal"
               blackout={showResultModal}
               bringForward={bringUpModal}
               initial="hidden"
@@ -93,29 +93,35 @@ export function IntervalCardContainer({
 
           {intervalType === "wholeInterval" ? (
             <Card.ButtonContainer>
-              <AnimateSharedLayout>
-                <Card.StartButton
-                  disabled={seconds === 0}
-                  active={timerActive}
-                  onClick={startTimer}
-                >
-                  <Card.ButtonText layout>
-                    <AnimatePresence>
-                      {!timerActive && (
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          layout
-                        >
-                          Start
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                    {formatIntervalTime(seconds)}
-                  </Card.ButtonText>
-                </Card.StartButton>
-              </AnimateSharedLayout>
+              <Card.StartButton
+                disabled={seconds === 0}
+                active={timerActive}
+                onClick={startTimer}
+              >
+                <AnimatePresence exitBeforeEnter>
+                  {!timerActive ? (
+                    <Card.ButtonText
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      layout
+                    >
+                      Start
+                      <br />
+                      {formatIntervalTime(seconds)}
+                    </Card.ButtonText>
+                  ) : (
+                    <Card.ButtonText
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      layout
+                    >
+                      {formatIntervalTime(seconds)}
+                    </Card.ButtonText>
+                  )}
+                </AnimatePresence>
+              </Card.StartButton>
             </Card.ButtonContainer>
           ) : (
             <Card.ButtonContainer>
@@ -216,9 +222,9 @@ export function IntervalCardContainer({
         {/* ----Results Dropdown Arrow---- */}
 
         <Card.RightContainer>
-          <Duration.IconContainer>
+          <Card.IconContainer>
             <DownArrowIcon isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
-          </Duration.IconContainer>
+          </Card.IconContainer>
         </Card.RightContainer>
       </Card.Top>
 
@@ -281,31 +287,31 @@ export function IntervalCardContainer({
                             // style={{ border: "solid 1px magenta" }}
                           >
                             <AnimateSharedLayout>
-                            <AnimatePresence exitBeforeEnter>
-                              {editEventsActive && (
-                                <DeleteIcon
-                                  key={item.docId}
-                                  animate="show"
-                                  initial="hidden"
-                                  exit="exit"
-                                  variants={deleteEventVariant}
-                                  onClick={() => deleteEvent(item.docId)}
-                                  active={editEventsActive}
-                                  layoutId='interval-history-item'
-                                />
-                              )}
-                            </AnimatePresence>
-                            <Card.ListText
-                              as={motion.p}
-                              key={`timestamp${item.docId}`}
-                              initial="hidden"
-                              animate="show"
-                              variants={deleteEventVariant}
-                              exit="exit"
-                              layout
-                            >
-                              {item.date.slice(-8)}
-                            </Card.ListText>
+                              <AnimatePresence exitBeforeEnter>
+                                {editEventsActive && (
+                                  <DeleteIcon
+                                    key={item.docId}
+                                    animate="show"
+                                    initial="hidden"
+                                    exit="exit"
+                                    variants={deleteEventVariant}
+                                    onClick={() => deleteEvent(item.docId)}
+                                    active={editEventsActive}
+                                    layoutId="interval-history-item"
+                                  />
+                                )}
+                              </AnimatePresence>
+                              <Card.ListText
+                                as={motion.p}
+                                key={`timestamp${item.docId}`}
+                                initial="hidden"
+                                animate="show"
+                                variants={deleteEventVariant}
+                                exit="exit"
+                                layout
+                              >
+                                {item.date.slice(-8)}
+                              </Card.ListText>
                             </AnimateSharedLayout>
                           </Card.LeftContainer>
                           <Card.RightContainer

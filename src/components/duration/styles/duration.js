@@ -393,57 +393,75 @@ export const EditButton = styled.button`
   }
 `;
 
-export const DropdownIcon = styled.span`
-  height: 5px;
-  /* justify-self: flex-end; */
-  position: relative;
-  width: ${({ open }) => (open ? "15px" : "5px")};
-  display: block;
-  background-color: ${({ open }) =>
-    open ? `${colors.btnActive}` : `${colors.headerBackground}`};
-  border-radius: ${({ open }) => (open ? "10px" : "50%")};
-  transform: translateY(-0.55em);
-  transition: all 0.25s ease;
+// export const DropdownIcon = styled.span`
+//   height: 5px;
+//   /* justify-self: flex-end; */
+//   position: relative;
+//   width: ${({ open }) => (open ? "15px" : "5px")};
+//   display: block;
+//   background-color: ${({ open }) =>
+//     open ? `${colors.btnActive}` : `${colors.headerBackground}`};
+//   border-radius: ${({ open }) => (open ? "10px" : "50%")};
+//   /* transform: translateY(-0.55em); */
+//   transition: all 0.25s ease;
+//   z-index: 153;
 
-  &::before,
-  &::after {
-    content: "";
-    background-color: ${({ open }) =>
-      open ? `${colors.btnActive}` : `${colors.headerBackground}`};
-    border-radius: ${({ open }) => (open ? "10px" : "50%")};
-    height: 5px;
-    width: ${({ open }) => (open ? "10px" : "5px")};
-    position: absolute;
-    /* z-index: 999; */
-    transition: all 0.25s ease;
-  }
+//   &::before,
+//   &::after {
+//     content: "";
+//     background-color: ${({ open }) =>
+//       open ? `${colors.btnActive}` : `${colors.headerBackground}`};
+//     border-radius: ${({ open }) => (open ? "10px" : "50%")};
+//     height: 5px;
+//     width: ${({ open }) => (open ? "10px" : "5px")};
+//     position: absolute;
+//     z-index: 999;
+//     transition: all 0.25s ease;
+//   }
 
-  &::after {
-    /* background-color: green; */
-    transform: ${({ open }) => (open ? "translateX(4px)" : "translateX(5px)")};
-  }
+//   &::after {
+//     /* background-color: green; */
+//     left: 7px;
 
-  &::before {
-    transform: translateX(-11px);
-  }
-`;
+//   }
+
+//   &::before {
+//     right: 7px;
+//     /* background-color: red; */
+//   }
+// `;
 export const IconContainer = styled.div`
-  /* border: solid 1px; */
+  border: solid 1px;
   align-self: flex-end;
   padding: 1em;
   flex: 1;
-  z-index: 150;
+  z-index: 15;
 
   ${({ iconType }) =>
     iconType === "delete" &&
     `
-        padding: 1em;
-        height: 20px;
+    z-index: 155;
+    position: absolute;
+    top: -100%;
+    // right: 0;
+    padding: 1em;
+    height: 20px;
+    // border: solid;
     `}
   ${({ iconType }) =>
     iconType === "more-info" &&
     `
-        padding: 0 .58em;
+      padding: 0 .58em;
+    `}
+
+  ${({ iconType }) =>
+    iconType === "add-session" &&
+    `
+    position: absolute;
+    left: 71%;
+    bottom: 100%;
+      z-index: 160;
+     
     `}
 `;
 export const IconPositioner = styled.div`
@@ -457,16 +475,14 @@ export const IconPositioner = styled.div`
 
 export const Dropdown = styled.div`
   position: absolute;
-  right: -0.2em;
-  top: -0.6em;
+  /* top: 0; */
+  right: -.3em;
+  top: -1.5em;
   /* width: 100%; */
   background: rgba(0, 0, 0, 0.85);
   /* overflow: hidden; */
   opacity: ${({ visible }) => (visible ? "1" : "0")};
-  /* padding: 1.25em 1em; */
-  /* min-width: 90%; */
-  /* max-width: 800px; */
-  z-index: 2;
+  z-index: 151;
   min-width: 200px;
   display: flex;
   flex-direction: column;
@@ -479,7 +495,8 @@ export const Dropdown = styled.div`
   /* max-height: ${({ visible }) => (visible ? "3em" : ".5em")}; */
   transform: ${({ visible }) => (visible ? "scaleY(1)" : "scaleY(0)")};
   transform-origin: top;
-  /* transition: all  .25s ease-in; */
+  padding: .5em;
+  /* transition: all 0.25s ease-in; */
 `;
 
 export const DropdownItem = styled.div`
@@ -492,10 +509,12 @@ export const DropdownItem = styled.div`
   /* display: ${({ hide }) => (!hide ? "none" : "inline-block")}; */
 `;
 
-export const DropdownContainer = styled.div`
+export const DropdownContainer = styled(motion.div)`
   align-self: flex-end;
   position: relative;
+  /* padding: 1em; */
 `;
+
 export const ConfirmDelete = styled.div`
   align-self: flex-end;
   position: relative;

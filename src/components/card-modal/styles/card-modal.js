@@ -15,16 +15,36 @@ export const Container = styled(motion.div)`
   bottom: 0;
   left: 0;
   right: 0;
+  transition:  all .25s ease;
   /* border-radius: 15%; */
 
-  z-index: ${({ bringForward }) =>
-    bringForward
-      ? "9999"
-      : "-1"}; //brings modal z-index forward when modal is active
+  ${({modalType, blackout}) => modalType === 'card-modal'  && `
+    opacity: ${blackout ? '1' : '0'};
+    z-index: ${blackout ? '999' : '-1'};
+  `}
+
+  ${({ modalType, bringForward }) => {
+    if (modalType === "add-tracker" && !bringForward) {
+      return `
+  opacity: 0;
+  z-index: -1;
+  `;
+    }
+    if (modalType === 'add-tracker' && bringForward) {
+      return `
+        opacity: 1;
+        z-index: 1
+      `
+    }
+  }}
+
+  //brings modal z-index forward when modal is active
   //specifies whether modal should be active
   /* transition: all .35s ease-in-out;  */
 
-  ${({containerType}) => containerType=== 'add-session-modal' &&`
+  ${({ containerType }) =>
+    containerType === "add-session-modal" &&
+    `
     align-items: center;
     padding: 0;
   `}

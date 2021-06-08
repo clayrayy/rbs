@@ -20,7 +20,7 @@ import {
   Seconds,
   // ButtonText,
   DropdownContainer,
-  DropdownIcon,
+  // DropdownIcon,
   Dropdown,
   DropdownItem,
   ConfirmDelete,
@@ -132,12 +132,12 @@ Duration.Seconds = function DurationSeconds({ children, ...restProps }) {
   return <Seconds {...restProps}>{children}</Seconds>;
 };
 
-Duration.DropdownIcon = function DurationOptionsDropdown({
-  children,
-  ...restProps
-}) {
-  return <DropdownIcon {...restProps}>{children}</DropdownIcon>;
-};
+// Duration.DropdownIcon = function DurationOptionsDropdown({
+//   children,
+//   ...restProps
+// }) {
+//   return <DropdownIcon {...restProps}>{children}</DropdownIcon>;
+// };
 
 Duration.EditButton = function DurationEditButton({ children, ...restProps }) {
   return <EditButton {...restProps}>{children}</EditButton>;

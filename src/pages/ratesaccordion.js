@@ -1,34 +1,26 @@
-import React, { useContext, useState } from "react";
-import {
-  Accordion,
-  Card,
-  CardModal,
-  Duration,
-  Form,
-  Intervals,
-} from "components";
-import { DurationCardContainer } from "containers/card-components/durationcard";
-import { FirebaseContext } from "context/firebase";
-import { useGetBehaviorsData } from "hooks/get-data-hooks/use-get-behaviors-data";
-import { AnimatePresence, motion } from "framer-motion";
+import { Accordion, Card, CardModal, Duration, Form } from "components";
 import { MotionVariants } from "constants/motionVariants";
+import { RateCardContainer } from "containers/card-components/ratecard";
+import { FirebaseContext } from "context/firebase";
+import { AnimatePresence } from "framer-motion";
+import { useGetBehaviorsData } from "hooks/get-data-hooks/use-get-behaviors-data";
+import React, { useState, useContext } from "react";
 
-export default function DurationsAccordion({ client, sessionId }) {
+export default function RatesAccordion({ client, sessionId, isRunning }) {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [newBehaviorName, setNewBehaviorName] = useState("");
-  const [addDurationFormOpen, setAddDurationFormOpen] = useState(false);
+  const [addRateFormOpen, setAddRateFormOpen] = useState(false);
   const { firebase } = useContext(FirebaseContext);
   const { behaviorsList, loading } = useGetBehaviorsData(
     client.docId,
     sessionId
   );
-  const { accordionVariants, pageTransitions } = MotionVariants();
-
-  const handleAddNewDuration = (e) => {
+  const { accordionVariants } = MotionVariants();
+  const handleAddNewRate = (e) => {
     e.preventDefault();
 
-    setAddDurationFormOpen(false);
+    setAddRateFormOpen(false);
     firebase
       .firestore()
       .collection("behaviors")
@@ -37,57 +29,50 @@ export default function DurationsAccordion({ client, sessionId }) {
         behaviorName: newBehaviorName,
         clientId: client.docId,
         sessionId: sessionId,
-        type: "duration",
+        type: "rate",
       })
       .then(() => {
         setNewBehaviorName("");
         setDropdownOpen(false);
-        // setAddDurationFormOpen(false);
+        // setAddRateFormOpen(false);
       });
   };
 
   return (
-    // <motion.div
-    //   variants={pageTransitions}
-    //   initial="hidden"
-    //   animate="show"
-    //   exit="exit"
-    // >
-    <Accordion layout>
+    <Accordion open={isOpen}>
       <CardModal
         modalType="add-tracker"
         blackout={dropdownOpen}
         dropdownOpen
-        bringForward={addDurationFormOpen}
+        bringForward={addRateFormOpen}
       >
         <CardModal.CenterContainer>
           <Form>
             <Form.Base formType="add-duration">
               <Form.Input
+                inputType="new-behavior"
                 onChange={({ target }) => {
                   setNewBehaviorName(target.value);
                 }}
                 value={newBehaviorName}
                 placeholder="Enter Behavior"
               />
-              <Form.Button onClick={handleAddNewDuration}>Add</Form.Button>
+              <Form.Button onClick={handleAddNewRate}>Add</Form.Button>
             </Form.Base>
           </Form>
         </CardModal.CenterContainer>
       </CardModal>
-
       <Accordion.TitleContainer>
         <Card.LeftContainer />
-        {/* <Accordion.Frame> */}
         <Card.CenterContainer>
           <Accordion.Title
             animate={
-              addDurationFormOpen ? { scale: 0.85, y: -10 } : { scale: 1, y: 0 }
+              addRateFormOpen ? { scale: 0.85, y: -10 } : { scale: 1, y: 0 }
             }
             onClick={() => setIsOpen(!isOpen)}
             open={isOpen}
           >
-            Duration
+            Rate
           </Accordion.Title>
 
           <Card.DownArrow
@@ -98,14 +83,12 @@ export default function DurationsAccordion({ client, sessionId }) {
           />
           {/* </Accordion.Frame> */}
         </Card.CenterContainer>
-
-        {/* <Accordion.IconContainer> */}
-        <Card.RightContainer >
+        <Card.RightContainer>
           <Card.IconContainer
             iconType="add-tracker"
             onClick={() => {
               setDropdownOpen(!dropdownOpen);
-              setAddDurationFormOpen(false);
+              setAddRateFormOpen(false);
             }}
           >
             <Card.DropdownIcon iconColor="light" open={dropdownOpen} />
@@ -113,22 +96,22 @@ export default function DurationsAccordion({ client, sessionId }) {
             {/* </Accordion.IconContainer> */}
           </Card.IconContainer>
           <AnimatePresence>
-            {dropdownOpen && !addDurationFormOpen && (
+            {dropdownOpen && !addRateFormOpen && (
               <Duration.DropdownContainer
-                visible={dropdownOpen && !addDurationFormOpen}
+                visible={dropdownOpen && !addRateFormOpen}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                exit={{ opacity: 0, transition: {duration: 0} }}
+                exit={{ opacity: 0 }}
               >
                 <Duration.Dropdown
-                  expand={addDurationFormOpen}
+                  expand={addRateFormOpen}
                   visible={dropdownOpen}
                 >
-                  {!addDurationFormOpen && (
+                  {!addRateFormOpen && (
                     <Duration.DropdownItem
-                      onClick={() => setAddDurationFormOpen(true)}
+                      onClick={() => setAddRateFormOpen(true)}
                     >
-                      Add New Duration
+                      Add New Rate
                     </Duration.DropdownItem>
                   )}
                 </Duration.Dropdown>
@@ -143,19 +126,19 @@ export default function DurationsAccordion({ client, sessionId }) {
         variants={accordionVariants}
         open={isOpen}
       >
-        <DurationCardContainer
+        <RateCardContainer
           behaviorName="Tantrum"
           client={client}
           sessionId={sessionId}
           layout
         />
-        <DurationCardContainer
+        <RateCardContainer
           behaviorName="Elopement"
           client={client}
           sessionId={sessionId}
           layout
         />
-        <DurationCardContainer
+        <RateCardContainer
           behaviorName="Pooping"
           client={client}
           sessionId={sessionId}
@@ -163,10 +146,10 @@ export default function DurationsAccordion({ client, sessionId }) {
         />
         {!loading &&
           behaviorsList
-            .filter((behavior) => behavior.type === "duration")
+            .filter((behavior) => behavior.type === "rate")
             .map((behavior, index) => {
               return (
-                <DurationCardContainer
+                <RateCardContainer
                   behaviorName={behavior.behaviorName}
                   behaviorId={behavior.docId}
                   isCustomDuration={true}
@@ -179,6 +162,5 @@ export default function DurationsAccordion({ client, sessionId }) {
             })}
       </Accordion.ItemsContainer>
     </Accordion>
-    // </motion.div>
   );
 }

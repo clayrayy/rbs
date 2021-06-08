@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 import { Link as ReachRouterLink } from "react-router-dom";
 import colors from "constants/colors";
+import { motion } from 'framer-motion'
 
 export const Container = styled.div`
   display: flex;
@@ -196,7 +197,7 @@ export const AddItemForm = styled.div`
   transition: transform 250ms cubic-bezier(0.5, 0, 0.5, 1);
 `;
 
-export const MenuDiv = styled.div`
+export const MenuDiv = styled(motion.div)`
   position: fixed;
   display: flex;
   justify-content: center;
@@ -210,7 +211,7 @@ export const MenuDiv = styled.div`
   right: 0;
   z-index: 100;
 
-  transform: ${({ open }) => (!open ? "translateX(100%)" : "none")};
+  /* transform: ${({ open }) => (!open ? "translateX(100%)" : "none")}; */
   /* transition: transform 250ms cubic-bezier(0.5, 0, 0.5, 1); */
 `;
 
@@ -222,7 +223,7 @@ export const Menu = styled.ul`
   justify-content: space-around;
   align-items: center;
   /* transform: translateY(.5vh); */
-border: solid 1px;
+/* border: solid 1px; */
   margin: 0;
   /* position: fixed; */
   padding: 0;

@@ -1,7 +1,7 @@
 export { default as DataSheet } from "./datasheet";
 export { default as Signup } from "./signup";
 export { default as Signin } from "./signin";
-export { default as NewClientList } from "./newclientlist";
+export { default as NewClientList } from "./clientlist";
 export { default as Home } from "./home";
 export { default as Profile } from "./profile";
 export { default as Session } from "./session";

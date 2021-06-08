@@ -18,7 +18,8 @@ import {
   IntervalResultItem,
   StartButton,
   ButtonContainer,
-  IconContainer
+  IconContainer,
+  DropdownIcon
 } from "./styles/card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
@@ -39,6 +40,10 @@ Card.Title = function CardTitle({ children, ...restProps }) {
 
 Card.IconContainer = function CardIconContainer({ children, ...restProps }) {
   return <IconContainer {...restProps}>{children}</IconContainer>;
+};
+
+Card.DropdownIcon = function CardDropdownIcon({ children, ...restProps }) {
+  return <DropdownIcon {...restProps}>{children}</DropdownIcon>;
 };
 
 Card.Top = function CardTop({ children, ...restProps }) {

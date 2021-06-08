@@ -7,6 +7,7 @@ import { useInterval } from "hooks/use-interval";
 import {  motion } from "framer-motion";
 import { FirebaseContext } from "context/firebase";
 import { MotionVariants } from "constants/motionVariants";
+import RatesAccordion from "./ratesaccordion";
 // import { RateCardContainer } from "containers/card-components/ratecard";
 
 export default function Session() {
@@ -98,6 +99,12 @@ export default function Session() {
         />
         <DurationsAccordion
           key="durationsacc"
+          isRunning={sessionIsRunning}
+          client={client}
+          sessionId={currentSessionId}
+        />
+        <RatesAccordion 
+          key='ratesacc'
           isRunning={sessionIsRunning}
           client={client}
           sessionId={currentSessionId}

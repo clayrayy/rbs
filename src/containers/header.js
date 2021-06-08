@@ -1,14 +1,13 @@
 // *****address problems refactoring addbehavor and addclient into remote components
 
 import React, { useState, useContext } from "react";
-import { Header, AddItemForm, Form, CardModal } from "../components";
+import { Header, Form } from "../components";
 import { FirebaseContext } from "../context/firebase";
 import { useHistory, useLocation } from "react-router-dom";
 import { useAuthListener } from "hooks";
 import * as ROUTES from "../constants/routes";
-import Popout from "components/popout";
-import { SessionContext } from "context/session";
-import { AnimationsContext } from "context/animations";
+import { AnimatePresence } from "framer-motion";
+import { MotionVariants } from "constants/motionVariants";
 
 export function HeaderContainer({
   data,
@@ -31,9 +30,11 @@ export function HeaderContainer({
   const [backActive, setBackActive] = useState(false); //activates change to animate back icon
   let history = useHistory();
   const location = useLocation();
+  const {menuVariants} = MotionVariants()
   // const { sessionIsRunning, setSessionIsRunning, isPaused, setIsPaused } =
   //   sessionFunctions;
-  const { toggleAnimations } = useContext(AnimationsContext);
+
+  // const { toggleAnimations } = useContext(AnimationsContext); -- removed because toggling animations had neglegable impact on performance
   const { user } = useAuthListener();
   const { firebase } = useContext(FirebaseContext);
   const db = firebase.firestore();
@@ -110,47 +111,65 @@ export function HeaderContainer({
             </CardModal> */}
 
       {/* Client List Menu */}
-      {location.pathname === "/clientlist" && (
-        <Header.MenuDiv open={menuOpen}>
-          <Header.Menu>
-            <Header.MenuItem key="profile">
-              <Header.MenuLink to={ROUTES.PROFILE}>Profile</Header.MenuLink>
-            </Header.MenuItem>
-            <Header.MenuItem key="about" onClick={toggleAnimations}>
-              Enable Fancy Animations
-            </Header.MenuItem>
+      <AnimatePresence>
+        {location.pathname === "/clientlist" && menuOpen && (
+          <Header.MenuDiv
+            initial="hidden"
+            animate="show"
+            exit="exit"
+            variants={menuVariants}
+            open={menuOpen}
+          >
+            <Header.Menu>
+              <Header.MenuItem key="profile">
+                <Header.MenuLink to={ROUTES.PROFILE}>Profile</Header.MenuLink>
+              </Header.MenuItem>
 
-            <Header.MenuItem key="signout">
-              <p onClick={signOut}>Sign Out</p>
-            </Header.MenuItem>
-          </Header.Menu>
-        </Header.MenuDiv>
-      )}
+              {/* <Header.MenuItem
+                key="about"
+                onClick={toggleAnimations}
+              >
+                Enable Fancy Animations
+              </Header.MenuItem> */}
 
-      {/* Session Menu */}
-      {location.pathname === "/session" && (
-        <Header.MenuDiv open={menuOpen}>
-          <Header.Menu>
-            <Header.MenuItem
-              onClick={() => {
-                sessionFunctions.setSessionIsRunning(
-                  !sessionFunctions.sessionIsRunning
-                );
-                sessionFunctions.setIsPaused(!sessionFunctions.isPaused);
-              }}
-            >
-              Pause Session
-            </Header.MenuItem>
-            <Header.MenuItem
-              key="about"
-              onClick={() => history.push(ROUTES.CLIENT_LIST)}
-            >
-              End Session
-            </Header.MenuItem>
-            <Header.MenuItem>How To Use</Header.MenuItem>
-          </Header.Menu>
-        </Header.MenuDiv>
-      )}
+              <Header.MenuItem key="signout">
+                <p onClick={signOut}>Sign Out</p>
+              </Header.MenuItem>
+            </Header.Menu>
+          </Header.MenuDiv>
+        )}
+
+        {/* Session Menu */}
+        {location.pathname === "/session" && menuOpen && (
+          <Header.MenuDiv
+            initial="hidden"
+            animate="show"
+            exit="exit"
+            variants={menuVariants}
+            open={menuOpen}
+          >
+            <Header.Menu>
+              <Header.MenuItem
+                onClick={() => {
+                  sessionFunctions.setSessionIsRunning(
+                    !sessionFunctions.sessionIsRunning
+                  );
+                  sessionFunctions.setIsPaused(!sessionFunctions.isPaused);
+                }}
+              >
+                Pause Session
+              </Header.MenuItem>
+              <Header.MenuItem
+                key="about"
+                onClick={() => history.push(ROUTES.CLIENT_LIST)}
+              >
+                End Session
+              </Header.MenuItem>
+              <Header.MenuItem>How To Use</Header.MenuItem>
+            </Header.Menu>
+          </Header.MenuDiv>
+        )}
+      </AnimatePresence>
 
       <Header.IconSpacer>
         {backIcon && (

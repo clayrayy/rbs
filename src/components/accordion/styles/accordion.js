@@ -16,6 +16,7 @@ export const Container = styled(motion.div)`
   width: 90%;
   grid-template-rows: 1fr 1fr 2fr;
   margin: 0 auto 1em auto;
+  z-index: 1;
   -webkit-box-shadow: 5px 5px 15px -1px rgba(0, 0, 0, 0.16);
   box-shadow: 5px 5px 15px -1px rgba(0, 0, 0, 0.16);
 `;
@@ -37,12 +38,13 @@ export const Modal = styled.div`
   background-color: rgba(0, 0, 0, 0.75);
   z-index: ${({ bringForward }) => (bringForward ? "10" : "-1")};
 `;
-export const Title = styled.h1`
+export const Title = styled(motion.h1)`
   font-size: 1.5rem;
   margin: 0;
   padding: .3em;
   font-weight: 200;
   color: ${colors.lightText};
+  z-index: 5;
 `;
 
 export const TitleContainer = styled.h1`
@@ -56,15 +58,15 @@ export const TitleContainer = styled.h1`
   border-bottom: solid 1px ${colors.lightText};
 `;
 
-export const DownArrow = styled.span`
-  font-size: 2rem;
-  color: ${colors.lightText};
-  text-align: right;
-  flex: 1;
-  z-index: ${({ moveToBack }) => (moveToBack ? "0" : "1")};
-  transition: all 0.25s ease-out;
-  transform: ${({ open }) => (open ? "scaleY(-1)" : "none")};
-`;
+// export const DownArrow = styled.span`
+//   font-size: 2rem;
+//   color: ${colors.lightText};
+//   text-align: right;
+//   flex: 1;
+//   z-index: ${({ moveToBack }) => (moveToBack ? "0" : "1")};
+//   transition: all 0.25s ease-out;
+//   transform: ${({ open }) => (open ? "scaleY(-1)" : "none")};
+// `;
 
 export const Text = styled.p`
   color: ${colors.lightText};

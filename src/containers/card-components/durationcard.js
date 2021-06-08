@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import { useDuration } from "hooks";
 import { Duration, Card, CardModal } from "components";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-
-  MotionVariants
-} from "constants/motionVariants";
+import { MotionVariants } from "constants/motionVariants";
 import { DeleteIcon, DownArrowIcon } from "components/icons";
 
 export function DurationCardContainer({
@@ -39,7 +36,7 @@ export function DurationCardContainer({
 
   const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
   const [bringUpModal, setBringUpModal] = useState(false);
-const { accordionVariants, deleteEventVariant } = MotionVariants();
+  const { accordionVariants, deleteEventVariant } = MotionVariants();
 
   // useEffect(() => {
   //   if (durations.length === 0) {
@@ -52,7 +49,11 @@ const { accordionVariants, deleteEventVariant } = MotionVariants();
   return (
     <Card>
       {/*_______ Confirm Delete Duration Modal Start _______*/}
-      <CardModal blackout={showConfirmDeleteModal} bringForward={bringUpModal}>
+      <CardModal
+        modalType="card-modal"
+        blackout={showConfirmDeleteModal}
+        bringForward={bringUpModal}
+      >
         {showConfirmDeleteModal && (
           <>
             <CardModal.LeftContainer>
@@ -109,12 +110,12 @@ const { accordionVariants, deleteEventVariant } = MotionVariants();
         <Card.RightContainer>
           {isCustomDuration && (
             <>
-              <Duration.IconContainer
+              <Card.IconContainer
                 iconType="delete"
                 onClick={() => setDeleteBehaviorDD(!deleteBehaviorDD)}
               >
-                <Duration.DropdownIcon open={deleteBehaviorDD} />
-              </Duration.IconContainer>
+                <Card.DropdownIcon open={deleteBehaviorDD} />
+              </Card.IconContainer>
               <Duration.DropdownContainer>
                 <Duration.Dropdown
                   visible={deleteBehaviorDD}
@@ -147,7 +148,7 @@ const { accordionVariants, deleteEventVariant } = MotionVariants();
               </Duration.DropdownContainer>
             </>
           )}
-          <Duration.IconContainer
+          <Card.IconContainer
             iconType="more-info"
             onClick={() => {
               toggleOpen(name);
@@ -155,7 +156,7 @@ const { accordionVariants, deleteEventVariant } = MotionVariants();
             moveToBack={deleteBehaviorDD}
           >
             <DownArrowIcon isOpen={isOpen} />
-          </Duration.IconContainer>
+          </Card.IconContainer>
         </Card.RightContainer>
       </Card.Top>
       <AnimatePresence>

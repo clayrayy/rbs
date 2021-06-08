@@ -64,11 +64,11 @@ export const Base = styled.form`
     ${({ formType }) =>
     formType === "add-duration" &&
     `
-        display: grid;
-        grid-template-rows: 1fr 1fr;
+        display: flex;
+        
         gap: 1em;
         
-        margin-top: 1em;
+        margin-top: 2em;
     `}
 
     ${({ formType }) =>
@@ -132,6 +132,7 @@ export const Input = styled.input`
   border: none;
   width: 100%;
   transition: all 0.25s ease;
+
   ${({ formType, gridArea }) =>
     formType === "add-session" &&
     `

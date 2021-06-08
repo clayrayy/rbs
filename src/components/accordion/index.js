@@ -7,7 +7,7 @@ import {
   Container,
   ItemsContainer,
   Title,
-  DownArrow,
+  // DownArrow,
   Text,
   TitleContainer,
   IconContainer,
@@ -45,9 +45,9 @@ Accordion.TitleContainer = function AccordionTitleContainer({
   return <TitleContainer {...restProps}>{children}</TitleContainer>;
 };
 
-Accordion.DownArrow = function AccordionDownArrow({ children, ...restProps }) {
-  return <DownArrow {...restProps}>{children}</DownArrow>;
-};
+// Accordion.DownArrow = function AccordionDownArrow({ children, ...restProps }) {
+//   return <DownArrow {...restProps}>{children}</DownArrow>;
+// };
 
 Accordion.Text = function AccordionText({ children, ...restProps }) {
   return <Text {...restProps}>{children}</Text>;

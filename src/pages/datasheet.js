@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import { HeaderContainer } from "containers/header";
 import { useLocation } from "react-router";
 import useGetSessionEvents from "hooks/get-data-hooks/use-getsessionevents";
-import { Accordion, Card, ClientCard} from "components";
+import { Accordion, Card, ClientCard } from "components";
 import LoadingContainer from "containers/loading";
 import { formatTotalTime } from "utils/formatTime";
 import { IntervalResultContainer } from "containers/intervalresult";
@@ -10,17 +10,18 @@ import { AnimatePresence, motion } from "framer-motion";
 import { MotionVariants } from "constants/motionVariants";
 import { DownArrowIcon } from "components/icons";
 
-
 export default function Datasheet() {
   const location = useLocation();
   const [wholeIntervalsOpen, setWholeIntervalsOpen] = useState(false);
   const [partialIntervalsOpen, setPartialIntervalsOpen] = useState(false);
   const [durationsOpen, setDurationsOpen] = useState(false);
+  const [ratesOpen, setRatesOpen] = useState(false);
   const session = location.state.session;
   const { eventsData, loading } = useGetSessionEvents(session.sessionId);
   const { accordionVariants, pageTransitions } = MotionVariants();
   let uniqueWIBehaviorsArr = [];
   let uniquePIBehaviorsArr = [];
+
   let wholeIntervalGraphs = [];
   let partialIntervalGraphs = [];
   const subtitle = `${session.date} - ${session.tod}`;
@@ -33,7 +34,8 @@ export default function Datasheet() {
   const durationsData = eventsData.filter(
     (event) => event.eventType === "duration"
   );
-
+  const ratesData = eventsData.filter((event) => event.eventType === "rate");
+  console.log(ratesData);
   wholeIntervalsData.forEach((interval) => {
     if (!uniqueWIBehaviorsArr.includes(interval.behaviorName)) {
       uniqueWIBehaviorsArr.push(interval.behaviorName);
@@ -63,7 +65,10 @@ export default function Datasheet() {
     });
   // iterates through each unique behavior and creates an array of all
   // interval events that have a matching behaviorName
+  console.log(session.sessionLength);
 
+  let x = 3600 / session.sessionLength;
+  console.log(x);
   return (
     <>
       <HeaderContainer
@@ -175,7 +180,7 @@ export default function Datasheet() {
                     onClick={() =>
                       setPartialIntervalsOpen(!partialIntervalsOpen)
                     }
-                    color='light'
+                    color="light"
                   />
                 </Card.RightContainer>
               </Card.Top>
@@ -216,7 +221,7 @@ export default function Datasheet() {
                     <DownArrowIcon
                       isOpen={durationsOpen}
                       onClick={() => setDurationsOpen(!durationsOpen)}
-                      color='light'
+                      color="light"
                     />
                   </Card.RightContainer>
                 </Card.Top>
@@ -259,6 +264,79 @@ export default function Datasheet() {
                               <Card.ListText>
                                 {formatTotalTime(event.seconds)}
                               </Card.ListText>
+                            </Card.RightContainer>
+                          </Card.SessionItem>
+                        ))}
+                      </Card>
+                    </Card.Dropdown>
+                  )}
+                </AnimatePresence>
+              </Accordion>
+            )}
+
+            {ratesData.length !== 0 && (
+              <Accordion
+                cardType="results"
+                style={{ color: "white", background: "rgba(0,0,0,.6)" }}
+              >
+                <Card.Top>
+                  <Card.RightContainer></Card.RightContainer>
+                  <Card.CenterContainer>
+                    <Accordion.Title>Rate</Accordion.Title>
+                  </Card.CenterContainer>
+                  <Card.RightContainer>
+                    <DownArrowIcon
+                      isOpen={ratesOpen}
+                      onClick={() => setRatesOpen(!ratesOpen)}
+                      color="light"
+                    />
+                  </Card.RightContainer>
+                </Card.Top>
+                <AnimatePresence>
+                  {ratesOpen && (
+                    <Card.Dropdown
+                      key="duration-results-dropdown"
+                      open={durationsOpen}
+                      animate="open"
+                      initial="collapsed"
+                      exit="collapsed"
+                      variants={accordionVariants}
+                      layout
+                    >
+                      <Card>
+                        <Card.ColumnsLabels>
+                          <Card.LeftContainer containerType="datasheet">
+                            <Card.Text textType="column-label">
+                              Behavior
+                            </Card.Text>
+                          </Card.LeftContainer>
+                          <Card.CenterContainer>
+                            <Card.Text textType="column-label">
+                              Total Occ.
+                            </Card.Text>
+                          </Card.CenterContainer>
+                          <Card.RightContainer containerType="datasheet">
+                            <Card.Text textType="column-label">
+                              Rate/Hr
+                            </Card.Text>
+                          </Card.RightContainer>
+                        </Card.ColumnsLabels>
+                        {ratesData.map((event, index) => (
+                          <Card.SessionItem
+                            itemType="duration-result"
+                            key={index}
+                          >
+                            <Card.LeftContainer containerType="datasheet">
+                              <Card.ListText>
+                                {event.behaviorName}
+                              </Card.ListText>
+                            </Card.LeftContainer>
+                            <Card.CenterContainer>
+                              <Card.ListText>{event.count}</Card.ListText>
+                            </Card.CenterContainer>
+
+                            <Card.RightContainer containerType="datasheet">
+                              {(event.count / x).toFixed(2)}
                             </Card.RightContainer>
                           </Card.SessionItem>
                         ))}
