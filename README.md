@@ -1,6 +1,8 @@
 # rbs
 Behavioral data tracking app
 
+Latest deployed version: https://rbsdata-b02f7.web.app/
+
 This is an app I made that can be used to track maladaptive behaviors 
 in conjunction with Applied Behavior Analysis therapy. 
 
@@ -35,6 +37,19 @@ A few things I would do differently:
   * Using better DRY principles to reduce repetition
   * Improve app architecture to better organize my filesystem and codebase based on component type
   * Reduce prop drilling using Context API
+
+Known bugs / things in the pipeline to be fixed:
+  * Animation on client list new session form is a little janky and text stretch is
+    not cute
+  * Hamburger menu only pops out on client list and session pages. Just need 
+    to add in conditionally rendered menu items based on current page for remaining pages
+  * Occasionally, logging out will cause page to crash. This is due to attempted auth state
+    update on unmounted component. Still tracking exact origin.
+  * Change add new session form to adjust 'Taken By' field to be a radio type
+    selector with options for 'Mom', 'Dad', etc.
+  * Add ability to decrement Rate tracker for accidental increments
+    
+
   
 I created this app over several months with the help of my lovely wife, who is in the ABA field. 
 As I stated earlier, this the creation of this app has been a massive learning experience and overall a lot of fun.
