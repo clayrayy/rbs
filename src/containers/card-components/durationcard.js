@@ -50,30 +50,30 @@ export function DurationCardContainer({
     <Card>
       {/*_______ Confirm Delete Duration Modal Start _______*/}
       <CardModal
-        modalType="card-modal"
+        modalType='card-modal'
         blackout={showConfirmDeleteModal}
         bringForward={bringUpModal}
       >
         {showConfirmDeleteModal && (
           <>
             <CardModal.LeftContainer>
-              <CardModal.Text textType="duration">
+              <CardModal.Text textType='duration'>
                 Delete duration <strong>"{behaviorName}"</strong>?
               </CardModal.Text>
             </CardModal.LeftContainer>
-            <CardModal.RightContainer modalType="delete-duration">
+            <CardModal.RightContainer modalType='delete-duration'>
               <Duration.ModalButton
-                className="delete"
+                className='delete'
                 onClick={() => deleteBehaviorEvents(behaviorName)}
               >
                 Confirm
               </Duration.ModalButton>
               <Duration.ModalButton
-                className="cancel"
+                className='cancel'
                 onClick={() => {
-                  setShowConfirmDeleteModal(false);
-                  setDeleteBehaviorDD(false);
-                  setBringUpModal(false);
+                  setShowConfirmDeleteModal(false)
+                  setDeleteBehaviorDD(false)
+                  setBringUpModal(false)
                 }}
               >
                 Cancel
@@ -94,7 +94,7 @@ export function DurationCardContainer({
               ) : (
                 <Card.ButtonText>Start</Card.ButtonText>
               )}
-              {isActive && <Duration.Seconds secondHandType="clockwise" />}
+              {isActive && <Duration.Seconds secondHandType='clockwise' />}
             </Card.StartButton>
           </Card.ButtonContainer>
         </Card.LeftContainer>
@@ -106,12 +106,11 @@ export function DurationCardContainer({
             <Duration.Text>{timePreview()}</Duration.Text>
           )}
         </Card.CenterContainer>
-
         <Card.RightContainer>
           {isCustomDuration && (
             <>
               <Card.IconContainer
-                iconType="delete"
+                iconType='delete'
                 onClick={() => setDeleteBehaviorDD(!deleteBehaviorDD)}
               >
                 <Card.DropdownIcon open={deleteBehaviorDD} />
@@ -125,9 +124,9 @@ export function DurationCardContainer({
                   <Duration.DropdownItem
                     hide={durations.length === 0}
                     onClick={() => {
-                      setDeleteBehaviorDD(!deleteBehaviorDD);
-                      setIsOpen(true);
-                      setEditEventsActive(!editEventsActive);
+                      setDeleteBehaviorDD(!deleteBehaviorDD)
+                      setIsOpen(true)
+                      setEditEventsActive(!editEventsActive)
                     }}
                   >
                     {editEventsActive || durations.length === 0 ? null : (
@@ -136,10 +135,10 @@ export function DurationCardContainer({
                   </Duration.DropdownItem>
                   <Duration.DropdownItem
                     onClick={() => {
-                      setShowConfirmDeleteModal(true);
-                      setDeleteBehaviorDD(false);
-                      setBringUpModal(true);
-                      setIsOpen(false);
+                      setShowConfirmDeleteModal(true)
+                      setDeleteBehaviorDD(false)
+                      setBringUpModal(true)
+                      setIsOpen(false)
                     }}
                   >
                     Delete Behavior
@@ -149,9 +148,9 @@ export function DurationCardContainer({
             </>
           )}
           <Card.IconContainer
-            iconType="more-info"
+            iconType='more-info'
             onClick={() => {
-              toggleOpen(name);
+              toggleOpen(name)
             }}
             moveToBack={deleteBehaviorDD}
           >
@@ -162,15 +161,29 @@ export function DurationCardContainer({
       <AnimatePresence>
         {isOpen && (
           <Card.Dropdown
-            key="durations-events"
-            initial="collapsed"
-            animate="open"
-            exit="collapsed"
+            key='durations-events'
+            initial='collapsed'
+            animate='open'
+            exit='collapsed'
             variants={accordionVariants}
             transition={{ duration: 0.35 }}
             open={isOpen}
             durations={durations}
           >
+            <Card.SessionItem>
+              <Card.ColumnsLabels>
+                <Card.LeftContainer containerType='interval-dropdown'>
+                  <Card.ListText>
+                    <strong>Time</strong>
+                  </Card.ListText>
+                </Card.LeftContainer>
+                <Card.RightContainer>
+                  <Card.ListText>
+                    <strong>Duration</strong>
+                  </Card.ListText>
+                </Card.RightContainer>
+              </Card.ColumnsLabels>
+            </Card.SessionItem>
             {!loading &&
               durations
                 .sort((a, b) => a.epochDate - b.epochDate)
@@ -179,20 +192,20 @@ export function DurationCardContainer({
                     // <AnimateSharedLayout key={item.docId}>
                     <AnimatePresence key={item.docId} layout>
                       <Card.SessionItem
-                        animate="show"
-                        initial="hidden"
-                        exit="exit"
+                        animate='show'
+                        initial='hidden'
+                        exit='exit'
                         variants={deleteEventVariant}
                         key={item.docId}
                         layout
                       >
-                        <Card.LeftContainer containerType="interval-dropdown">
+                        <Card.LeftContainer containerType='interval-dropdown'>
                           {editEventsActive && (
                             <DeleteIcon
                               key={`delete-icon${item.docId}`}
-                              animate="show"
-                              initial="hidden"
-                              exit="exit"
+                              animate='show'
+                              initial='hidden'
+                              exit='exit'
                               variants={deleteEventVariant}
                               onClick={() => deleteEvent(item.docId)}
                               active={editEventsActive}
@@ -203,8 +216,8 @@ export function DurationCardContainer({
                           <Card.ListText
                             as={motion.p}
                             key={`timestamp${item.docId}`}
-                            initial={editEventsActive ? "hidden" : "show"}
-                            animate="show"
+                            initial={editEventsActive ? 'hidden' : 'show'}
+                            animate='show'
                             variants={deleteEventVariant}
                             // exit='exit'
                             layout
@@ -217,9 +230,9 @@ export function DurationCardContainer({
                           <Card.ListText
                             key={`event-time${item.docId}`}
                             as={motion.p}
-                            animate="show"
-                            initial="hidden"
-                            exit="exit"
+                            animate='show'
+                            initial='hidden'
+                            exit='exit'
                             layout
                             variants={deleteEventVariant}
                           >
@@ -228,27 +241,27 @@ export function DurationCardContainer({
                         </Card.RightContainer>
                       </Card.SessionItem>
                     </AnimatePresence>
-                  );
+                  )
                 })}
             <Card.SessionItem>
               <Card.LeftContainer />
               <Card.CenterContainer>
                 <Card.ListText>
                   {durations.length === 0
-                    ? "No Data"
+                    ? 'No Data'
                     : `${durations.length} ${
-                        durations.length > 1 ? "Trials" : "Trial"
+                        durations.length > 1 ? 'Trials' : 'Trial'
                       } - ${formatTotalTime(totalSeconds)}`}
                 </Card.ListText>
               </Card.CenterContainer>
 
-              <Card.RightContainer itemType="edit-container">
+              <Card.RightContainer itemType='edit-container'>
                 {durations.length !== 0 && !isActive && (
                   <Duration.EditButton
                     active={editEventsActive}
                     onClick={() => setEditEventsActive(!editEventsActive)}
                   >
-                    {editEventsActive ? "Done" : "Edit Trials"}
+                    {editEventsActive ? 'Done' : 'Edit Trials'}
                   </Duration.EditButton>
                 )}
               </Card.RightContainer>
@@ -257,5 +270,5 @@ export function DurationCardContainer({
         )}
       </AnimatePresence>
     </Card>
-  );
+  )
 }

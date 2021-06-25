@@ -22,7 +22,7 @@ export const Container = styled(motion.div)`
   background: ${colors.cardBackground};
 
   @media (max-width: 600px) {
-    padding: 0.75em 0em;
+    padding: 0.75em;
   }
 
   ${({ expandForSmallScreen }) =>
@@ -101,23 +101,25 @@ export const Text = styled.p`
 export const LeftContainer = styled(motion.div)`
   flex: 1;
   display: flex;
-  flex-direction: column;
+  /* border: solid 1px yellow; */
+  flex-direction: row;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   ${({ containerType }) =>
     containerType === "interval-dropdown" ? "flex: 1" : "flex: 1"};
-  ${({ containerType }) =>
+  /* ${({ containerType }) =>
     containerType === "interval-dropdown" &&
     `
       flex-direction: row;
-      margin-left: 1em;
+      // margin-left: 1em;
       justify-content: flex-start; 
       align-items: center;
-    `}
+    `} */
 
   ${({ containerType }) =>
     containerType === "datasheet" &&
     `
+    text-align-center;
     align-items: center;
     
 `}
@@ -161,9 +163,10 @@ export const RightContainer = styled(motion.div)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   text-align: center;
   position: relative;
+  /* border: solid 1px green; */
 
   ${({ itemType }) =>
     itemType === "edit-container" &&
@@ -177,13 +180,13 @@ export const RightContainer = styled(motion.div)`
     `
     align-items: center;
 `}
-  ${({ containerType }) =>
+  /* ${({ containerType }) =>
     containerType === "interval-dropdown" &&
     `
     // border: solid 1px;
     align-items: flex-end;
     margin-right: 1em;
-`}
+`} */
 `;
 
 export const Top = styled(motion.div)`
@@ -194,8 +197,9 @@ export const Top = styled(motion.div)`
   justify-content: space-between;
 `;
 export const Dropdown = styled(motion.div)`
-  width: ${({ dropdownType }) =>
-    dropdownType === "session-list" ? "80%" : "100%"};
+width: 100%;
+  /* width: ${({ dropdownType }) =>
+    dropdownType === "session-list" ? "100%" : "100%"}; */
 `;
 
 export const DropdownIcon = styled.span`
@@ -248,18 +252,15 @@ export const SessionItem = styled(motion.div)`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 95%;
+  width: 100%;
   margin: 0 auto;
-  /* border: solid 1px; */
-  ${({ itemType }) =>
-    itemType === "duration-result" &&
-    `
-        width: 100%;
-    `}
+  border-bottom: solid 1px;
+
 
   &:last-of-type {
     border-bottom: none;
   }
+
   ${({ itemType }) =>
     itemType === "link-to-session" &&
     `
@@ -275,7 +276,7 @@ export const SessionItem = styled(motion.div)`
 `;
 export const ColumnsLabels = styled.div`
   width: 100%;
-  border-bottom: solid 1px;
+  /* border-bottom: solid 1px; */
   text-align: center;
   display: flex;
   margin: 0 auto;
@@ -289,17 +290,17 @@ export const ColumnsLabels = styled.div`
 `;
 
 export const ListText = styled(motion.p)`
-  font-size: clamp(0.75rem, -0.875rem + 8.333vw, 0.1rem);
+  /* font-size: clamp(0.75rem, -0.875rem + 8.333vw, 0.1rem); */
   text-align: center;
-  max-width: 100%;
+  /* max-width: 100%; */
   font-size: 0.75rem;
   color: ${colors.darkText};
 
-  @media (min-width: 835px) {
+  @media (min-width: 600px) {
     font-size: 0.85rem;
   }
 
-  @media (min-width: 600px) {
+  @media (min-width: 835px) {
     font-size: 1rem;
   }
 
@@ -462,3 +463,17 @@ export const IntervalResultItem = styled.div`
     /* border: 1px magenta solid; */
   }
 `;
+
+export const Row = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  /* border:solid 1px magenta; */
+
+  
+
+  ${({columnType}) => columnType === 'labels' && `
+    border-bottom: solid 1px;
+  `}
+`

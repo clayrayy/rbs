@@ -14,7 +14,7 @@ export default function Home() {
         title="RBS Data"
         name="home"
         backIcon={false}
-        showMenu={false}
+        showMenu='false'
       />
       <motion.div
         variants={pageTransitions}

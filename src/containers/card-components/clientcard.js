@@ -232,7 +232,7 @@ export function ClientCardContainer({ client }) {
                             </Card.Text>
                           </Card.CenterContainer>
                         </Card.ColumnsLabels>
-                        <Card.ColumnsLabels>
+                        <Card.Row>
                           <Card.LeftContainer>
                             <Card.Text>Date</Card.Text>
                           </Card.LeftContainer>
@@ -242,7 +242,7 @@ export function ClientCardContainer({ client }) {
                           <Card.RightContainer>
                             <Card.Text>Total Time</Card.Text>
                           </Card.RightContainer>
-                        </Card.ColumnsLabels>
+                        </Card.Row>
                       </>
                     )}
                     <motion.div initial="hidden" animate="show" variants={list}>

@@ -15,36 +15,36 @@ export function IntervalResultContainer({ behavior, name, intervalType }) {
 
     return (
       <Card key={index}>
-        <Card.ColumnsLabels>
-          <Card.LeftContainer containerType="interval-dropdown">
+        <Card.Row columnType='labels'>
+          <Card.LeftContainer containerType='datasheet'>
             <Card.Text>Behavior</Card.Text>
           </Card.LeftContainer>
-          <Card.CenterContainer containerType="interval-dropdown">
+          <Card.CenterContainer containerType='datasheet'>
             <Card.Text>
               Interval <br />
               Length
             </Card.Text>
           </Card.CenterContainer>
-          <Card.RightContainer containerType="interval-dropdown">
+          <Card.RightContainer containerType='datasheet'>
             <Card.Text>Total</Card.Text>
           </Card.RightContainer>
-        </Card.ColumnsLabels>
-        <Card.Dropdown open={true}>
-          <Card.SessionItem>
-            <Card.LeftContainer containerType="datasheet">
-              <Card.ListText>{name}</Card.ListText>
-            </Card.LeftContainer>
-            <Card.CenterContainer containerType="datasheet">
-              <Card.ListText>
-                {formatTotalTime(result[0].intervalLength)}
-              </Card.ListText>
-            </Card.CenterContainer>
-            <Card.RightContainer containerType="datasheet">
-              <Card.ListText>{totalOccurrances}</Card.ListText>
-            </Card.RightContainer>
-          </Card.SessionItem>
-          <Card.IntervalResultContainer>
-            {/* <Card.IntervalResultItem>
+        </Card.Row>
+        {/* <Card.Dropdown dropdownType='results'open={true}> */}
+        <Card.Row>
+          <Card.LeftContainer containerType='datasheet'>
+            <Card.ListText>{name}</Card.ListText>
+          </Card.LeftContainer>
+          <Card.CenterContainer>
+            <Card.ListText>
+              {formatTotalTime(result[0].intervalLength)}
+            </Card.ListText>
+          </Card.CenterContainer>
+          <Card.RightContainer containerType='datasheet'>
+            <Card.ListText>{totalOccurrances}</Card.ListText>
+          </Card.RightContainer>
+        </Card.Row>
+        <Card.IntervalResultContainer>
+          {/* <Card.IntervalResultItem>
                             <Card.Text textType='result-number'>
                                 &nbsp;
                                     </Card.Text>
@@ -52,19 +52,19 @@ export function IntervalResultContainer({ behavior, name, intervalType }) {
                                 X or O
                             </Card.ListText>
                         </Card.IntervalResultItem> */}
-            {result.map((event, index) => {
-              return (
-                <Card.IntervalResultItem key={index}>
-                  <Card.Text textType="result-number">{index + 1}</Card.Text>
-                  <Card.ListText textType="interval-result">
-                    {event.result ? "X" : "O"}
-                  </Card.ListText>
-                </Card.IntervalResultItem>
-              );
-            })}
-          </Card.IntervalResultContainer>
-        </Card.Dropdown>
+          {result.map((event, index) => {
+            return (
+              <Card.IntervalResultItem key={index}>
+                <Card.Text textType='result-number'>{index + 1}</Card.Text>
+                <Card.ListText textType='interval-result'>
+                  {event.result ? 'X' : 'O'}
+                </Card.ListText>
+              </Card.IntervalResultItem>
+            )
+          })}
+        </Card.IntervalResultContainer>
+        {/* </Card.Dropdown> */}
       </Card>
-    );
+    )
   });
 }

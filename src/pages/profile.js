@@ -9,12 +9,13 @@ export default function Profile() {
     MotionVariants();
   return (
     <>
-      <HeaderContainer backIcon="true" title="Profile" />
+      <HeaderContainer backIcon="true" title="Profile" showMenu='false'/>
       <motion.div
             variants={pageTransitions}
             initial="hidden"
             animate="show"
             exit="exit"
+            
           >
       <ProfileContainer /></motion.div>
     </>

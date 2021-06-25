@@ -9,16 +9,16 @@ export default function Signin() {
     MotionVariants();
   return (
     <>
-      <HeaderContainer backIcon="true" title="Sign In" />
-      
+      <HeaderContainer backIcon='true' title='Sign In' showMenu='false' />
+
       <motion.div
-            variants={pageTransitions}
-            initial="hidden"
-            animate="show"
-            exit="exit"
-          >
-      <SigninFormContainer />
+        variants={pageTransitions}
+        initial='hidden'
+        animate='show'
+        exit='exit'
+      >
+        <SigninFormContainer />
       </motion.div>
     </>
-  );
+  )
 }

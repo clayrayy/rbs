@@ -73,64 +73,65 @@ export default function Datasheet() {
     <>
       <HeaderContainer
         backIcon={true}
-        title={session.sessionName ? session.sessionName : "Session"}
+        title={session.sessionName ? session.sessionName : 'Session'}
         subtitle={subtitle}
+        showMenu='false'
       />
       {loading ? (
         <LoadingContainer />
       ) : (
         <motion.div
           variants={pageTransitions}
-          initial="hidden"
-          animate="show"
-          exit="exit"
+          initial='hidden'
+          animate='show'
+          exit='exit'
         >
-          <Fragment key="results">
-            <Accordion style={{ color: "white" }}>
+          <Fragment key='results'>
+            <Accordion style={{ color: 'white' }}>
               {/* <Card.LeftContainer></Card.LeftContainer> */}
-              <Card.CenterContainer containerType="datasheet-title">
+              <Card.CenterContainer containerType='datasheet-title'>
                 <Accordion.Title>Details</Accordion.Title>
               </Card.CenterContainer>
               <Card.RightContainer></Card.RightContainer>
               <Card>
-                <Card.ColumnsLabels>
-                  <Card.LeftContainer containerType="interval-dropdown">
-                    <Card.Text style={{ textAlign: "center" }}>Date</Card.Text>
+                <Card.Row>
+                  <Card.LeftContainer containerType='interval-dropdown'>
+                    <Card.Text style={{ textAlign: 'center' }}>Date</Card.Text>
                   </Card.LeftContainer>
                   <Card.CenterContainer>
                     <Card.Text>Taken By</Card.Text>
                   </Card.CenterContainer>
-                  <Card.RightContainer containerType="interval-dropdown">
+                  <Card.RightContainer containerType='interval-dropdown'>
                     <Card.Text>Session Length</Card.Text>
                   </Card.RightContainer>
-                </Card.ColumnsLabels>
+                </Card.Row>
 
-                <Card.Dropdown>
-                  <Card.SessionItem>
-                    <Card.LeftContainer containerType="datasheet">
-                      <Card.ListText>{subtitle}</Card.ListText>
-                    </Card.LeftContainer>
-                    <Card.CenterContainer containerType="datasheet">
-                      <Card.ListText>{session.takenBy}</Card.ListText>
-                    </Card.CenterContainer>
-                    <Card.RightContainer containerType="datasheet">
-                      <Card.ListText>
-                        {formatTotalTime(session.sessionLength)}
-                      </Card.ListText>
-                    </Card.RightContainer>
-                  </Card.SessionItem>
-                </Card.Dropdown>
+                {/* <Card.Dropdown> */}
+                <Card.SessionItem>
+                  <Card.LeftContainer containerType='datasheet'>
+                    <Card.ListText>{subtitle}</Card.ListText>
+                  </Card.LeftContainer>
+                  <Card.CenterContainer containerType='datasheet'>
+                    <Card.ListText>{session.takenBy}</Card.ListText>
+                  </Card.CenterContainer>
+                  <Card.RightContainer containerType='datasheet'>
+                    <Card.ListText>
+                      {formatTotalTime(session.sessionLength)}
+                    </Card.ListText>
+                  </Card.RightContainer>
+                </Card.SessionItem>
+                {/* </Card.Dropdown> */}
               </Card>
             </Accordion>
 
             <Accordion
-              cardType="results"
-              style={{ color: "white", background: "rgba(0,0,0,.6)" }}
+              cardType='results'
+              style={{ color: 'white', background: 'rgba(0,0,0,.6)' }}
             >
               <Card.Top>
                 <Card.LeftContainer></Card.LeftContainer>
-                <Card.CenterContainer containerType="results-title">
-                  <Accordion.Title style={{ color: "white" }}>
+                <Card.CenterContainer containerType='results-title'>
+                  <Accordion.Title style={{ color: 'white' }}>
                     W. Intervals
                   </Accordion.Title>
                 </Card.CenterContainer>
@@ -138,17 +139,17 @@ export default function Datasheet() {
                   <DownArrowIcon
                     isOpen={wholeIntervalsOpen}
                     onClick={() => setWholeIntervalsOpen(!wholeIntervalsOpen)}
-                    color="light"
+                    color='light'
                   />
                 </Card.RightContainer>
               </Card.Top>
               <AnimatePresence>
                 {wholeIntervalsOpen && (
                   <Card.Dropdown
-                    key="intervals-drop"
-                    animate="open"
-                    initial="collapsed"
-                    exit="collapsed"
+                    key='intervals-drop'
+                    animate='open'
+                    initial='collapsed'
+                    exit='collapsed'
                     variants={accordionVariants}
                     layout
                   >
@@ -159,19 +160,19 @@ export default function Datasheet() {
                           name={item}
                           key={index}
                         />
-                      );
+                      )
                     })}
                   </Card.Dropdown>
                 )}
               </AnimatePresence>
             </Accordion>
             <Accordion
-              cardType="results"
-              style={{ color: "white", background: "rgba(0,0,0,.6)" }}
+              cardType='results'
+              style={{ color: 'white', background: 'rgba(0,0,0,.6)' }}
             >
               <Card.Top>
                 <Card.LeftContainer></Card.LeftContainer>
-                <Card.CenterContainer containerType="datasheet-title">
+                <Card.CenterContainer containerType='datasheet-title'>
                   <Accordion.Title>P. Intervals</Accordion.Title>
                 </Card.CenterContainer>
                 <Card.RightContainer>
@@ -180,17 +181,17 @@ export default function Datasheet() {
                     onClick={() =>
                       setPartialIntervalsOpen(!partialIntervalsOpen)
                     }
-                    color="light"
+                    color='light'
                   />
                 </Card.RightContainer>
               </Card.Top>
               <AnimatePresence>
                 {partialIntervalsOpen && (
                   <Card.Dropdown
-                    key="intervals-drop"
-                    animate="open"
-                    initial="collapsed"
-                    exit="collapsed"
+                    key='intervals-drop'
+                    animate='open'
+                    initial='collapsed'
+                    exit='collapsed'
                     variants={accordionVariants}
                     layout
                   >
@@ -201,7 +202,7 @@ export default function Datasheet() {
                           name={item}
                           key={index}
                         />
-                      );
+                      )
                     })}
                   </Card.Dropdown>
                 )}
@@ -209,8 +210,8 @@ export default function Datasheet() {
             </Accordion>
             {durationsData.length !== 0 && (
               <Accordion
-                cardType="results"
-                style={{ color: "white", background: "rgba(0,0,0,.6)" }}
+                cardType='results'
+                style={{ color: 'white', background: 'rgba(0,0,0,.6)' }}
               >
                 <Card.Top>
                   <Card.RightContainer></Card.RightContainer>
@@ -221,46 +222,46 @@ export default function Datasheet() {
                     <DownArrowIcon
                       isOpen={durationsOpen}
                       onClick={() => setDurationsOpen(!durationsOpen)}
-                      color="light"
+                      color='light'
                     />
                   </Card.RightContainer>
                 </Card.Top>
                 <AnimatePresence>
                   {durationsOpen && (
                     <Card.Dropdown
-                      key="duration-results-dropdown"
+                      key='duration-results-dropdown'
                       open={durationsOpen}
-                      animate="open"
-                      initial="collapsed"
-                      exit="collapsed"
+                      animate='open'
+                      initial='collapsed'
+                      exit='collapsed'
                       variants={accordionVariants}
                       layout
                     >
                       <Card>
-                        <Card.ColumnsLabels>
-                          <Card.LeftContainer containerType="datasheet">
-                            <Card.Text textType="column-label">
+                        <Card.Row>
+                          <Card.LeftContainer containerType='datasheet'>
+                            <Card.Text textType='column-label'>
                               Behavior
                             </Card.Text>
                           </Card.LeftContainer>
                           <Card.CenterContainer></Card.CenterContainer>
-                          <Card.RightContainer containerType="datasheet">
-                            <Card.Text textType="column-label">Time</Card.Text>
+                          <Card.RightContainer containerType='datasheet'>
+                            <Card.Text textType='column-label'>Time</Card.Text>
                           </Card.RightContainer>
-                        </Card.ColumnsLabels>
+                        </Card.Row>
                         {durationsData.map((event, index) => (
                           <Card.SessionItem
-                            itemType="duration-result"
+                            itemType='duration-result'
                             key={index}
                           >
-                            <Card.LeftContainer containerType="datasheet">
+                            <Card.LeftContainer containerType='datasheet'>
                               <Card.ListText>
                                 {event.behaviorName}
                               </Card.ListText>
                             </Card.LeftContainer>
                             <Card.CenterContainer />
 
-                            <Card.RightContainer containerType="datasheet">
+                            <Card.RightContainer containerType='datasheet'>
                               <Card.ListText>
                                 {formatTotalTime(event.seconds)}
                               </Card.ListText>
@@ -276,8 +277,8 @@ export default function Datasheet() {
 
             {ratesData.length !== 0 && (
               <Accordion
-                cardType="results"
-                style={{ color: "white", background: "rgba(0,0,0,.6)" }}
+                cardType='results'
+                style={{ color: 'white', background: 'rgba(0,0,0,.6)' }}
               >
                 <Card.Top>
                   <Card.RightContainer></Card.RightContainer>
@@ -288,45 +289,45 @@ export default function Datasheet() {
                     <DownArrowIcon
                       isOpen={ratesOpen}
                       onClick={() => setRatesOpen(!ratesOpen)}
-                      color="light"
+                      color='light'
                     />
                   </Card.RightContainer>
                 </Card.Top>
                 <AnimatePresence>
                   {ratesOpen && (
                     <Card.Dropdown
-                      key="duration-results-dropdown"
+                      key='duration-results-dropdown'
                       open={durationsOpen}
-                      animate="open"
-                      initial="collapsed"
-                      exit="collapsed"
+                      animate='open'
+                      initial='collapsed'
+                      exit='collapsed'
                       variants={accordionVariants}
                       layout
                     >
                       <Card>
                         <Card.ColumnsLabels>
-                          <Card.LeftContainer containerType="datasheet">
-                            <Card.Text textType="column-label">
+                          <Card.LeftContainer containerType='datasheet'>
+                            <Card.Text textType='column-label'>
                               Behavior
                             </Card.Text>
                           </Card.LeftContainer>
                           <Card.CenterContainer>
-                            <Card.Text textType="column-label">
+                            <Card.Text textType='column-label'>
                               Total Occ.
                             </Card.Text>
                           </Card.CenterContainer>
-                          <Card.RightContainer containerType="datasheet">
-                            <Card.Text textType="column-label">
+                          <Card.RightContainer containerType='datasheet'>
+                            <Card.Text textType='column-label'>
                               Rate/Hr
                             </Card.Text>
                           </Card.RightContainer>
                         </Card.ColumnsLabels>
                         {ratesData.map((event, index) => (
                           <Card.SessionItem
-                            itemType="duration-result"
+                            itemType='duration-result'
                             key={index}
                           >
-                            <Card.LeftContainer containerType="datasheet">
+                            <Card.LeftContainer containerType='datasheet'>
                               <Card.ListText>
                                 {event.behaviorName}
                               </Card.ListText>
@@ -335,7 +336,7 @@ export default function Datasheet() {
                               <Card.ListText>{event.count}</Card.ListText>
                             </Card.CenterContainer>
 
-                            <Card.RightContainer containerType="datasheet">
+                            <Card.RightContainer containerType='datasheet'>
                               {(event.count / x).toFixed(2)}
                             </Card.RightContainer>
                           </Card.SessionItem>
@@ -350,7 +351,7 @@ export default function Datasheet() {
         </motion.div>
       )}
     </>
-  );
+  )
 }
 
 /* {intervalsData.length === 0 ? (

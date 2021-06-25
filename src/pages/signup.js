@@ -9,15 +9,15 @@ export default function Signup() {
     MotionVariants();
   return (
     <>
-      <HeaderContainer backIcon="true" title="Sign Up" />
+      <HeaderContainer backIcon='true' title='Sign Up' showMenu='false' />
       <motion.div
         variants={pageTransitions}
-        initial="hidden"
-        animate="show"
-        exit="exit"
+        initial='hidden'
+        animate='show'
+        exit='exit'
       >
         <SignupFormContainer />
       </motion.div>
     </>
-  );
+  )
 }

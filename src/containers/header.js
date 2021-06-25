@@ -165,7 +165,11 @@ export function HeaderContainer({
               >
                 End Session
               </Header.MenuItem>
-              <Header.MenuItem>How To Use</Header.MenuItem>
+              {/* 
+                  TODO - add comprehensive user guides
+              <Header.MenuItem>How To Use</Header.MenuItem> 
+              
+              */}
             </Header.Menu>
           </Header.MenuDiv>
         )}
