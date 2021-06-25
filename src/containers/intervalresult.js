@@ -4,9 +4,7 @@ import { formatTotalTime } from "utils/formatTime";
 
 export function IntervalResultContainer({ behavior, name, intervalType }) {
   const results = behavior.filter((item) => item[0].behaviorName === name);
-  console.log(results);
 
-  // console.log(totalOccurances)
   return results.map((result, index) => {
     let totalOccurrances = 0;
 

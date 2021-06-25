@@ -7,7 +7,7 @@ import { useAuthListener } from "hooks";
 import * as ROUTES from "../../constants/routes";
 import { formatTotalTime } from "utils/formatTime";
 import dayjs from "dayjs";
-import { AnimatePresence, AnimateSharedLayout, motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { MotionVariants } from "constants/motionVariants";
 import { AnimationsContext } from "context/animations";
 import { DownArrowIcon } from "components/icons";

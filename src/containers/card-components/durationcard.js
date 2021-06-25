@@ -38,14 +38,6 @@ export function DurationCardContainer({
   const [bringUpModal, setBringUpModal] = useState(false);
   const { accordionVariants, deleteEventVariant } = MotionVariants();
 
-  // useEffect(() => {
-  //   if (durations.length === 0) {
-  //     setIsOpen(false)
-  //   }
-  // }, [editEventsActive, durations.length, setIsOpen])
-
-  // console.log(durations)
-  // console.log(new Date().getTime().toString())
   return (
     <Card>
       {/*_______ Confirm Delete Duration Modal Start _______*/}

@@ -5,7 +5,7 @@ import { HeaderContainer } from "containers/header";
 import { Card, Header } from "components";
 import LoadingContainer from "containers/loading";
 // import useGetSessionEvents from "hooks/get-data-hooks/use-getsessionevents";
-import { AnimateSharedLayout, motion } from "framer-motion";
+import {  motion } from "framer-motion";
 import { MotionVariants} from "constants/motionVariants";
 
 export default function ClientList() {
@@ -13,7 +13,6 @@ export default function ClientList() {
   const { pageTransitions } =
     MotionVariants();
 
-  // console.log(durationsData)
 
   return (
     <>

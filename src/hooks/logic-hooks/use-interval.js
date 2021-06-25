@@ -31,7 +31,6 @@ export function useIntervalLogic(behaviorName, client, sessionId, intervalType) 
     behaviorName,
     intervalType
   );
-  // console.log(intervals)
   // converts seconds to hh:mm:ss format
 
   //starts timer

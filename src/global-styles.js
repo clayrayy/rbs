@@ -1,5 +1,4 @@
 import { createGlobalStyle } from "styled-components";
-import colors from "constants/colors";
 //MAKE IT SO IT DONT SCROLL NO MO
 
 export const GlobalStyles = createGlobalStyle`

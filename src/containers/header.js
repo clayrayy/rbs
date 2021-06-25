@@ -26,7 +26,6 @@ export function HeaderContainer({
   const [addClientFormOpen, setAddClientFormOpen] = useState(false); // activates slideout menu to add client
   const [firstName, setFirstName] = useState(""); //sets add client first name
   const [lastName, setLastName] = useState(""); //sets add client first name
-  const [confirmEndSessionActive, setConfirmEndSessionActive] = useState(false);
   const [backActive, setBackActive] = useState(false); //activates change to animate back icon
   let history = useHistory();
   const location = useLocation();

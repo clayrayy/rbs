@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import { HeaderContainer } from "containers/header";
 import { useLocation } from "react-router";
 import useGetSessionEvents from "hooks/get-data-hooks/use-getsessionevents";
-import { Accordion, Card, ClientCard } from "components";
+import { Accordion, Card } from "components";
 import LoadingContainer from "containers/loading";
 import { formatTotalTime } from "utils/formatTime";
 import { IntervalResultContainer } from "containers/intervalresult";
@@ -35,7 +35,6 @@ export default function Datasheet() {
     (event) => event.eventType === "duration"
   );
   const ratesData = eventsData.filter((event) => event.eventType === "rate");
-  console.log(ratesData);
   wholeIntervalsData.forEach((interval) => {
     if (!uniqueWIBehaviorsArr.includes(interval.behaviorName)) {
       uniqueWIBehaviorsArr.push(interval.behaviorName);
@@ -65,10 +64,8 @@ export default function Datasheet() {
     });
   // iterates through each unique behavior and creates an array of all
   // interval events that have a matching behaviorName
-  console.log(session.sessionLength);
 
   let x = 3600 / session.sessionLength;
-  console.log(x);
   return (
     <>
       <HeaderContainer

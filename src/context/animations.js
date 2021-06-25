@@ -3,7 +3,6 @@ const AnimationsContext = createContext(null)
 
 function AnimationsContextProvider({children}) {
     const [animationsOn, setAnimationsOn] = useState(true)
-    console.log(animationsOn)
     function toggleAnimations() {
         setAnimationsOn(!animationsOn)
     }
