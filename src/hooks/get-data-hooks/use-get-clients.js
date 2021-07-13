@@ -14,7 +14,7 @@ export default function useGetClients() {
     .where("ownerUid", "==", user.email);
 
   useEffect(() => {
-    const unsubscribe = clientsRef.onSnapshot(
+    const unsubscribe = user && clientsRef.onSnapshot(
       (snapshot) => {
         let content = [];
         snapshot.docs.forEach((contentObj) => {
@@ -31,6 +31,7 @@ export default function useGetClients() {
       }
     );
     return unsubscribe;
+    
   }, []);
 
   return { clients, loading };

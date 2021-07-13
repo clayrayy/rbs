@@ -139,7 +139,7 @@ export default function RatesAccordion({ client, sessionId, isRunning }) {
           layout
         />
         <RateCardContainer
-          behaviorName="Pooping"
+          behaviorName="Hitting"
           client={client}
           sessionId={sessionId}
           layout

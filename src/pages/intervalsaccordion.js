@@ -161,7 +161,7 @@ export default function IntervalsAccordion({
               intervalType="wholeInterval"
             />
             <IntervalCardContainer
-              behaviorName="Pooping"
+              behaviorName="Hitting"
               client={client}
               sessionId={sessionId}
               isRunning={isRunning}
@@ -206,7 +206,7 @@ export default function IntervalsAccordion({
               layout
             />
             <IntervalCardContainer
-              behaviorName="Pooping"
+              behaviorName="Hitting"
               client={client}
               sessionId={sessionId}
               isRunning={isRunning}

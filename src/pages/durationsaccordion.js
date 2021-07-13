@@ -156,7 +156,7 @@ export default function DurationsAccordion({ client, sessionId }) {
           layout
         />
         <DurationCardContainer
-          behaviorName="Pooping"
+          behaviorName="Hitting"
           client={client}
           sessionId={sessionId}
           layout

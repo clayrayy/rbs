@@ -120,8 +120,8 @@ export default function Datasheet() {
                 {/* </Card.Dropdown> */}
               </Card>
             </Accordion>
-
-            <Accordion
+          {wholeIntervalsData.length === 0 && partialIntervalsData.length === 0 && durationsData.length === 0 && ratesData.length === 0 && <Card>No Session Data Taken</Card>}
+            {wholeIntervalsData.length !== 0 && <Accordion
               cardType='results'
               style={{ color: 'white', background: 'rgba(0,0,0,.6)' }}
             >
@@ -162,8 +162,8 @@ export default function Datasheet() {
                   </Card.Dropdown>
                 )}
               </AnimatePresence>
-            </Accordion>
-            <Accordion
+            </Accordion>}
+            {partialIntervalsData.length !== 0 && <Accordion
               cardType='results'
               style={{ color: 'white', background: 'rgba(0,0,0,.6)' }}
             >
@@ -204,7 +204,7 @@ export default function Datasheet() {
                   </Card.Dropdown>
                 )}
               </AnimatePresence>
-            </Accordion>
+            </Accordion>}
             {durationsData.length !== 0 && (
               <Accordion
                 cardType='results'
