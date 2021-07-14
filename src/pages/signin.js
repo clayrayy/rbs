@@ -1,12 +1,13 @@
-import React from "react";
-import { HeaderContainer } from "../containers/header";
-import { SigninFormContainer } from "../containers/formcontainers/signin.js";
+import React from 'react'
+import { HeaderContainer } from '../containers/header'
+import { SigninFormContainer } from '../containers/formcontainers/signin.js'
 import { motion } from 'framer-motion'
-import { MotionVariants } from "constants/motionVariants";
+import { MotionVariants } from 'constants/motionVariants'
+import { Card } from 'components'
+
 
 export default function Signin() {
-  const { pageTransitions } =
-    MotionVariants();
+  const { pageTransitions } = MotionVariants()
   return (
     <>
       <HeaderContainer backIcon='true' title='Sign In' showMenu='false' />
@@ -17,6 +18,7 @@ export default function Signin() {
         animate='show'
         exit='exit'
       >
+        
         <SigninFormContainer />
       </motion.div>
     </>

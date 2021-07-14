@@ -4,6 +4,7 @@ import {
   Container,
   Title,
   Text,
+  Image,
   LeftContainer,
   CenterContainer,
   RightContainer,
@@ -37,6 +38,10 @@ export default function Card({ children, ...restProps }) {
 
 Card.Title = function CardTitle({ children, ...restProps }) {
   return <Title {...restProps}>{children}</Title>
+}
+
+Card.Image = function CardImage({ children, ...restProps }) {
+  return <Image {...restProps}>{children}</Image>
 }
 
 Card.IconContainer = function CardIconContainer({ children, ...restProps }) {

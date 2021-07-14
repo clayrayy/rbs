@@ -5,13 +5,15 @@ import * as ROUTES from "constants/routes";
 import { SigninFormContainer } from "../containers/formcontainers/signin.js";
 import { motion } from "framer-motion";
 import { MotionVariants } from "constants/motionVariants.js";
+import { Card } from "components/index.js";
+
 
 export default function Home() {
   const { pageTransitions } = MotionVariants();
   return (
     <>
       <HeaderContainer
-        title="RBS Data"
+        title=""
         name="home"
         backIcon={false}
         showMenu='false'
@@ -23,7 +25,7 @@ export default function Home() {
         exit="exit"
       >
         <Homepage>
-          <Homepage.Title>Log in </Homepage.Title>
+          
           <SigninFormContainer />
           <Homepage.Text>Need an account?</Homepage.Text>
           <Homepage.ButtonLink to={ROUTES.SIGN_UP}>

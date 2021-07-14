@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { Link as ReachRouterLink } from "react-router-dom";
-import colors from "constants/colors";
+import styled from 'styled-components'
+import { Link as ReachRouterLink } from 'react-router-dom'
+import colors from 'constants/colors'
 
 export const Container = styled.section`
   width: 100%;
@@ -11,25 +11,30 @@ export const Container = styled.section`
   flex-direction: column;
   border-radius: 15px;
   /* border: solid 1px yellow; */
-`;
+`
 
 export const Frame = styled.div`
-  border: solid 1px magenta;
   display: flex;
-  width: 100%;
+  width: 80%;
+  max-width: 400px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+  align-items: center;
+  padding: 2em;
+  flex-direction: column;
   justify-content: space-between;
-`;
+`
 
 export const Error = styled.div`
   color: red;
   justify-self: center;
   text-align: center;
   margin: 0em;
-  padding: .5em;
+  padding: 0.5em;
   border-radius: 15px;
   max-width: 100%;
-  background: rgba(0,0,0,.65);
-`;
+  background: rgba(0, 0, 0, 0.65);
+`
 
 export const Base = styled.form`
   display: flex;
@@ -38,10 +43,10 @@ export const Base = styled.form`
   align-items: center;
   width: 90%;
   flex-direction: ${({ formType }) =>
-    formType === "add-client" ? "column" : "row"};
+    formType === 'add-client' ? 'column' : 'row'};
   /* bordeR: solid 1px magenta; */
   ${({ formType }) =>
-    formType === "add-session" &&
+    formType === 'add-session' &&
     `
         display: grid;
         grid-template-columns: repeat(10, 1fr);
@@ -55,14 +60,14 @@ export const Base = styled.form`
     `}
 
   ${({ formType }) =>
-    formType === "add-client" &&
+    formType === 'add-client' &&
     `
         align-items: center;
         // border: solid 1px magenta;
     `}
 
     ${({ formType }) =>
-    formType === "add-duration" &&
+    formType === 'add-duration' &&
     `
         display: flex;
         
@@ -72,7 +77,7 @@ export const Base = styled.form`
     `}
 
     ${({ formType }) =>
-    formType === "sign-in" &&
+    formType === 'sign-in' &&
     `
         display: grid;
         justify-content: center;
@@ -97,12 +102,12 @@ export const Base = styled.form`
     `}
 
     ${({ formType }) =>
-    formType === "sign-up" &&
+    formType === 'sign-up' &&
     `
     flex-direction: column;
     max-width: 400px;
     `}
-`;
+`
 
 export const Title = styled.h1`
   text-align: center;
@@ -111,17 +116,18 @@ export const Title = styled.h1`
   margin-top: 0;
 
   ${({ formType }) =>
-    formType === "sign-up" &&
+    formType === 'sign-up' &&
     `
+    margin-bottom: 2em;
     color: ${colors.darkText}
     `}
-`;
+`
 
-export const Link = styled(ReachRouterLink)``;
+export const Link = styled(ReachRouterLink)``
 
-export const Text = styled.p``;
+export const Text = styled.p``
 
-export const TextSmall = styled.p``;
+export const TextSmall = styled.p``
 
 export const Input = styled.input`
   /* margin-bottom: 20px; */
@@ -134,21 +140,21 @@ export const Input = styled.input`
   transition: all 0.25s ease;
 
   ${({ formType, gridArea }) =>
-    formType === "add-session" &&
+    formType === 'add-session' &&
     `
         grid-area: ${gridArea};
         padding: .5em;
     `}
-  ${({ formType }) => formType === "add-client" && ` margin-bottom: 3em`};
-  /* ${({ addMarginLeft }) => addMarginLeft && "margin-left: 3em;"} */
-  ${({ pwError }) => (pwError ? "border: solid 1px red;" : null)}
+  ${({ formType }) => formType === 'add-client' && ` margin-bottom: 3em`};
+  /* ${({ addMarginLeft }) => addMarginLeft && 'margin-left: 3em;'} */
+  ${({ pwError }) => (pwError ? 'border: solid 1px red;' : null)}
 
   @media (min-width: 600px) {
     font-size: 1.2rem;
   }
 
   ${({ formType }) =>
-    formType === "add-client" &&
+    formType === 'add-client' &&
     `
         padding: .75em;
         width: 70%;
@@ -156,11 +162,11 @@ export const Input = styled.input`
     `};
 
   ${({ formType }) =>
-    formType === "sign-up" &&
+    formType === 'sign-up' &&
     `
         margin-bottom: 1em;
         `}
-`;
+`
 
 export const Button = styled.button`
   padding: 5px 10px;
@@ -170,12 +176,12 @@ export const Button = styled.button`
   border-radius: 15px;
   /* width: 100%; */
   background-color: ${({ buttonType }) =>
-    buttonType === "cancel" ? colors.btnPrimary : colors.btnActive};
+    buttonType === 'cancel' ? colors.btnPrimary : colors.btnActive};
   color: ${colors.lightText};
   font-size: 1rem;
   transition: all 150ms cubic-bezier(0.5, 0, 0.5, 1);
   ${({ formType, gridArea }) =>
-    formType === "add-session" &&
+    formType === 'add-session' &&
     `
         grid-area: ${gridArea};
         padding: .75em .75em;
@@ -191,16 +197,29 @@ export const Button = styled.button`
   }
 
   ${({ formType }) =>
-    formType === "add-client" &&
+    formType === 'add-client' &&
     `
         padding: 1em 1.75em;
     `};
 
   ${({ buttonType }) =>
-    buttonType === "end-session" &&
+    buttonType === 'end-session' &&
     `
     
     `};
-`;
 
-export const TitleContainer = styled.div``;
+  ${({ type }) =>
+    type === 'form-submit' &&
+    `
+    margin-top: 1.5em;
+    background-color: #042859;
+    `}
+
+  ${({ type }) =>
+    type === 'submit' &&
+    `
+    color: green
+    `}
+`
+
+export const TitleContainer = styled.div``

@@ -66,52 +66,56 @@ export function SignupFormContainer() {
 
   return (
     <Form>
-      <Form.Base formType="sign-up" onSubmit={handleSignup}>
-        <Form.Title formType="sign-up">Let's get this party started</Form.Title>
+      <Form.Frame>
+        <Form.Base formType='sign-up' onSubmit={handleSignup}>
+          <Form.Title formType='sign-up'>
+            Enter your information to get started 
+          </Form.Title>
 
-        <Form.Input
-          formType="sign-up"
-          placeholder="First Name"
-          value={firstName}
-          onChange={({ target }) => setFirstName(target.value)}
-        />
-        <Form.Input
-          formType="sign-up"
-          placeholder="Last Name"
-          value={lastName}
-          onChange={({ target }) => setLastName(target.value)}
-        />
-        <Form.Input
-          formType="sign-up"
-          placeholder="Email"
-          value={emailAddress}
-          onChange={({ target }) => setEmailAddress(target.value)}
-        />
-        <Form.Input
-          formType="sign-up"
-          pwError={passwordError}
-          placeholder="Password"
-          value={password}
-          type="password"
-          autoComplete="off"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-        <Form.Input
-          formType="sign-up"
-          pwError={passwordError}
-          placeholder="Re-enter Password"
-          value={verifiedPassword}
-          type="password"
-          autoComplete="off"
-          onChange={({ target }) => {
-            setVerifiedPassword(target.value);
-          }}
-        />
-        <Form.Button disabled={isInvalid}>Sign Up</Form.Button>
-        {error && <Form.Error>{error}</Form.Error>}
-      </Form.Base>
+          <Form.Input
+            formType='sign-up'
+            placeholder='First Name'
+            value={firstName}
+            onChange={({ target }) => setFirstName(target.value)}
+          />
+          <Form.Input
+            formType='sign-up'
+            placeholder='Last Name'
+            value={lastName}
+            onChange={({ target }) => setLastName(target.value)}
+          />
+          <Form.Input
+            formType='sign-up'
+            placeholder='Email'
+            value={emailAddress}
+            onChange={({ target }) => setEmailAddress(target.value)}
+          />
+          <Form.Input
+            formType='sign-up'
+            pwError={passwordError}
+            placeholder='Password'
+            value={password}
+            type='password'
+            autoComplete='off'
+            onChange={({ target }) => setPassword(target.value)}
+          />
+          <Form.Input
+            formType='sign-up'
+            pwError={passwordError}
+            placeholder='Re-enter Password'
+            value={verifiedPassword}
+            type='password'
+            autoComplete='off'
+            onChange={({ target }) => {
+              setVerifiedPassword(target.value)
+            }}
+          />
+          <Form.Button disabled={isInvalid} type='form-submit'>Sign Up</Form.Button>
+          {error && <Form.Error>{error}</Form.Error>}
+        </Form.Base>
+      </Form.Frame>
     </Form>
-  );
+  )
 }
 
 // const handleSignup = (e) => {

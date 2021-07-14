@@ -124,6 +124,12 @@ export const LeftContainer = styled(motion.div)`
     
 `}
 `;
+
+export const Image = styled(motion.img)`
+width: 200px;
+`
+
+
 export const CenterContainer = styled(motion.div)`
   flex: 3;
   display: flex;

@@ -148,7 +148,7 @@ export function ClientCardContainer({ client }) {
                     onChange={({ target }) => setTakenBy(target.value)}
                   />
                   <Form.Button
-                    type="submit"
+                    // type="submit"
                     gridArea="s"
                     buttonType="confirm"
                     formType="add-session"
