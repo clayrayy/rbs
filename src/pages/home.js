@@ -11,25 +11,22 @@ export default function Home() {
   const { pageTransitions } = MotionVariants();
   return (
     <>
-      <HeaderContainer
+      {/* <HeaderContainer
         title=""
         name="home"
         backIcon={false}
         showMenu='false'
-      />
+      /> */}
       <motion.div
         variants={pageTransitions}
-        initial="hidden"
+        initial="show"
         animate="show"
         exit="exit"
       >
         <Homepage>
           
           <SigninFormContainer />
-          <Homepage.Text>Need an account?</Homepage.Text>
-          <Homepage.ButtonLink to={ROUTES.SIGN_UP}>
-            Click here to sign up.
-          </Homepage.ButtonLink>
+          
         </Homepage>
       </motion.div>
     </>

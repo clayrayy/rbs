@@ -120,9 +120,19 @@ export const Title = styled.h1`
     `}
 `
 
-export const Link = styled(ReachRouterLink)``
+export const Link = styled(ReachRouterLink)`
+  text-decoration: none;
+  text-align: center;
+  font-size: .85rem;
+color: ${colors.accent};
+`
 
-export const Text = styled.p``
+export const Text = styled.p`
+text-align: center;
+margin: 0;
+margin-top: 1em;
+font-size: .85rem;
+`
 
 export const TextSmall = styled.p``
 

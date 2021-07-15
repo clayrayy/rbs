@@ -5,10 +5,12 @@ import colors from 'constants/colors'
 export const Container = styled.div`
   width: 90%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
   margin: 0 auto;
+  height: 100vh;
+
 `
 
 export const Text = styled.p``

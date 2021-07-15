@@ -5,6 +5,7 @@ import { FirebaseContext } from '../../context/firebase'
 import * as ROUTES from '../../constants/routes'
 import { AnimatePresence, motion } from 'framer-motion'
 import rbsLogo from '../../images/rbsLogo.png'
+import Homepage from 'components/homepage'
 
 export function SigninFormContainer() {
   const history = useHistory()
@@ -33,7 +34,6 @@ export function SigninFormContainer() {
   return (
     <Form>
       <Form.Frame>
-        
         <Card.Image src={rbsLogo} />
         <Form.Base formType='sign-in' onSubmit={handleSignin} method='POST'>
           <Form.Input
@@ -62,6 +62,11 @@ export function SigninFormContainer() {
           </AnimatePresence>
 
           <Form.Button type='form-submit'>Sign In</Form.Button>
+          
+          <Form.Text>Need an account?</Form.Text>
+          <Form.Link to={ROUTES.SIGN_UP}>
+            Click here to sign up.
+          </Form.Link>
         </Form.Base>
       </Form.Frame>
     </Form>
