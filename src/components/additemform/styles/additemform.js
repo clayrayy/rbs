@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import colors from "constants/colors";
+import styled from 'styled-components'
+import colors from 'constants/colors'
 
 export const Container = styled.div`
   max-width: 1000px;
@@ -9,31 +9,31 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: space-between;
   transition: all 0.25s ease;
-  transform: ${({ shrink }) => (shrink ? "scale(.5)" : "none")};
-`;
+  transform: ${({ shrink }) => (shrink ? 'scale(.5)' : 'none')};
+`
 
 export const Error = styled.div`
   color: red;
   text-align: center;
   margin: 1em;
-`;
+`
 
 export const Base = styled.form`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-`;
+`
 
 export const Title = styled.p`
   text-align: center;
   color: ${colors.lightText};
-  opacity: ${({ shrink }) => (shrink ? "0" : "1")};
-`;
+  opacity: ${({ shrink }) => (shrink ? '0' : '1')};
+`
 
-export const Text = styled.p``;
+export const Text = styled.p``
 
-export const TextSmall = styled.p``;
+export const TextSmall = styled.p``
 
 export const Input = styled.input`
   padding: 1em 20px;
@@ -46,7 +46,7 @@ export const Input = styled.input`
 
   @media (max-width: 800px) {
   } ;
-`;
+`
 
 export const Submit = styled.button`
   padding: 10px 25px;
@@ -63,7 +63,7 @@ export const Submit = styled.button`
 
   @media (max-width: 800px) {
   }
-`;
+`
 
 export const TypeButtonContainer = styled.div`
   display: flex;
@@ -77,13 +77,13 @@ export const TypeButtonContainer = styled.div`
     justify-content: center;
     font-size: 1em;
   }
-`;
+`
 
-export const TypeSelector = styled.input``;
+export const TypeSelector = styled.input``
 
 export const TypeSelectorFrame = styled.div`
   @media (max-width: 800px) {
     margin-bottom: 2em;
   }
-`;
-export const TitleContainer = styled.div``;
+`
+export const TitleContainer = styled.div``

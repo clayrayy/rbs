@@ -10,7 +10,6 @@ export const Container = styled.section`
   align-items: center;
   flex-direction: column;
   border-radius: 15px;
-  /* border: solid 1px yellow; */
 `
 
 export const Frame = styled.div`
@@ -38,13 +37,11 @@ export const Error = styled.div`
 
 export const Base = styled.form`
   display: flex;
-  /* flex-direction: column; */
   justify-content: space-between;
   align-items: center;
   width: 90%;
   flex-direction: ${({ formType }) =>
     formType === 'add-client' ? 'column' : 'row'};
-  /* bordeR: solid 1px magenta; */
   ${({ formType }) =>
     formType === 'add-session' &&
     `
@@ -130,7 +127,6 @@ export const Text = styled.p``
 export const TextSmall = styled.p``
 
 export const Input = styled.input`
-  /* margin-bottom: 20px; */
   padding: 5px 10px;
   background-color: ${colors.cardBackground};
   font-size: 1rem;
@@ -146,7 +142,6 @@ export const Input = styled.input`
         padding: .5em;
     `}
   ${({ formType }) => formType === 'add-client' && ` margin-bottom: 3em`};
-  /* ${({ addMarginLeft }) => addMarginLeft && 'margin-left: 3em;'} */
   ${({ pwError }) => (pwError ? 'border: solid 1px red;' : null)}
 
   @media (min-width: 600px) {
@@ -174,7 +169,6 @@ export const Button = styled.button`
   min-width: 100px;
   text-align: center;
   border-radius: 15px;
-  /* width: 100%; */
   background-color: ${({ buttonType }) =>
     buttonType === 'cancel' ? colors.btnPrimary : colors.btnActive};
   color: ${colors.lightText};

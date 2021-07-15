@@ -6,7 +6,9 @@ import { Intervals, Duration, Card, CardModal } from "../../components";
 import { formatIntervalTime } from "utils/formatIntervalTime";
 import { DeleteIcon, DownArrowIcon } from "components/icons";
 
-//add interval time preset buttons and make a 'custom time' button that brings up add and subtract time buttons
+                        /* TODO */ 
+      /*  add interval time preset buttons and make a 'custom time' 
+      button that brings up add and subtract time buttons*/
 
 export function IntervalCardContainer({
   behaviorName,
@@ -22,7 +24,6 @@ export function IntervalCardContainer({
     lockInIntervalTime,
     addSecondsActive,
     subtractSecondsActive,
-    clockSeconds,
     showResultModal,
     bringUpModal,
     editEventsActive,

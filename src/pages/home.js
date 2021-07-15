@@ -5,7 +5,6 @@ import * as ROUTES from "constants/routes";
 import { SigninFormContainer } from "../containers/formcontainers/signin.js";
 import { motion } from "framer-motion";
 import { MotionVariants } from "constants/motionVariants.js";
-import { Card } from "components/index.js";
 
 
 export default function Home() {

@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import colors from "constants/colors";
+import styled from 'styled-components'
+import colors from 'constants/colors'
 
 export const Container = styled.div`
   background-color: ${colors.cardBackground};
@@ -11,23 +11,22 @@ export const Container = styled.div`
   margin: 0 auto 1em auto;
   padding: 10px 25px;
   border-radius: 15px;
-  /* border: solid 1px magenta; */
   -webkit-box-shadow: 5px 5px 15px -1px rgba(0, 0, 0, 0.16);
   box-shadow: 5px 5px 15px -1px rgba(0, 0, 0, 0.16);
   display: flex;
   justify-content: center;
   text-align: center;
-`;
+`
 
-export const ItemList = styled.div``;
+export const ItemList = styled.div``
 
 export const Item = styled.h2`
   margin-bottom: 1em;
   &:last-of-type {
     margin-bottom: 0;
   }
-`;
+`
 export const Text = styled.p`
   font-size: 0.5rem;
   margin: 0;
-`;
+`

@@ -2,7 +2,7 @@ export { default as Header } from "./header";
 export { default as Duration } from "./duration";
 export { default as Form } from "./form";
 export { default as ClientCard } from "./clientcard";
-export { default as FrequencyCounter } from "./frequencycounter";
+// export { default as FrequencyCounter } from "./frequencycounter";
 export { default as AddItemForm } from "./additemform";
 export { default as Profile } from "./profile";
 export { default as Intervals } from "./intervals";

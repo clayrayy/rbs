@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 import {
   Header,
   Container,
@@ -6,29 +6,29 @@ import {
   ListItem,
   HeaderContainer,
   OpenButton,
-} from "./styles/popout";
+} from './styles/popout'
 
 export default function Popout({ children, ...restProps }) {
-  return <Container {...restProps}>{children}</Container>;
+  return <Container {...restProps}>{children}</Container>
 }
 
 Popout.Header = function PopoutHeader({ children, ...restProps }) {
-  return <Header {...restProps}>{children}</Header>;
-};
+  return <Header {...restProps}>{children}</Header>
+}
 Popout.HeaderContainer = function PopoutHeaderContainer({
   children,
   ...restProps
 }) {
-  return <HeaderContainer {...restProps}>{children}</HeaderContainer>;
-};
+  return <HeaderContainer {...restProps}>{children}</HeaderContainer>
+}
 
 Popout.ListItem = function PopoutListItem({ children, ...restProps }) {
-  return <ListItem {...restProps}>{children}</ListItem>;
-};
+  return <ListItem {...restProps}>{children}</ListItem>
+}
 
 Popout.List = function PopoutList({ children, ...restProps }) {
-  return <List {...restProps}>{children}</List>;
-};
+  return <List {...restProps}>{children}</List>
+}
 Popout.OpenButton = function PopoutOpenButton({ children, ...restProps }) {
-  return <OpenButton {...restProps}>{children}</OpenButton>;
-};
+  return <OpenButton {...restProps}>{children}</OpenButton>
+}

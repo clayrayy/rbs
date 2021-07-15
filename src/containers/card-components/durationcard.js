@@ -181,7 +181,6 @@ export function DurationCardContainer({
                 .sort((a, b) => a.epochDate - b.epochDate)
                 .map((item) => {
                   return (
-                    // <AnimateSharedLayout key={item.docId}>
                     <AnimatePresence key={item.docId} layout>
                       <Card.SessionItem
                         animate='show'
@@ -211,7 +210,6 @@ export function DurationCardContainer({
                             initial={editEventsActive ? 'hidden' : 'show'}
                             animate='show'
                             variants={deleteEventVariant}
-                            // exit='exit'
                             layout
                           >
                             {item.timestamp.slice(-8)}

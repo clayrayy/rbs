@@ -1,13 +1,9 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
-import AnimateHeight from "react-animate-height";
 
 import {
   Container,
   ItemsContainer,
   Title,
-  // DownArrow,
   Text,
   TitleContainer,
   IconContainer,
@@ -45,9 +41,6 @@ Accordion.TitleContainer = function AccordionTitleContainer({
   return <TitleContainer {...restProps}>{children}</TitleContainer>;
 };
 
-// Accordion.DownArrow = function AccordionDownArrow({ children, ...restProps }) {
-//   return <DownArrow {...restProps}>{children}</DownArrow>;
-// };
 
 Accordion.Text = function AccordionText({ children, ...restProps }) {
   return <Text {...restProps}>{children}</Text>;

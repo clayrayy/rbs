@@ -1,5 +1,4 @@
 import React from 'react'
-// import { motion, AnimatePresence } from "framer-motion";
 import {
   Container,
   Title,
@@ -27,12 +26,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 
 export default function Card({ children, ...restProps }) {
-  // const variants = {
-  //     hidden: { opacity: 0, x:-100 },
-  //     visible: { opacity: 1, x: 0},
-  //     exit: { opacity: 0 },
-  //   }
-
   return <Container {...restProps}>{children}</Container>
 }
 
@@ -133,25 +126,3 @@ Card.ListText = function CardListText({ children, ...restProps }) {
 Card.Row = function CardRow({ children, ...restProps }) {
   return <Row {...restProps}>{children}</Row>
 }
-
-// export const Container = styled.div`
-//     display: flex;
-//     justify-content: space-between;
-//     align-items: center;
-// `
-// export const Title = styled.h1`
-
-// `
-
-// export const SmallText = styled.p`
-
-// `
-// export const LeftContainer = styled.div`
-
-// `
-// export const CenterContainer = styled.div`
-
-// `
-// export const RightContainer = styled.div`
-
-// `

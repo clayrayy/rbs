@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import colors from "constants/colors";
-import { motion } from "framer-motion";
+import styled from 'styled-components'
+import colors from 'constants/colors'
+import { motion } from 'framer-motion'
 
 export const Container = styled(motion.div)`
   display: flex;
@@ -33,7 +33,7 @@ export const Container = styled(motion.div)`
         }
         
     `}
-`;
+`
 
 export const Title = styled.h1`
   color: ${colors.darkText};
@@ -48,7 +48,7 @@ export const Title = styled.h1`
   @media (max-width: 600px) {
     font-size: clamp(1rem, -0.875rem + 8.333vw, 0.75rem);
   }
-`;
+`
 
 export const Text = styled.p`
   font-weight: bold;
@@ -62,7 +62,7 @@ export const Text = styled.p`
   }
 
   ${({ textType }) =>
-    textType === "session-date" &&
+    textType === 'session-date' &&
     `
         font-size: clamp(.75rem, -0.875rem + 8.333vw, .1rem);
         text-align: center;
@@ -75,7 +75,7 @@ export const Text = styled.p`
         }
     `}
   ${({ textType }) =>
-    textType === "session-name" &&
+    textType === 'session-name' &&
     `
         font-size: clamp(.75rem, -0.875rem + 8.333vw, .1rem);
         text-align: center;
@@ -89,7 +89,7 @@ export const Text = styled.p`
     `}
 
     ${({ textType }) =>
-    textType === "result-number" &&
+    textType === 'result-number' &&
     `
         margin: 0 auto;
         border-top: solid 1px;
@@ -97,38 +97,28 @@ export const Text = styled.p`
         width: 100%;
         max-width: 100%;
     `}
-`;
+`
 export const LeftContainer = styled(motion.div)`
   flex: 1;
   display: flex;
-  /* border: solid 1px yellow; */
   flex-direction: row;
   justify-content: center;
   align-items: center;
   ${({ containerType }) =>
-    containerType === "interval-dropdown" ? "flex: 1" : "flex: 1"};
-  /* ${({ containerType }) =>
-    containerType === "interval-dropdown" &&
-    `
-      flex-direction: row;
-      // margin-left: 1em;
-      justify-content: flex-start; 
-      align-items: center;
-    `} */
+    containerType === 'interval-dropdown' ? 'flex: 1' : 'flex: 1'};
 
   ${({ containerType }) =>
-    containerType === "datasheet" &&
+    containerType === 'datasheet' &&
     `
     text-align-center;
     align-items: center;
     
 `}
-`;
-
-export const Image = styled(motion.img)`
-width: 200px;
 `
 
+export const Image = styled(motion.img)`
+  width: 200px;
+`
 
 export const CenterContainer = styled(motion.div)`
   flex: 3;
@@ -137,17 +127,16 @@ export const CenterContainer = styled(motion.div)`
   align-items: center;
   justify-content: center;
   text-align: center;
-  /* border: solid pink; */
 
   ${({ containerType }) =>
-    containerType === "datasheet" &&
+    containerType === 'datasheet' &&
     `
     align-items: center;
     
 `}
 
   ${({ containerType }) =>
-    containerType === "datasheet-title" &&
+    containerType === 'datasheet-title' &&
     `
     // border: solid;
     // align-items: flex-start;
@@ -158,12 +147,12 @@ export const CenterContainer = styled(motion.div)`
 `}
 
   ${({ containerType }) =>
-    containerType === "results-title" &&
+    containerType === 'results-title' &&
     `
     border-solid 1px;
     position: relative;
   `}
-`;
+`
 export const RightContainer = styled(motion.div)`
   flex: 1;
   display: flex;
@@ -172,28 +161,20 @@ export const RightContainer = styled(motion.div)`
   align-items: center;
   text-align: center;
   position: relative;
-  /* border: solid 1px green; */
 
   ${({ itemType }) =>
-    itemType === "edit-container" &&
+    itemType === 'edit-container' &&
     `
     justify-content: center;
     align-items: center;
 `}
 
   ${({ containerType }) =>
-    containerType === "datasheet" &&
+    containerType === 'datasheet' &&
     `
     align-items: center;
 `}
-  /* ${({ containerType }) =>
-    containerType === "interval-dropdown" &&
-    `
-    // border: solid 1px;
-    align-items: flex-end;
-    margin-right: 1em;
-`} */
-`;
+`
 
 export const Top = styled(motion.div)`
   display: flex;
@@ -201,58 +182,52 @@ export const Top = styled(motion.div)`
   padding: 0.5em;
   align-items: center;
   justify-content: space-between;
-`;
+`
 export const Dropdown = styled(motion.div)`
-width: 100%;
-  /* width: ${({ dropdownType }) =>
-    dropdownType === "session-list" ? "100%" : "100%"}; */
-`;
+  width: 100%;
+`
 
 export const DropdownIcon = styled.span`
   height: 5px;
-  /* justify-self: flex-end; */
   position: relative;
-  width: ${({ open }) => (open ? "15px" : "5px")};
+  width: ${({ open }) => (open ? '15px' : '5px')};
   display: block;
   background-color: ${({ open, iconColor }) =>
     open
       ? `${colors.btnActive}`
       : `${
-          iconColor === "light" ? colors.lightText : colors.headerBackground
+          iconColor === 'light' ? colors.lightText : colors.headerBackground
         }`};
-  border-radius: ${({ open }) => (open ? "10px" : "50%")};
-  /* transform: translateY(-0.55em); */
+  border-radius: ${({ open }) => (open ? '10px' : '50%')};
   transition: all 0.25s ease;
   z-index: 153;
 
   &::before,
   &::after {
-    content: "";
+    content: '';
     background-color: ${({ open, iconColor }) =>
       open
         ? `${colors.btnActive}`
         : `${
-            iconColor === "light" ? colors.lightText : colors.headerBackground
+            iconColor === 'light' ? colors.lightText : colors.headerBackground
           }`};
     transition: all 0.25s ease;
-    border-radius: ${({ open }) => (open ? "10px" : "50%")};
+    border-radius: ${({ open }) => (open ? '10px' : '50%')};
     height: 5px;
-    width: ${({ open }) => (open ? "10px" : "5px")};
+    width: ${({ open }) => (open ? '10px' : '5px')};
     position: absolute;
     z-index: 999;
     transition: all 0.25s ease;
   }
 
   &::after {
-    /* background-color: green; */
     left: 7px;
   }
 
   &::before {
     right: 7px;
-    /* background-color: red; */
   }
-`;
+`
 
 export const SessionItem = styled(motion.div)`
   display: flex;
@@ -262,13 +237,12 @@ export const SessionItem = styled(motion.div)`
   margin: 0 auto;
   border-bottom: solid 1px;
 
-
   &:last-of-type {
     border-bottom: none;
   }
 
   ${({ itemType }) =>
-    itemType === "link-to-session" &&
+    itemType === 'link-to-session' &&
     `
 
         &:hover {
@@ -279,26 +253,23 @@ export const SessionItem = styled(motion.div)`
         cursor: pointer;
     
     `}
-`;
+`
 export const ColumnsLabels = styled.div`
   width: 100%;
-  /* border-bottom: solid 1px; */
   text-align: center;
   display: flex;
   margin: 0 auto;
   justify-content: space-between;
 
   ${({ columnType }) =>
-    columnType === "instruction-text" &&
+    columnType === 'instruction-text' &&
     `
         border-bottom: 0;
     `}
-`;
+`
 
 export const ListText = styled(motion.p)`
-  /* font-size: clamp(0.75rem, -0.875rem + 8.333vw, 0.1rem); */
   text-align: center;
-  /* max-width: 100%; */
   font-size: 0.75rem;
   color: ${colors.darkText};
 
@@ -311,30 +282,31 @@ export const ListText = styled(motion.p)`
   }
 
   ${({ textType }) =>
-    textType === "column-label" &&
+    textType === 'column-label' &&
     `
         font-weight: bold;
     `}
 
   ${({ textType }) =>
-    textType === "total-behaviors" &&
+    textType === 'total-behaviors' &&
     `
        position: absolute;
     `}
-`;
+`
 
 export const DownArrow = styled.span`
   font-size: 30px;
   text-align: center;
   margin: 0 auto;
-  color: ${({iconColor}) => iconColor === 'light' ? `${colors.lightText}` : 'inherit'};
+  color: ${({ iconColor }) =>
+    iconColor === 'light' ? `${colors.lightText}` : 'inherit'};
   transition: all 0.25s ease;
   ${({ open }) =>
     open &&
     `
         transform: scaleY(-1);
     `}
-`;
+`
 
 export const StartButton = styled.button`
   font-family: inherit;
@@ -342,22 +314,21 @@ export const StartButton = styled.button`
   color: ${colors.lightText};
   height: 70px;
   width: 70px;
-  border-radius: ${({ active }) => (active ? "50%" : "15%")};
+  border-radius: ${({ active }) => (active ? '50%' : '15%')};
   display: flex;
   font-size: 1.2rem;
   font-weight: 200;
-  /* justify-self: flex-start; */
   justify-content: center;
   align-items: center;
   letter-spacing: 1px;
   position: relative;
   background: ${({ disabled, active }) => {
     if (disabled) {
-      return "#a0a0a0;";
+      return '#a0a0a0;'
     }
     if (active) {
-      return `${colors.btnActive};`;
-    } else return `${colors.startButton}`;
+      return `${colors.btnActive};`
+    } else return `${colors.startButton}`
   }};
 
   -webkit-box-shadow: inset 0px 5px 17px 0px rgba(0, 0, 0, 0.1);
@@ -386,7 +357,7 @@ export const StartButton = styled.button`
     height: 60px;
     width: 60px;
   }
-`;
+`
 
 export const ButtonText = styled.p`
   font-family: inherit;
@@ -398,7 +369,7 @@ export const ButtonText = styled.p`
   @media (max-width: 600px) {
     font-size: 0.85rem;
   }
-`;
+`
 
 export const IntervalResultContainer = styled.div`
   margin: 0 auto;
@@ -407,17 +378,16 @@ export const IntervalResultContainer = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
   grid-auto-flow: column;
   text-align: center;
-`;
+`
 
 export const IconContainer = styled.div`
-  /* border: solid 1px pink; */
   align-self: flex-end;
   padding: 1em;
   flex: 1;
   z-index: 15;
 
   ${({ iconType }) =>
-    iconType === "delete" &&
+    iconType === 'delete' &&
     `
     z-index: 155;
     position: absolute;
@@ -428,13 +398,13 @@ export const IconContainer = styled.div`
     // border: solid;
     `}
   ${({ iconType }) =>
-    iconType === "more-info" &&
+    iconType === 'more-info' &&
     `
       padding: 0 .58em;
     `}
 
   ${({ iconType }) =>
-    iconType === "add-tracker" &&
+    iconType === 'add-tracker' &&
     `
     // background-color: green;
     position: absolute;
@@ -445,17 +415,15 @@ export const IconContainer = styled.div`
       z-index: 160;
      
     `}
-`;
+`
 
 export const ButtonContainer = styled.div`
   flex: 1;
-  /* padding-right: 15px; */
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  /* margin-top: 1em; */
   margin: 0;
-`;
+`
 
 export const IntervalResultItem = styled.div`
   margin-top: 2em;
@@ -466,20 +434,18 @@ export const IntervalResultItem = styled.div`
   flex-direction: column;
   &:first-of-type {
     border-left: solid 1px;
-    /* border: 1px magenta solid; */
   }
-`;
+`
 
 export const Row = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  /* border:solid 1px magenta; */
 
-  
-
-  ${({columnType}) => columnType === 'labels' && `
+  ${({ columnType }) =>
+    columnType === 'labels' &&
+    `
     border-bottom: solid 1px;
   `}
 `

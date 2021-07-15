@@ -1,6 +1,6 @@
-import styled, { css } from "styled-components";
-import { Link as ReachRouterLink } from "react-router-dom";
-import colors from "constants/colors";
+import styled, { css } from 'styled-components'
+import { Link as ReachRouterLink } from 'react-router-dom'
+import colors from 'constants/colors'
 import { motion } from 'framer-motion'
 
 export const Container = styled.div`
@@ -9,70 +9,62 @@ export const Container = styled.div`
   background: ${colors.headerBackground};
   margin-bottom: 2em;
   width: 100%;
-  /* padding: 0 25px; */
-`;
+`
 
-export const BackLink = styled(ReachRouterLink)``;
+export const BackLink = styled(ReachRouterLink)``
 
 export const Inner = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 90%;
-  /* min-width: 100%; */
   max-width: 800px;
   height: 100px;
 
   @media (max-width: 600px) {
     max-width: 100%;
   }
-`;
+`
 
 export const Title = styled.h1`
   color: ${colors.lightText};
   letter-spacing: 1px;
   text-align: center;
-  /* max-width: 33%; */
-  /* min-width: 100%; */
   margin: 0;
   font-size: clamp(1.5rem, -0.875rem + 8.333vw, 2.5rem);
 
   @media (max-width: 600px) {
-    /* max-width: 33%; */
     font-size: 1.5rem;
   }
-`;
+`
 
 export const Subtitle = styled.p`
   margin: 0;
   color: ${colors.lightText};
   font-size: clamp(0.5rem, -0.875rem + 8.333vw, 1rem);
-`;
+`
 
 export const TitleContainer = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  /* border: solid 1px magenta; */
-`;
+`
 
 export const BackIcon = styled.span`
   font-size: 30px;
   color: ${colors.lightText};
   flex: 1;
-  transform: ${({ active }) => (active ? "translateX(-5em)" : "none")};
-  opacity: ${({ active }) => (active ? "0" : "1")};
+  transform: ${({ active }) => (active ? 'translateX(-5em)' : 'none')};
+  opacity: ${({ active }) => (active ? '0' : '1')};
   transition: all 0.2s ease-in-out;
-`;
+`
 
 export const AddItemIcon = styled.span`
-  z-index: ${({ open }) => (open ? "1000" : "1")};
+  z-index: ${({ open }) => (open ? '1000' : '1')};
   width: 1.5em;
-  /* padding-left: 1em; */
   background-color: ${colors.lightText};
   height: 0.25em;
-  /* margin-right: 1em; */
   position: relative;
   display: inline-block;
   border-radius: 1em;
@@ -81,10 +73,9 @@ export const AddItemIcon = styled.span`
     open &&
     css`
       transform: rotate(0.37turn);
-      /* margin-left: 1em; */
     `}
   ${({ iconType }) =>
-    iconType === "example" &&
+    iconType === 'example' &&
     `
         background-color: black;
         border-radius: 1em;
@@ -99,13 +90,13 @@ export const AddItemIcon = styled.span`
     position: absolute;
     display: inline-block;
     transition: all 0.3s ease-in-out;
-    content: "";
+    content: '';
     background-color: ${colors.lightText};
     height: 0.25em;
     width: 1.5em;
     transform: rotate(90deg);
     ${({ iconType }) =>
-      iconType === "example" &&
+      iconType === 'example' &&
       `
         background-color: black;
         width: .75em;
@@ -113,7 +104,7 @@ export const AddItemIcon = styled.span`
         transform: rotate(90deg) translateY(.35em)
     `}
   }
-`;
+`
 
 export const IconSpacer = styled.div`
   flex: 1;
@@ -121,19 +112,16 @@ export const IconSpacer = styled.div`
   justify-content: flex-end;
   align-items: center;
   margin: 0;
-  /* border: solid 1px magenta; */
-`;
+`
 
 export const IconContainer = styled.div`
   padding: 12px 16px;
-  /* margin: 0; */
-  /* transition: all 0.1s ease-in-out; */
 
-  z-index: ${({ hideWhen }) => (hideWhen ? "0" : "1000")};
-`;
+  z-index: ${({ hideWhen }) => (hideWhen ? '0' : '1000')};
+`
 
 export const Hamburger = styled.span`
-  z-index: ${({ open }) => (open ? "1000" : "1")};
+  z-index: ${({ open }) => (open ? '1000' : '1')};
   background-color: ${colors.lightText};
   height: 0.25em;
   width: 1.5em;
@@ -149,7 +137,7 @@ export const Hamburger = styled.span`
 
   &::before,
   &::after {
-    content: "";
+    content: '';
     background-color: ${colors.lightText};
     border-radius: 1em;
     height: 0.25em;
@@ -177,7 +165,7 @@ export const Hamburger = styled.span`
         height: 0;
       `}
   }
-`;
+`
 
 export const AddItemForm = styled.div`
   display: flex;
@@ -193,16 +181,15 @@ export const AddItemForm = styled.div`
   right: 0;
   z-index: 100;
 
-  transform: ${({ open }) => (!open ? "translateX(100%)" : "none")};
+  transform: ${({ open }) => (!open ? 'translateX(100%)' : 'none')};
   transition: transform 250ms cubic-bezier(0.5, 0, 0.5, 1);
-`;
+`
 
 export const MenuDiv = styled(motion.div)`
   position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* padding-top: 6em; */
   background-color: ${colors.dropdown};
 
   top: 0;
@@ -210,10 +197,7 @@ export const MenuDiv = styled(motion.div)`
   left: 0;
   right: 0;
   z-index: 100;
-
-  /* transform: ${({ open }) => (!open ? "translateX(100%)" : "none")}; */
-  /* transition: transform 250ms cubic-bezier(0.5, 0, 0.5, 1); */
-`;
+`
 
 export const Menu = styled.ul`
   list-style: none;
@@ -222,12 +206,9 @@ export const Menu = styled.ul`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  /* transform: translateY(.5vh); */
-/* border: solid 1px; */
   margin: 0;
-  /* position: fixed; */
   padding: 0;
-`;
+`
 
 export const MenuItem = styled.li`
   color: white;
@@ -238,7 +219,7 @@ export const MenuItem = styled.li`
   &:hover {
     color: ${colors.pageBackground};
   }
-`;
+`
 
 export const MenuLink = styled(ReachRouterLink)`
   text-decoration: none;
@@ -248,4 +229,4 @@ export const MenuLink = styled(ReachRouterLink)`
   &:hover {
     color: ${colors.pageBackground};
   }
-`;
+`

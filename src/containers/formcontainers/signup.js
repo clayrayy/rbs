@@ -117,16 +117,3 @@ export function SignupFormContainer() {
     </Form>
   )
 }
-
-// const handleSignup = (e) => {
-//     e.preventDefault()
-//     if (!isValid) {
-//        setError('All fields are required')
-//     }
-//     if (password !== verifiedPassword) {
-//         setError('Please check your password and try again')
-//     }
-//     if (isValid && verifiedPassword === password) {
-//         alert('success')
-//     }
-// }

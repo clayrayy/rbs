@@ -1,5 +1,4 @@
-import styled, { css } from "styled-components";
-import colors from "constants/colors";
+import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
@@ -11,10 +10,8 @@ export const Container = styled.div`
   left: 0;
   right: 0;
   transition: all 0.35s ease-in-out;
-  //specifies whether modal should be active
   width: 100%;
   height: 100%;
-  /* background-color: rgba(255,255,255,1); */
   z-index: 9999; //brings modal z-index forward when modal is active
   padding: 0.5em;
 
