@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import React from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 // import { useLocation } from 'react-router'
 import {
   DataSheet,
@@ -10,17 +10,18 @@ import {
   Home,
   Profile,
   Session,
-} from "./pages";
-import * as ROUTES from "./constants/routes";
-import { useAuthListener } from "hooks";
-import { AnimatePresence, AnimateSharedLayout, motion } from "framer-motion";
+} from './pages'
+import * as ROUTES from './constants/routes'
+import { useAuthListener } from 'hooks'
+import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion'
 
-import { IsUserRedirect, ProtectedRoute } from "helpers/routes";
-import { pageTransitions } from "constants/motionVariants";
+import { IsUserRedirect, ProtectedRoute } from 'helpers/routes'
+// import { pageTransitions } from 'constants/motionVariants'
+// import PageTransition from 'components/page-transition'
 
 function App() {
   // const location = useLocation()
-  const { user } = useAuthListener();
+  const { user } = useAuthListener()
 
   return (
     <Router>
@@ -33,7 +34,9 @@ function App() {
                 loggedInPath={ROUTES.CLIENT_LIST}
                 path={ROUTES.SIGN_UP}
               >
-                <Signup />
+                
+                  <Signup />
+                
               </IsUserRedirect>
 
               <ProtectedRoute user={user} path={ROUTES.DATASHEET}>
@@ -65,7 +68,7 @@ function App() {
         )}
       ></Route>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App

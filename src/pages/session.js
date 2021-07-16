@@ -4,10 +4,9 @@ import React, { useContext, useState } from "react";
 import { useLocation, Prompt, useHistory } from "react-router";
 import IntervalsAccordion from "./intervalsaccordion";
 import { useInterval } from "hooks/use-interval";
-import {  motion } from "framer-motion";
 import { FirebaseContext } from "context/firebase";
-import { MotionVariants } from "constants/motionVariants";
 import RatesAccordion from "./ratesaccordion";
+import PageTransition from "components/page-transition";
 // import { RateCardContainer } from "containers/card-components/ratecard";
 
 export default function Session() {
@@ -15,21 +14,20 @@ export default function Session() {
   const client = location.state.client;
   const currentSessionId = location.state.currentSessionId;
   const sessionName = location.state.sessionName;
-  const currentSessionName = location.state.sessionName;
-  const [subtitle, setSubtite] = useState("");
-  const [popoutOpen, setPopoutOpen] = useState(false);
+  // const currentSessionName = location.state.sessionName;
+  // const [subtitle, setSubtite] = useState("");
+  // const [popoutOpen, setPopoutOpen] = useState(false);
   const [sessionLength, setSessionLength] = useState(0);
   const [sessionIsRunning, setSessionIsRunning] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
   const { firebase } = useContext(FirebaseContext);
-  const history = useHistory();
+  // const history = useHistory();
   const currentSessionData = {
     sessionId: currentSessionId,
     sessionLength: sessionLength,
   };
   let [count, setCount] = useState(0);
-  const { accordionVariants, pageTransitions, textDisappear } =
-    MotionVariants();
+
   useInterval(() => {
     if (sessionIsRunning) {
       setSessionLength(sessionLength + 1);
@@ -67,23 +65,23 @@ export default function Session() {
         }
         backIcon={true}
         sessionData={currentSessionData}
-        sessionFunctions={{sessionIsRunning, setSessionIsRunning, setIsPaused, isPaused}}
+        sessionFunctions={{
+          sessionIsRunning,
+          setSessionIsRunning,
+          setIsPaused,
+          isPaused,
+        }}
       />
 
-      <motion.div
-        variants={pageTransitions}
-        initial="hidden"
-        animate="show"
-        exit="exit"
-      >
+      <PageTransition>
         <Prompt
           message={(location, action) => {
-            endSession();
-            return `Navigating away from this page will end current session - All running trials will be lost`;
+            endSession()
+            return `Navigating away from this page will end current session - All running trials will be lost`
           }}
         />
         <IntervalsAccordion
-          key="wholeintervalsacc"
+          key='wholeintervalsacc'
           intervalType='wholeInterval'
           isRunning={sessionIsRunning}
           client={client}
@@ -91,27 +89,27 @@ export default function Session() {
         />
 
         <IntervalsAccordion
-          key="partialintervalsacc"
+          key='partialintervalsacc'
           intervalType='partialInterval'
           isRunning={sessionIsRunning}
           client={client}
           sessionId={currentSessionId}
         />
         <DurationsAccordion
-          key="durationsacc"
+          key='durationsacc'
           isRunning={sessionIsRunning}
           client={client}
           sessionId={currentSessionId}
         />
-        <RatesAccordion 
+        <RatesAccordion
           key='ratesacc'
           isRunning={sessionIsRunning}
           client={client}
           sessionId={currentSessionId}
         />
-        
+
         {/* <RateCardContainer /> */}
-      </motion.div>
+      </PageTransition>
     </>
-  );
+  )
 }

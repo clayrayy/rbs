@@ -5,13 +5,12 @@ import { HeaderContainer } from "containers/header";
 import { Card, Header } from "components";
 import LoadingContainer from "containers/loading";
 // import useGetSessionEvents from "hooks/get-data-hooks/use-getsessionevents";
-import {  motion } from "framer-motion";
-import { MotionVariants} from "constants/motionVariants";
+
+import PageTransition from "components/page-transition";
 
 export default function ClientList() {
   const { clients, loading } = useClientData();
-  const { pageTransitions } =
-    MotionVariants();
+
 
 
   return (
@@ -19,39 +18,32 @@ export default function ClientList() {
       <HeaderContainer
         backIcon={false}
         addIcon={true}
-        title="Clients"
-        name="clients"
+        title='Clients'
+        name='clients'
       />
-      <motion.div
-        variants={pageTransitions}
-        initial="hidden"
-        animate="show"
-        exit="exit"
-      >
-        {loading ? (
-          <LoadingContainer />
-        ) : (
-          // <AnimateSharedLayout>
-            <>
-              {!loading && clients.length === 0 && (
-                <Card>
-                  <Card.CenterContainer>
-                    <Card.Title>
-                      Click or tap <Header.AddItemIcon iconType="example" /> to
-                      get started
-                    </Card.Title>
-                  </Card.CenterContainer>
-                </Card>
-              )}
-              {!loading &&
-                clients.map((client, index) => {
-                  const curClient = client;
-                  return <ClientCardContainer client={curClient} key={index} />;
-                })}
-            </>
-          // </AnimateSharedLayout>
-        )}
-      </motion.div>
+      {loading ? (
+        <LoadingContainer />
+      ) : (
+        // <AnimateSharedLayout>
+        <PageTransition>
+          {!loading && clients.length === 0 && (
+            <Card>
+              <Card.CenterContainer>
+                <Card.Title>
+                  Click or tap <Header.AddItemIcon iconType='example' /> to get
+                  started
+                </Card.Title>
+              </Card.CenterContainer>
+            </Card>
+          )}
+          {!loading &&
+            clients.map((client, index) => {
+              const curClient = client
+              return <ClientCardContainer client={curClient} key={index} />
+            })}
+        </PageTransition>
+        // </AnimateSharedLayout>
+      )}
     </>
-  );
+  )
 }

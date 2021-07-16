@@ -1,50 +1,51 @@
-import React, { Fragment, useState } from "react";
-import { HeaderContainer } from "containers/header";
-import { useLocation } from "react-router";
-import useGetSessionEvents from "hooks/get-data-hooks/use-getsessionevents";
-import { Accordion, Card } from "components";
-import LoadingContainer from "containers/loading";
-import { formatTotalTime } from "utils/formatTime";
-import { IntervalResultContainer } from "containers/intervalresult";
-import { AnimatePresence, motion } from "framer-motion";
-import { MotionVariants } from "constants/motionVariants";
-import { DownArrowIcon } from "components/icons";
+import React, { Fragment, useState } from 'react'
+import { HeaderContainer } from 'containers/header'
+import { useLocation } from 'react-router'
+import useGetSessionEvents from 'hooks/get-data-hooks/use-getsessionevents'
+import { Accordion, Card } from 'components'
+import LoadingContainer from 'containers/loading'
+import { formatTotalTime } from 'utils/formatTime'
+import { IntervalResultContainer } from 'containers/intervalresult'
+import { AnimatePresence } from 'framer-motion'
+import { MotionVariants } from 'constants/motionVariants'
+import { DownArrowIcon } from 'components/icons'
+import PageTransition from 'components/page-transition'
 
 export default function Datasheet() {
-  const location = useLocation();
-  const [wholeIntervalsOpen, setWholeIntervalsOpen] = useState(false);
-  const [partialIntervalsOpen, setPartialIntervalsOpen] = useState(false);
-  const [durationsOpen, setDurationsOpen] = useState(false);
-  const [ratesOpen, setRatesOpen] = useState(false);
-  const session = location.state.session;
-  const { eventsData, loading } = useGetSessionEvents(session.sessionId);
-  const { accordionVariants, pageTransitions } = MotionVariants();
-  let uniqueWIBehaviorsArr = [];
-  let uniquePIBehaviorsArr = [];
+  const location = useLocation()
+  const [wholeIntervalsOpen, setWholeIntervalsOpen] = useState(false)
+  const [partialIntervalsOpen, setPartialIntervalsOpen] = useState(false)
+  const [durationsOpen, setDurationsOpen] = useState(false)
+  const [ratesOpen, setRatesOpen] = useState(false)
+  const session = location.state.session
+  const { eventsData, loading } = useGetSessionEvents(session.sessionId)
+  const { accordionVariants } = MotionVariants()
+  let uniqueWIBehaviorsArr = []
+  let uniquePIBehaviorsArr = []
 
-  let wholeIntervalGraphs = [];
-  let partialIntervalGraphs = [];
-  const subtitle = `${session.date} - ${session.tod}`;
+  let wholeIntervalGraphs = []
+  let partialIntervalGraphs = []
+  const subtitle = `${session.date} - ${session.tod}`
   const wholeIntervalsData = eventsData.filter(
-    (event) => event.eventType === "wholeInterval"
-  );
+    (event) => event.eventType === 'wholeInterval'
+  )
   const partialIntervalsData = eventsData.filter(
-    (event) => event.eventType === "partialInterval"
-  );
+    (event) => event.eventType === 'partialInterval'
+  )
   const durationsData = eventsData.filter(
-    (event) => event.eventType === "duration"
-  );
-  const ratesData = eventsData.filter((event) => event.eventType === "rate");
+    (event) => event.eventType === 'duration'
+  )
+  const ratesData = eventsData.filter((event) => event.eventType === 'rate')
   wholeIntervalsData.forEach((interval) => {
     if (!uniqueWIBehaviorsArr.includes(interval.behaviorName)) {
-      uniqueWIBehaviorsArr.push(interval.behaviorName);
+      uniqueWIBehaviorsArr.push(interval.behaviorName)
     }
-  });
+  })
   partialIntervalsData.forEach((interval) => {
     if (!uniquePIBehaviorsArr.includes(interval.behaviorName)) {
-      uniquePIBehaviorsArr.push(interval.behaviorName);
+      uniquePIBehaviorsArr.push(interval.behaviorName)
     }
-  });
+  })
   // iterates through intervals data to pick out unique behaviors
   // & pushes them into uniqueWIBehaviorsArr
 
@@ -52,20 +53,20 @@ export default function Datasheet() {
     uniqueWIBehaviorsArr.forEach((behavior) => {
       let x = wholeIntervalsData.filter(
         (interval) => interval.behaviorName === behavior
-      );
-      wholeIntervalGraphs.push(x);
-    });
+      )
+      wholeIntervalGraphs.push(x)
+    })
   !loading &&
     uniquePIBehaviorsArr.forEach((behavior) => {
       let x = partialIntervalsData.filter(
         (interval) => interval.behaviorName === behavior
-      );
-      partialIntervalGraphs.push(x);
-    });
+      )
+      partialIntervalGraphs.push(x)
+    })
   // iterates through each unique behavior and creates an array of all
   // interval events that have a matching behaviorName
 
-  let x = 3600 / session.sessionLength;
+  let x = 3600 / session.sessionLength
   return (
     <>
       <HeaderContainer
@@ -77,12 +78,7 @@ export default function Datasheet() {
       {loading ? (
         <LoadingContainer />
       ) : (
-        <motion.div
-          variants={pageTransitions}
-          initial='hidden'
-          animate='show'
-          exit='exit'
-        >
+        <PageTransition>
           <Fragment key='results'>
             <Accordion style={{ color: 'white' }}>
               {/* <Card.LeftContainer></Card.LeftContainer> */}
@@ -120,91 +116,98 @@ export default function Datasheet() {
                 {/* </Card.Dropdown> */}
               </Card>
             </Accordion>
-          {wholeIntervalsData.length === 0 && partialIntervalsData.length === 0 && durationsData.length === 0 && ratesData.length === 0 && <Card>No Session Data Taken</Card>}
-            {wholeIntervalsData.length !== 0 && <Accordion
-              cardType='results'
-              style={{ color: 'white', background: 'rgba(0,0,0,.6)' }}
-            >
-              <Card.Top>
-                <Card.LeftContainer></Card.LeftContainer>
-                <Card.CenterContainer containerType='results-title'>
-                  <Accordion.Title style={{ color: 'white' }}>
-                    W. Intervals
-                  </Accordion.Title>
-                </Card.CenterContainer>
-                <Card.RightContainer>
-                  <DownArrowIcon
-                    isOpen={wholeIntervalsOpen}
-                    onClick={() => setWholeIntervalsOpen(!wholeIntervalsOpen)}
-                    color='light'
-                  />
-                </Card.RightContainer>
-              </Card.Top>
-              <AnimatePresence>
-                {wholeIntervalsOpen && (
-                  <Card.Dropdown
-                    key='intervals-drop'
-                    animate='open'
-                    initial='collapsed'
-                    exit='collapsed'
-                    variants={accordionVariants}
-                    layout
-                  >
-                    {uniqueWIBehaviorsArr.map((item, index) => {
-                      return (
-                        <IntervalResultContainer
-                          behavior={wholeIntervalGraphs}
-                          name={item}
-                          key={index}
-                        />
-                      )
-                    })}
-                  </Card.Dropdown>
-                )}
-              </AnimatePresence>
-            </Accordion>}
-            {partialIntervalsData.length !== 0 && <Accordion
-              cardType='results'
-              style={{ color: 'white', background: 'rgba(0,0,0,.6)' }}
-            >
-              <Card.Top>
-                <Card.LeftContainer></Card.LeftContainer>
-                <Card.CenterContainer containerType='datasheet-title'>
-                  <Accordion.Title>P. Intervals</Accordion.Title>
-                </Card.CenterContainer>
-                <Card.RightContainer>
-                  <DownArrowIcon
-                    isOpen={partialIntervalsOpen}
-                    onClick={() =>
-                      setPartialIntervalsOpen(!partialIntervalsOpen)
-                    }
-                    color='light'
-                  />
-                </Card.RightContainer>
-              </Card.Top>
-              <AnimatePresence>
-                {partialIntervalsOpen && (
-                  <Card.Dropdown
-                    key='intervals-drop'
-                    animate='open'
-                    initial='collapsed'
-                    exit='collapsed'
-                    variants={accordionVariants}
-                    layout
-                  >
-                    {uniquePIBehaviorsArr.map((item, index) => {
-                      return (
-                        <IntervalResultContainer
-                          behavior={partialIntervalGraphs}
-                          name={item}
-                          key={index}
-                        />
-                      )
-                    })}
-                  </Card.Dropdown>
-                )}
-              </AnimatePresence>
-            </Accordion>}
+            {wholeIntervalsData.length === 0 &&
+              partialIntervalsData.length === 0 &&
+              durationsData.length === 0 &&
+              ratesData.length === 0 && <Card>No Session Data Taken</Card>}
+            {wholeIntervalsData.length !== 0 && (
+              <Accordion
+                cardType='results'
+                style={{ color: 'white', background: 'rgba(0,0,0,.6)' }}
+              >
+                <Card.Top>
+                  <Card.LeftContainer></Card.LeftContainer>
+                  <Card.CenterContainer containerType='results-title'>
+                    <Accordion.Title style={{ color: 'white' }}>
+                      W. Intervals
+                    </Accordion.Title>
+                  </Card.CenterContainer>
+                  <Card.RightContainer>
+                    <DownArrowIcon
+                      isOpen={wholeIntervalsOpen}
+                      onClick={() => setWholeIntervalsOpen(!wholeIntervalsOpen)}
+                      color='light'
+                    />
+                  </Card.RightContainer>
+                </Card.Top>
+                <AnimatePresence>
+                  {wholeIntervalsOpen && (
+                    <Card.Dropdown
+                      key='intervals-drop'
+                      animate='open'
+                      initial='collapsed'
+                      exit='collapsed'
+                      variants={accordionVariants}
+                      layout
+                    >
+                      {uniqueWIBehaviorsArr.map((item, index) => {
+                        return (
+                          <IntervalResultContainer
+                            behavior={wholeIntervalGraphs}
+                            name={item}
+                            key={index}
+                          />
+                        )
+                      })}
+                    </Card.Dropdown>
+                  )}
+                </AnimatePresence>
+              </Accordion>
+            )}
+            {partialIntervalsData.length !== 0 && (
+              <Accordion
+                cardType='results'
+                style={{ color: 'white', background: 'rgba(0,0,0,.6)' }}
+              >
+                <Card.Top>
+                  <Card.LeftContainer></Card.LeftContainer>
+                  <Card.CenterContainer containerType='datasheet-title'>
+                    <Accordion.Title>P. Intervals</Accordion.Title>
+                  </Card.CenterContainer>
+                  <Card.RightContainer>
+                    <DownArrowIcon
+                      isOpen={partialIntervalsOpen}
+                      onClick={() =>
+                        setPartialIntervalsOpen(!partialIntervalsOpen)
+                      }
+                      color='light'
+                    />
+                  </Card.RightContainer>
+                </Card.Top>
+                <AnimatePresence>
+                  {partialIntervalsOpen && (
+                    <Card.Dropdown
+                      key='intervals-drop'
+                      animate='open'
+                      initial='collapsed'
+                      exit='collapsed'
+                      variants={accordionVariants}
+                      layout
+                    >
+                      {uniquePIBehaviorsArr.map((item, index) => {
+                        return (
+                          <IntervalResultContainer
+                            behavior={partialIntervalGraphs}
+                            name={item}
+                            key={index}
+                          />
+                        )
+                      })}
+                    </Card.Dropdown>
+                  )}
+                </AnimatePresence>
+              </Accordion>
+            )}
             {durationsData.length !== 0 && (
               <Accordion
                 cardType='results'
@@ -345,7 +348,7 @@ export default function Datasheet() {
               </Accordion>
             )}
           </Fragment>
-        </motion.div>
+        </PageTransition>
       )}
     </>
   )

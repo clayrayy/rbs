@@ -5,12 +5,11 @@ import {
   CardModal,
   Duration,
   Form,
-  Intervals,
 } from "components";
 import { DurationCardContainer } from "containers/card-components/durationcard";
 import { FirebaseContext } from "context/firebase";
 import { useGetBehaviorsData } from "hooks/get-data-hooks/use-get-behaviors-data";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { MotionVariants } from "constants/motionVariants";
 
 export default function DurationsAccordion({ client, sessionId }) {
@@ -23,7 +22,7 @@ export default function DurationsAccordion({ client, sessionId }) {
     client.docId,
     sessionId
   );
-  const { accordionVariants, pageTransitions } = MotionVariants();
+  const { accordionVariants } = MotionVariants();
 
   const handleAddNewDuration = (e) => {
     e.preventDefault();
